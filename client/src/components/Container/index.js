@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.scss"
 
 function Container(props) {
     return <div className={`container${props.fluid ? "-fluid" : ""}`} {...props} />;
