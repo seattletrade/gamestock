@@ -29,7 +29,7 @@ export default function Infopage() {
 
         setCompanyNameState(companyName);
 
-        // const API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=1min&apikey=${API_KEY}`;
+        // const API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=10min&outputsize=full&apikey=${API_KEY}`;
         const API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${API_KEY}`;
 
         let xAxis = [];
@@ -41,33 +41,33 @@ export default function Infopage() {
         // 86400000 sec (= 1 day )
         let aDayTomiliSec = 86400000;
         // 1 day per 1
-        let days = 30;
+        let days = 1;
 
         API.getStockMarketData(API_Call)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setLoading(false);
                 setTicker(res.data["Meta Data"]["2. Symbol"])
-                for (let date in res.data["Time Series (Daily)"]) {
+                for (let date in res.data["Time Series (1min)"]) {
                     // console.log(Date.parse(date));
                     // console.log(Date.now());
                     if (Date.parse(date) > (Date.now() - (aDayTomiliSec * days))) {
                         xAxis.push(date);
 
-                        openValue.push(res.data["Time Series (Daily)"][date]['1. open']);
-                        highValue.push(res.data["Time Series (Daily)"][date]['2. high']);
-                        lowValue.push(res.data["Time Series (Daily)"][date]['3. low']);
-                        closeValue.push(res.data["Time Series (Daily)"][date]['4. close']);
-                        volumeValue.push(res.data["Time Series (Daily)"][date]['5. volume']);
+                        // openValue.push(res.data["Time Series (1min)"][date]['1. open']);
+                        // highValue.push(res.data["Time Series (1min)"][date]['2. high']);
+                        // lowValue.push(res.data["Time Series (1min)"][date]['3. low']);
+                        // closeValue.push(res.data["Time Series (1min)"][date]['4. close']);
+                        // volumeValue.push(res.data["Time Series (1min)"][date]['5. volume']);
                     }
                 }
 
                 console.log(xAxis);
-                console.log(openValue);
-                console.log(highValue);
-                console.log(lowValue);
-                console.log(closeValue);
-                console.log(volumeValue);
+                // console.log(openValue);
+                // console.log(highValue);
+                // console.log(lowValue);
+                // console.log(closeValue);
+                // console.log(volumeValue);
 
 
 
