@@ -29,7 +29,7 @@ export default function Form() {
 
                 <div className="form-group row">
                     <div className="col-sm-10">
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <button type="submit" className="btn btn-danger">Submit</button>
                     </div>
                 </div>
             </form>
