@@ -1,28 +1,29 @@
 import React from 'react';
-
+import "./style.scss";
 
 export default function Form() {
     return (
         <div>
             <form>
                 <div className="form-group row">
-                    <label for="searchSymbol" className="col-sm-2 col-form-label">Symbol</label>
-                    <div className="col-sm-2">
+                    <label for="searchSymbol" className="col-xs-2 col-form-label">Symbol</label>
+                    <div className="col-xs-1">
                         <input type="input" className="form-control" id="searchSymbol" />
+                        <div id="previewPrice" class="form-text text-muted">Preview current price here</div>
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label for="searchShares" className="col-sm-2 col-form-label">Shares</label>
-                    <div className="col-sm-2">
+                    <label for="searchShares" className="col-xs-2 col-form-label">Shares</label>
+                    <div className="col-xs-1">
                         <input type="input" className="form-control" id="searchShares" />
+                        <div id="previewTotal" className="form-text text-muted">Preview TX total here</div>
                     </div>
                 </div>
+
                 <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineBuy" value="option1" />
+                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineBuy" value="buy" />
                     <label className="form-check-label" for="inlineBuy">Buy</label>
-                </div>
-                <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineSell" value="option2" />
+                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineSell" value="sell" />
                     <label className="form-check-label" for="inlineSell">Sell</label>
                 </div>
 
