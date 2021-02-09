@@ -29,7 +29,7 @@ export default function Infopage() {
 
         setCompanyNameState(companyName);
 
-        // const API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=10min&outputsize=full&apikey=${API_KEY}`;
+        const API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=10min&outputsize=full&apikey=${API_KEY}`;
         const API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${API_KEY}`;
 
         let xAxis = [];
