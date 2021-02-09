@@ -6,9 +6,9 @@ import Userpage from "./pages/Userpage";
 import Searchpage from "./pages/Searchpage";
 import Infopage from "./pages/Infopage";
 import Tradepage from "./pages/Tradepage";
-import Container from "./components/Container";
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
+import Container from "./components/Container/index";
+import Nav from "./components/Nav/index";
+import Footer from "./components/Footer/index";
 
 
 function App() {
