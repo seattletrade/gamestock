@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Infopage() {
+export default function Userpage() {
     return (
         <div>
-            info
+            user
         </div>
     )
 }
