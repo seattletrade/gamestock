@@ -20,10 +20,15 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
+    "animated-number-react": "^0.1.1",
     "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "express": "^4.16.3",
     "if-env": "^1.0.4",
     "mongoose": "^5.3.16",
-    "node-sass": "^4.14.1"
+    "node-sass": "^4.14.1",
+    "plotly.js": "^1.58.4",
+    "react-bootstrap": "^1.4.3",
+    "react-plotly.js": "^2.5.1"
   }
 }
