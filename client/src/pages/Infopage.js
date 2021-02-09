@@ -56,7 +56,7 @@ export default function Infopage() {
 
 
     // Display first Graph
-    useEffect(() => {        
+    useEffect(() => {
         console.log("First")
 
         // Add .env file root in client
@@ -141,7 +141,8 @@ export default function Infopage() {
                 lowValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
                 openValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
                 openValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
-
+                volumeValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
+                volumeValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
                 // console.log(currentXAxis);
 
                 setOneDayStockState({
@@ -151,6 +152,7 @@ export default function Infopage() {
                         high: highValue,
                         low: lowValue,
                         open: openValue,
+                        volume: volumeValue,
                     }
                 })
 
@@ -193,6 +195,13 @@ export default function Infopage() {
     // Display Real-time Market data
     useEffect(() => {
         const intervalId = setInterval(() => {
+            let currentXAxis = [];
+            let currentCloseValue = [];
+            let currentHighValue = [];
+            let currentLowValue = [];
+            let currentOpenValue = [];
+            let currentVolumeValue = [];
+
             console.log("IN second useEffect currentValueState");
             console.log(currentValueState);
             let tempCurrentValueCloseOpenDifferent = [];
@@ -201,20 +210,59 @@ export default function Infopage() {
                 console.log("Pass first implement for Second useEffect")
             } else {
                 console.log("Implement Second useEffect")
-                // console.log(oneDayStockState);
+                console.log(oneDayStockState);
                 // console.log(oneDayStockState["Time Series (15min)"]["xAxis"]);
                 for (let index in oneDayStockState["Time Series (15min)"]["xAxis"]) {
 
                     // Calculate Current Value
-                    if (Date.parse(oneDayStockState["Time Series (15min)"]["xAxis"][index]) > (new Date())) { // 900000 ( 15min ) to take current time value
+                    if (Date.parse(oneDayStockState["Time Series (15min)"]["xAxis"][index]) > (new Date())) {
                         // console.log(oneDayStockState["Time Series (15min)"]["close"][index])
                         openValue = oneDayStockState["Time Series (15min)"]["open"][index]
                         tempCurrentValueCloseOpenDifferent.push(oneDayStockState["Time Series (15min)"]["close"][index] - oneDayStockState["Time Series (15min)"]["open"][index]);
 
                         // console.log(index)
                     };
+
+                    // Refresh Chart with latest data
+                    if (Date.parse(oneDayStockState["Time Series (15min)"]["xAxis"][index]) < (new Date())) {
+                        currentXAxis.push(oneDayStockState["Time Series (15min)"]["xAxis"][index])
+                        currentCloseValue.push(oneDayStockState["Time Series (15min)"]["close"][index])
+                        currentHighValue.push(oneDayStockState["Time Series (15min)"]["high"][index])
+                        currentLowValue.push(oneDayStockState["Time Series (15min)"]["low"][index])
+                        currentOpenValue.push(oneDayStockState["Time Series (15min)"]["open"][index])
+                        currentVolumeValue.push(oneDayStockState["Time Series (15min)"]["volume"][index])
+                    }  
                 }
+
+
+                //Refresh the Graph data every 5sec
+                setTraceState({
+                    x: currentXAxis,
+                    close: currentCloseValue,
+                    high: currentHighValue,
+                    low: currentLowValue,
+                    open: currentOpenValue,
+                    increasing: { line: { color: 'blue' }, fillcolor: 'blue' },
+                    decreasing: { line: { color: 'red' }, fillcolor: 'red' },
+
+                    type: 'candlestick',
+                    xaxis: 'x',
+                    yaxis: 'y',
+                    name: '',
+                })
+
+                setVolume({
+                    x: currentXAxis,
+                    y: currentVolumeValue,
+                    yaxis: 'y2',
+                    type: 'bar',
+                    name: 'Volume',
+                    marker: {
+                        color: 'rgba(100,255,255,0.3)',
+                    }
+                })
             }
+
             console.log("openValue");
             console.log(openValue);
 
@@ -231,17 +279,17 @@ export default function Infopage() {
                 console.log(currentValueState);
                 let openCloseDifference = tempCurrentValueCloseOpenDifferent[tempCurrentValueCloseOpenDifferent.length - 1];
                 console.log(tempCurrentValueCloseOpenDifferent[tempCurrentValueCloseOpenDifferent.length - 1] / 180.0);
-                if(operatorForCurrentValue === "+"){
+                if (operatorForCurrentValue === "+") {
                     setCurrentValueState(parseFloat(currentValueState) + parseFloat(openCloseDifference / 180.0) + openCloseDifference)
                     setOperatorForCurrentValue("-")
-                }else{
+                } else {
                     setCurrentValueState(parseFloat(currentValueState) + parseFloat(openCloseDifference / 180.0) - openCloseDifference)
                     setOperatorForCurrentValue("+")
                 }
             }
 
             // Live Current Chart 1D
-            
+
 
         }, 5000)
 
