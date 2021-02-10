@@ -1,23 +1,35 @@
 import GetFakeDate from '../GetFakeDate';
 
-function GetIntraDayMarketDataForFirstGraph(oneDayStockState) {
+function GetIntraDayMarketDataForFirstGraph(oneDayStockState , increaseFAKETime) {
     // It is inside IntraDayMarketDATACall func on info PAGE
-    console.log("Inside oneDayStockState FOR FIRST GRAPH function")
-    console.log(oneDayStockState)
-    return (dataProcessing(oneDayStockState));
+    // console.log("Inside oneDayStockState FOR FIRST GRAPH function")
+    // console.log(oneDayStockState)
+    return (dataProcessing(oneDayStockState, increaseFAKETime));
 }
 
-function GetIntraDayMarketData(oneDayStockState) {
+function GetIntraDayMarketData(oneDayStockState, increaseFAKETime) {
     // It is inside setInterval in useEffect on info PAGE
-    console.log("Inside oneDayStockState function")
-    console.log(oneDayStockState)
+
+    // console.log("Inside oneDayStockState function")
+    // console.log(oneDayStockState)
+    // console.log(increaseFAKETime);
+    if(oneDayStockState === undefined){
+        console.log("Pass - Undefined in GetIntraDayMarketData Func")
+        return { "setTraceStateIntraDay": {"null":""},
+        "setVolumeIntraDay": {"null":""},
+        "rangeIntraDay": {"null":""}};
+    }else{
+        return (dataProcessing(oneDayStockState, increaseFAKETime));
+    }
+    
 }
 
 // Manage data to use it with Graph
-function dataProcessing(oneDayStockState) {
-    console.log("Inside dataProcessing")
-    console.log(oneDayStockState)
+function dataProcessing(oneDayStockState, increaseFAKETime) {
+    // console.log("Inside dataProcessing")
+    // console.log(oneDayStockState)
 
+    let increasorFAKETime = increaseFAKETime;
     let currentXAxis = [];
     let currentCloseValue = [];
     let currentHighValue = [];
@@ -29,12 +41,12 @@ function dataProcessing(oneDayStockState) {
     let aDayTomiliSec = 86400000; 
 
     const fakeDate = GetFakeDate();
-    console.log("FAKE DATE")
+    // console.log("FAKE DATE")
     // console.log(fakeDate.getDate())
     // console.log(fakeDate);
     // console.log(Date.parse(fakeDate) - aDayTomiliSec);
     // console.log(new Date() - aDayTomiliSec);
-
+    // console.log(increasorFAKETime);
 
     for (let date in oneDayStockState["Time Series (15min)"]) {
 
@@ -46,7 +58,7 @@ function dataProcessing(oneDayStockState) {
         
         // get Current data for Graph
         if (new Date(Date.parse(date)).getDate() === fakeDate.getDate() - 1 &&
-            Date.parse(date) < (Date.parse(fakeDate) - aDayTomiliSec)) {
+            Date.parse(date) < (Date.parse(fakeDate) + increasorFAKETime - aDayTomiliSec)) {
             currentOpenValue.unshift(oneDayStockState["Time Series (15min)"][date]['1. open']);
             currentHighValue.unshift(oneDayStockState["Time Series (15min)"][date]['2. high']);
             currentLowValue.unshift(oneDayStockState["Time Series (15min)"][date]['3. low']);

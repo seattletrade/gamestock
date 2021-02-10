@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Row, Col } from 'react-bootstrap';
 import AnimatedNumber from "animated-number-react";
@@ -9,12 +8,12 @@ import ChartCompanyInfo from '../components/ChartCompanyInfo'
 import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../components/GetIntraDayMarketData'
 import GetOneWeekMarketData from '../components/GetOneWeekMarketData'
 import GetDailyMarketData from '../components/GetDailyMarketData'
-=======
-import React from 'react'
 import Search from "../components/Search";
->>>>>>> dev
 
 export default function Infopage() {
+
+    // Increase FAKE Time state
+    const [increaseFAKETime, setIncreaseFAKETime] = useState(0);
 
     const [loading, setLoading] = useState(true);
     const [ticker, setTicker] = useState();
@@ -105,11 +104,17 @@ export default function Infopage() {
         // Store Market Data(IntraDay(15min / 60min), Daily(20years)) to STATE
         GetMarketData(userInput);
 
-        // GetIntraDayMarketData after Processing
-        GetIntraDayMarketData(intraDayStockState);
+        // // Update Graph every 5 sec
+        // const intervalId = setInterval(() => {
+        //     console.log("Inside setInterval === ")
+        //     setIncreaseFAKETime(parseInt(increaseFAKETime) + 5000);
+        //     console.log(intraDayStockState);
+        //     console.log(increaseFAKETime);
+        //     GetIntraDayMarketData(intraDayStockState, increaseFAKETime);
+        //     console.log("Inside setInterval === ")
+        // }, 5000)
 
-
-
+        // return () => clearInterval(intervalId);
 
         // // Add .env file root in client
         // const API_KEY = process.env.REACT_APP_API_KEY;
@@ -117,7 +122,7 @@ export default function Infopage() {
         // let symbol = 'MSFT';
         // let companyName = 'Microsoft';
 
-        
+
 
         // const API_ONEDAY_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=15min&apikey=${API_KEY}`;
         // const API_ONEWEEK_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=60min&apikey=${API_KEY}`;
@@ -251,6 +256,33 @@ export default function Infopage() {
         //     }).catch(err => { console.log(err); setLoading(false); })
     }, [])
 
+    // Display Real-time Market data
+    useEffect(() => {
+        // Update Graph every 5 sec
+        const intervalId = setInterval(() => {
+            setIncreaseFAKETime(increaseFAKETime + 5000); // 15min - 900000 / 5sec 5000
+            // console.log("Interval")
+            const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime);
+
+            // console.log("traceStateIntraDay in Interval");
+            // console.log(setTraceStateIntraDay);
+
+            if (setTraceStateIntraDay["null"] === "") {
+                console.log("Pass - Undefined from GetIntraDayMarketData Func on InfoPAGE")
+            }
+             else {
+                // console.log('Check else in Interval ');
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
+            }
+
+        }, 5000)
+
+        return () => clearInterval(intervalId);
+    }, [increaseFAKETime, setTraceState])
+
+
     // // Display Real-time Market data
     // useEffect(() => {
     //     const intervalId = setInterval(() => {
@@ -351,8 +383,6 @@ export default function Infopage() {
     // }, [currentValueState])
 
 
-    // API_ONEWEEK_Call
-
     function IntraDayMarketDATACall(API_ONEDAY_Call) {
         API.getStockMarketData(API_ONEDAY_Call)
             .then(res => {
@@ -360,7 +390,7 @@ export default function Infopage() {
                 setLoading(false)
                 console.log("IntraDay MARKET DATA - check")
                 console.log(res.data)
-                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketDataForFirstGraph(res.data);
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketDataForFirstGraph(res.data, 0);
 
                 setTraceState(setTraceStateIntraDay);
                 setVolume(setVolumeIntraDay);
@@ -464,7 +494,6 @@ export default function Infopage() {
     }
 
     return (
-<<<<<<< HEAD
         <>
             {loading ? (<div>Loding...</div>) : (
 
@@ -502,12 +531,10 @@ export default function Infopage() {
 
 
             )}
-        </>
-=======
-        <div>
-            <Search />
+            <div>
+                <Search />
             info
         </div>
->>>>>>> dev
+        </>
     )
 }

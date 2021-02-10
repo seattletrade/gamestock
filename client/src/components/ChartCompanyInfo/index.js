@@ -3,8 +3,8 @@ import Plot from 'react-plotly.js';
 
 
 export default function ChartCompanyInfo(props) {
-    console.log("In ChartComponent")
-    console.log(props)
+    // console.log("In ChartComponent")
+    // console.log(props)
 
     return (
         <Plot
