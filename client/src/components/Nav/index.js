@@ -48,7 +48,15 @@ export default function Nav() {
                             search
         </Link>
                     </li>
-                    {/* logout link here somewhere */}
+                    {/* auth link text needs work based on state? */}
+                    <li className="nav-item">
+                        <Link
+                            to="/gamestock/login"
+                            className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"}
+                        >
+                            auth
+        </Link>
+                    </li>
                 </ul>
             </div>
 
