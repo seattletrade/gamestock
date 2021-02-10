@@ -1,0 +1,16 @@
+.logo {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-transform: none;
+  -webkit-text-stroke: 1px black;
+  -webkit-transform: scale(1.15, 1);
+  margin-inline: 5px;
+}
+
+.game {
+  color: white;
+}
+
+.stock {
+  color: red;
+}
+/*# sourceMappingURL=style.css.map */
