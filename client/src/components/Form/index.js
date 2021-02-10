@@ -9,7 +9,7 @@ export default function Form() {
                     <label for="searchSymbol" className="col-xs-2 col-form-label">Symbol</label>
                     <div className="col-xs-1">
                         <input type="input" className="form-control" id="searchSymbol" />
-                        <div id="previewPrice" class="form-text text-muted">Preview current price here</div>
+                        <div id="previewPrice" className="form-text text-muted">Preview current price here</div>
                     </div>
                 </div>
                 <div className="form-group row">
