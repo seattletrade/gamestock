@@ -5,7 +5,7 @@ export default function Infopage() {
     return (
         <div>
             <Search />
-            info
+            info content here
         </div>
     )
 }
