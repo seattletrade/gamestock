@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Row, Col } from 'react-bootstrap';
 import AnimatedNumber from "animated-number-react";
@@ -8,6 +9,10 @@ import ChartCompanyInfo from '../components/ChartCompanyInfo'
 import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../components/GetIntraDayMarketData'
 import GetOneWeekMarketData from '../components/GetOneWeekMarketData'
 import GetDailyMarketData from '../components/GetDailyMarketData'
+=======
+import React from 'react'
+import Search from "../components/Search";
+>>>>>>> dev
 
 export default function Infopage() {
 
@@ -459,6 +464,7 @@ export default function Infopage() {
     }
 
     return (
+<<<<<<< HEAD
         <>
             {loading ? (<div>Loding...</div>) : (
 
@@ -497,5 +503,11 @@ export default function Infopage() {
 
             )}
         </>
+=======
+        <div>
+            <Search />
+            info
+        </div>
+>>>>>>> dev
     )
 }
