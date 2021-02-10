@@ -4,7 +4,6 @@ import Signuppage from "./pages/Signuppage";
 import Loginpage from './pages/Loginpage'
 import Homepage from "./pages/Homepage";
 import Userpage from "./pages/Userpage";
-import Searchpage from "./pages/Searchpage";
 import Infopage from "./pages/Infopage";
 import Tradepage from "./pages/Tradepage";
 import Container from "./components/Container";
@@ -23,8 +22,7 @@ function App() {
           <Route exact path="/gamestock/login" component={Loginpage} />
           <Route exact path="/gamestock/user" component={Userpage} />
           <Route exact path="/gamestock/trade" component={Tradepage} />
-          <Route exact path="/gamestock/search" component={Searchpage} />
-          <Route exact path="/gamestock/info" component={Infopage} />
+          <Route exact path="/gamestock/search" component={Infopage} />
           {/* create 404 page */}
           <Footer />
         </Container>
