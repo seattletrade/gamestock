@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Authpage() {
     return (
         <div>
-            auth
+            auth page
         </div>
     )
 }
