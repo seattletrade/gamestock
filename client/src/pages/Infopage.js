@@ -494,6 +494,7 @@ export default function Infopage() {
     }
 
     return (
+
         <>
             {loading ? (<div>Loding...</div>) : (
 
@@ -534,6 +535,7 @@ export default function Infopage() {
             <div>
                 <Search />
             info
+
         </div>
         </>
     )

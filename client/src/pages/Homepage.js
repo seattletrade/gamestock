@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Homepage() {
     return (
         <div>
-            home
+            home content here
         </div>
     )
 }
