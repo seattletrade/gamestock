@@ -3,8 +3,8 @@ import Plot from 'react-plotly.js';
 
 
 export default function ChartCompanyInfo(props) {
-
-
+    console.log("In ChartComponent")
+    console.log(props)
 
     return (
         <Plot
@@ -23,14 +23,17 @@ export default function ChartCompanyInfo(props) {
                 showlegend: false,
                 xaxis: {
                     // TODO:get range date!!,
-                    range: ['2021-02-9 07:46', '2021-02-9 18:10'],
+                    range: props.range,
+                    // range: ['2021-02-10 07:46', '2021-02-10 18:10'],
                     rangeslider: {
                         visible: false
                     },
+                    // type: 'category',
                     type: 'date',
                     tickmode: 'array',
                     // fixedrange: true,
-                    // visible: false
+                    visible: true,
+                    // autorange: "reversed"
 
                 },
                 yaxis: {

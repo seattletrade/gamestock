@@ -26,6 +26,10 @@ function App() {
           {/* create 404 page */}
           <Footer />
         </Container>
+
+        <Infopage />
+        
+        
       </>
     </Router>
   );
