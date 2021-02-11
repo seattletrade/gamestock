@@ -117,7 +117,7 @@ function dataProcessing(oneDayStockState, increaseFAKETime) {
         "type": 'date',
         "visible": true
     }
-
+    // console.log(intraDayMarketData);
     return intraDayMarketData;
 }
 

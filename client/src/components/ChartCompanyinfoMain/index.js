@@ -7,7 +7,7 @@ import ChartCompanyInfo from '../ChartCompanyInfo'
 
 import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../GetIntraDayMarketData'
 import GetOneWeekMarketData from '../GetOneWeekMarketData'
-import GetDailyMarketData from '../GetDailyMarketData'
+import { GetOneMonthMarketData } from '../GetDailyMarketData'
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
 import { set } from "mongoose";
 
@@ -90,7 +90,7 @@ export default function Infopage() {
         // // Call Oneweek market data
         OneWeekMarketDATACall(API_ONEWEEK_Call)
         // // Call Total Daily market data
-        // TotalDailyMarketDATACall(API_DAILY_Call)
+        TotalDailyMarketDATACall(API_DAILY_Call)
     }
 
     // Display first Graph
@@ -138,6 +138,7 @@ export default function Infopage() {
                     break;
                 case "1M":
                     console.log("switchState 1M");
+                    graphDate = (GetOneMonthMarketData(totalDailyStockState ,increaseFAKETime));
                     break;
                 case "3M":
                     console.log("switchState 3M");
@@ -273,6 +274,12 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetOneMonthMarketData(totalDailyStockState, increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
 
                 break;
             }
