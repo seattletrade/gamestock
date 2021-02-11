@@ -18,7 +18,7 @@ export default function Search() {
         searchEndpoint(searchInput)
             .then(result => {
                 console.log("API RESULT:");
-                console.log(result);
+                console.log(result); // result.data.bestMatches (this is an array, map over it, see https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=microso&apikey=demod for rest of path)
             })
             .catch(err => console.log(err));
 
