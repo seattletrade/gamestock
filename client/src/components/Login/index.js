@@ -1,23 +1,54 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {useRef, useState} from 'react'
+import { Form, Button, Card, Alert } from 'react-bootstrap'
+import { useAuth } from '../../contexts/AuthContext';
+import { Link, useHistory } from 'react-router-dom'
 
 export default function Login() {
+    const emailRef = useRef();
+    const passwordRef = useRef();    
+    const { login } = useAuth();
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();        
+        try{
+            setError('')
+            setLoading(true)
+            await login(emailRef.current.value, passwordRef.current.value)
+            history.push("/gamestock/user")
+        } catch {
+            setError('Failed to sign in')
+        }
+        setLoading(false)
+    }
+
     return (
-        <div className="w-50 border border-5 mx-auto" >
-            <p className="h1 text-center">Log In</p>
-            <form className="p-2 m-2">                
-                <div className="form-group">                
-                    <input type="email" className="form-control" name="email" placeholder="email"/>
-                </div>
-                <div className="form-group">                
-                    <input type="password" className="form-control" name="password" placeholder="password"/>
-                </div>               
-                <div className="text-center">
-                <button type="submit" className="btn btn-primary ">
-                       <Link className="text-white text-decoration-none" to="/gamestock/user">Log In</Link> 
-                    </button>
-                </div>
-            </form>
-        </div>
+        <>
+            <Card>
+                <Card.Body>
+                    <h1 className="text-center mb-4">Log In</h1>                                        
+                    {error && <Alert variant="danger">{error}</Alert> }
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group id="email">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" ref={emailRef} />
+                        </Form.Group>
+                        <Form.Group id="password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" ref={passwordRef} />
+                        </Form.Group>                        
+                        <Button disabled={loading} className="w-100" type="submit">Log In</Button>
+                    </Form>
+                    <div className="w-100 text-center mt-3">
+                        <Link to="/gamestock/forgot-password">Forgot password?</Link>
+                    </div>
+                </Card.Body>
+            </Card>
+            <div className="w-100 text-center mt-2">
+                Don't have an account? <Link to="/gamestock/signup">Sign Up</Link>
+            </div>
+        </>
     )
 }

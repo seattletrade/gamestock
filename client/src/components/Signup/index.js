@@ -1,32 +1,59 @@
-import React from 'react'
-import {Link} from 'react-router-dom';
+import React, {useRef, useState} from 'react'
+import { Form, Button, Card, Alert } from 'react-bootstrap'
+import { useAuth } from '../../contexts/AuthContext';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function Signup() {
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const passwordConfirmRef = useRef()
+    const { signup } = useAuth()
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        if(passwordRef.current.value !== passwordConfirmRef.current.value){
+            return setError("Password confirmation do not match the password")
+        }
+        try{
+            setError('')
+            setLoading(true)
+            await signup(emailRef.current.value, passwordRef.current.value)
+            history.push("/gamestock/user")
+        } catch {
+            setError('Account creation failed')
+        }
+        setLoading(false)
+    }
+
     return (
-        <div className="w-50 border border-5 mx-auto" >
-            <p className="h1 text-center">Sign Up Form</p>
-            <form className="p-2 m-2">
-                <div className="form-group">                
-                    <input type="text" className="form-control" name="name" placeholder="full name"/>
-                </div>
-                <div className="form-group">                
-                    <input type="text" className="form-control" name="phone" placeholder="phone number"/>
-                </div>
-                <div className="form-group">                
-                    <input type="email" className="form-control" name="email" placeholder="email"/>
-                </div>
-                <div className="form-group">                
-                    <input type="password" className="form-control" name="password" placeholder="password"/>
-                </div>
-                <div className="checkbox">
-                    <label><input type="checkbox"/> Terms and conditions</label>
-                </div>
-                <div className="text-center">
-                    <button type="submit" className="btn btn-primary ">
-                       <Link className="text-white text-decoration-none" to="/gamestock/user">Create Account</Link> 
-                    </button>
-                </div>
-            </form>
-        </div>
+        <>
+            <Card>
+                <Card.Body>
+                    <h1 className="text-center mb-4">Sign Up</h1>                                        
+                    {error && <Alert variant="danger">{error}</Alert> }
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group id="email">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" ref={emailRef} />
+                        </Form.Group>
+                        <Form.Group id="password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" ref={passwordRef} />
+                        </Form.Group>
+                        <Form.Group id="password-confirm">
+                            <Form.Label>Password Confirmation</Form.Label>
+                            <Form.Control type="password" ref={passwordConfirmRef} />
+                        </Form.Group>
+                        <Button disabled={loading} className="w-100" type="submit">Sign Up</Button>
+                    </Form>
+                </Card.Body>
+            </Card>
+            <div className="w-100 text-center mt-2">
+                Already have an account? <Link to="/gamestock/login">Log In</Link>
+            </div>
+        </>
     )
 }
