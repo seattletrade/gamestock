@@ -1,9 +1,10 @@
 import GetFakeDate from '../GetFakeDate';
 
-function GetIntraDayMarketDataForFirstGraph(oneDayStockState , increaseFAKETime) {
+function GetIntraDayMarketDataForFirstGraph(oneDayStockState, increaseFAKETime) {
     // It is inside IntraDayMarketDATACall func on info PAGE
     // console.log("Inside oneDayStockState FOR FIRST GRAPH function")
     // console.log(oneDayStockState)
+    console.log(dataProcessing(oneDayStockState, increaseFAKETime));
     return (dataProcessing(oneDayStockState, increaseFAKETime));
 }
 
@@ -13,15 +14,18 @@ function GetIntraDayMarketData(oneDayStockState, increaseFAKETime) {
     // console.log("Inside oneDayStockState function")
     // console.log(oneDayStockState)
     // console.log(increaseFAKETime);
-    if(oneDayStockState === undefined){
+    if (oneDayStockState === undefined) {
         console.log("Pass - Undefined in GetIntraDayMarketData Func")
-        return { "setTraceStateIntraDay": {"null":""},
-        "setVolumeIntraDay": {"null":""},
-        "rangeIntraDay": {"null":""}};
-    }else{
+        return {
+            "setTraceStateIntraDay": { "null": "" },
+            "setVolumeIntraDay": { "null": "" },
+            "rangeIntraDay": { "null": "" }
+        };
+    } else {
+        // console.log(dataProcessing(oneDayStockState, increaseFAKETime));
         return (dataProcessing(oneDayStockState, increaseFAKETime));
     }
-    
+
 }
 
 // Manage data to use it with Graph
@@ -38,7 +42,7 @@ function dataProcessing(oneDayStockState, increaseFAKETime) {
     let currentVolumeValue = [];
 
     // 86400000 sec (= 1 day )
-    let aDayTomiliSec = 86400000; 
+    let aDayTomiliSec = 86400000;
 
     const fakeDate = GetFakeDate();
     // console.log("FAKE DATE")
@@ -50,12 +54,12 @@ function dataProcessing(oneDayStockState, increaseFAKETime) {
 
     for (let date in oneDayStockState["Time Series (15min)"]) {
 
-        if (new Date(Date.parse(date)).getDate() === fakeDate.getDate() - 1){
+        if (new Date(Date.parse(date)).getDate() === fakeDate.getDate() - 1) {
             // Fake Date -> Change Previous day to Today
             currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)));
             // currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)).toString().substring(4, 21));
         }
-        
+
         // get Current data for Graph
         if (new Date(Date.parse(date)).getDate() === fakeDate.getDate() - 1 &&
             Date.parse(date) < (Date.parse(fakeDate) + increasorFAKETime - aDayTomiliSec)) {
@@ -109,7 +113,9 @@ function dataProcessing(oneDayStockState, increaseFAKETime) {
                 color: 'rgba(100,255,255,0.3)',
             }
         },
-        "rangeIntraDay": [currentXAxis[0], currentXAxis[currentXAxis.length - 1]]
+        "rangeIntraDay": [currentXAxis[0], currentXAxis[currentXAxis.length - 1]],
+        "type": 'date',
+        "visible": true
     }
 
     return intraDayMarketData;

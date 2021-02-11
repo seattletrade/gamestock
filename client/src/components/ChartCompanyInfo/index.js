@@ -29,10 +29,10 @@ export default function ChartCompanyInfo(props) {
                         visible: false
                     },
                     // type: 'category',
-                    type: 'date',
+                    type: props.type,
+                    visible: props.visible,
                     tickmode: 'array',
                     // fixedrange: true,
-                    visible: true,
                     // autorange: "reversed"
 
                 },
