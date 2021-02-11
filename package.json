@@ -27,7 +27,7 @@
     "express": "^4.16.3",
     "if-env": "^1.0.4",
     "mongoose": "^5.3.16",
-    "node-sass": "^4.14.1",
+    "node-sass": "^5.0.0",
     "plotly.js": "^1.58.4",
     "react-bootstrap": "^1.4.3",
     "react-plotly.js": "^2.5.1"
