@@ -10,10 +10,11 @@ export default function Search() {
     };
 
     return (
+
         <>
-            <form className="input-group mb-3 col-sm-4">
-                <input type="text" className="form-control" placeholder="Symbol" aria-label="Search"
-                    onChange={e => setSearchInput(e.target.value)} />
+            <form className="input-group mb-3 col-sm-4" onSubmit={handleSubmit}>
+                <input type="text" className="form-control" placeholder="Symbol" aria-label="Search" onChange={e => setSearchInput(e.target.value)} />
+
                 <div className="input-group-append" >
                     <button className="btn btn-danger" type="submit">Search</button>
                 </div>
