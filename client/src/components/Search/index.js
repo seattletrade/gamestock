@@ -1,12 +1,28 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import ChartCompanyinfoMain from '../ChartCompanyinfoMain';
 
 export default function Search() {
     const [searchInput, setSearchInput] = useState();
 
+    function searchEndpoint(inputState) {
+        const API_KEY = process.env.REACT_APP_API_KEY;
+        const keyword = inputState;
+        const API_SearchEndpoint_Call = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${keyword}&apikey=${API_KEY}`;
+        return axios.get(API_SearchEndpoint_Call);
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         console.log("user entered  " + searchInput); //searchInput is the state, console log is displaying the state
+        searchEndpoint(searchInput)
+            .then(result => {
+                console.log("API RESULT:");
+                console.log(result);
+            })
+            .catch(err => console.log(err));
+
+        ;
     };
 
     return (
