@@ -15,6 +15,7 @@ export default function Infopage() {
 
     // Increase FAKE Time state
     const [increaseFAKETime, setIncreaseFAKETime] = useState(0);
+    const [switchState, setSwitchState] = useState("1D");
 
     const [loading, setLoading] = useState(true);
     const [ticker, setTicker] = useState();
@@ -38,6 +39,8 @@ export default function Infopage() {
     const [button5YState, setButton5YState] = useState(btnWithOutline);
 
     //Graph Data state
+    const [typeState, useTypeState] = useState('date');
+    const [visibleState, useVisibleState] = useState('true');
     const [traceState, setTraceState] = useState({
         x: ['myChartXState'],
         close: ['myCloseState'],
@@ -85,7 +88,7 @@ export default function Infopage() {
         // Call IntraDay market data
         IntraDayMarketDATACall(API_ONEDAY_Call)
         // // Call Oneweek market data
-        // OneWeekMarketDATACall(API_ONEWEEK_Call)
+        OneWeekMarketDATACall(API_ONEWEEK_Call)
         // // Call Total Daily market data
         // TotalDailyMarketDATACall(API_DAILY_Call)
     }
@@ -105,7 +108,7 @@ export default function Infopage() {
 
         // Store Market Data(IntraDay(15min / 60min), Daily(20years)) to STATE
         GetMarketData(userInput);
-        
+
     }, [])
 
     // Display Real-time Market data
@@ -114,29 +117,63 @@ export default function Infopage() {
         const intervalId = setInterval(() => {
             // console.log("Interval")
             setIncreaseFAKETime(increaseFAKETime + 5000); // 15min - 900000 / 5sec 5000
-            
+
+            // Graph Data
+            let graphDate = {}
+
             // Display Realtime Value
             let afterFifteenMinDifference = GetCurrentValueForLive(intraDayStockState, increaseFAKETime);
 
-            const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime);
+            // Swich Statment - 1D , 1W , 1M , 3M , 1Y , 5Y
+            // console.log("switchState");
+            // console.log(switchState);
+            switch (switchState) {
+                case "1D":
+                    console.log("switchState 1D");
+                    graphDate = GetIntraDayMarketData(intraDayStockState, increaseFAKETime);
+                    break;
+                case "1W":
+                    console.log("switchState 1W");
+                    graphDate = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime);
+                    break;
+                case "1M":
+                    console.log("switchState 1M");
+                    break;
+                case "3M":
+                    console.log("switchState 3M");
+                    break;
+                case "1Y":
+                    console.log("switchState 1Y");
+                    break;
+                case "5Y":
+                    console.log("switchState 5Y");
+                    break;
+            }
+            
+            
+            // console.log("After Swtich")
+            // console.log(graphDate);
+            // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime);
             // console.log("traceStateIntraDay in Interval");
             // console.log(setTraceStateIntraDay);
 
-            if (setTraceStateIntraDay["null"] === "") {
+            if (graphDate.setTraceStateIntraDay["null"] === "") {
                 console.log("Pass - Undefined from GetIntraDayMarketData Func on InfoPAGE")
             }
             else {
                 // console.log('Check else in Interval ');
-                setTraceState(setTraceStateIntraDay);
-                setVolume(setVolumeIntraDay);
-                setRangeState(rangeIntraDay);
+                useTypeState(graphDate.typeState);
+                useVisibleState(graphDate.visible);
+                setTraceState(graphDate.setTraceStateIntraDay);
+                setVolume(graphDate.setVolumeIntraDay);
+                setRangeState(graphDate.rangeIntraDay);
 
-                if(operatorForCurrentValue === "+"){
-                    setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference/180) + afterFifteenMinDifference);
+                if (operatorForCurrentValue === "+") {
+                    setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference / 180) + afterFifteenMinDifference);
                     setOperatorForCurrentValue("-");
                     // console.log("+")
-                }else{
-                    setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference/180) - afterFifteenMinDifference);
+                } else {
+                    setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference / 180) - afterFifteenMinDifference);
                     setOperatorForCurrentValue("+")
                     // console.log("-")
                 }
@@ -146,7 +183,7 @@ export default function Infopage() {
         }, 5000)
 
         return () => clearInterval(intervalId);
-    }, [increaseFAKETime, setTraceState])
+    }, [increaseFAKETime, switchState])
 
     // Call IntraDay market data
     function IntraDayMarketDATACall(API_ONEDAY_Call) {
@@ -197,40 +234,50 @@ export default function Infopage() {
 
         switch (e.target.innerText) {
             case "1D": {
+                setSwitchState("1D")
                 setButton1DState(btnWithoutOutline)
                 setButton1WState(btnWithOutline)
                 setButton1MState(btnWithOutline)
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
-
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime)
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
                 break;
             }
             case "1W": {
+                setSwitchState("1W")
                 setButton1DState(btnWithOutline)
                 setButton1WState(btnWithoutOutline)
                 setButton1MState(btnWithOutline)
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
-
-                console.log(oneWeekStockState);
-                setTraceState(GetOneWeekMarketData(oneWeekStockState)["setTraceState"]);
-                setVolume(GetOneWeekMarketData(oneWeekStockState)["setVolume"]);
-                setRangeState(GetOneWeekMarketData(oneWeekStockState)["range"])
-
-                break;
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
+               break;
             }
             case "1M": {
+                setSwitchState("1M")
                 setButton1DState(btnWithOutline)
                 setButton1WState(btnWithOutline)
                 setButton1MState(btnWithoutOutline)
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
+
                 break;
             }
             case "3M": {
+                setSwitchState("3M")
                 setButton1DState(btnWithOutline)
                 setButton1WState(btnWithOutline)
                 setButton1MState(btnWithOutline)
@@ -240,6 +287,7 @@ export default function Infopage() {
                 break;
             }
             case "1Y": {
+                setSwitchState("1Y")
                 setButton1DState(btnWithOutline)
                 setButton1WState(btnWithOutline)
                 setButton1MState(btnWithOutline)
@@ -255,6 +303,7 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithoutOutline)
+                setSwitchState("5Y")
                 break;
             }
         }
@@ -274,7 +323,7 @@ export default function Infopage() {
                             formatValue={n => n.toFixed(2)} /></h3>
                     </div>
 
-                    <ChartCompanyInfo traceState={traceState} volumeState={volumeState} range={rangeState} />
+                    <ChartCompanyInfo traceState={traceState} volumeState={volumeState} range={rangeState} typeState={typeState} visible={visibleState}/>
 
                     <Row>
                         <Col className="ml-2 mr-0 pr-0">
