@@ -8,6 +8,8 @@ import ChartCompanyInfo from '../ChartCompanyInfo'
 import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../GetIntraDayMarketData'
 import GetOneWeekMarketData from '../GetOneWeekMarketData'
 import GetDailyMarketData from '../GetDailyMarketData'
+import GetCurrentValueForLive from '../GetCurrentValueForLive'
+import { set } from "mongoose";
 
 export default function Infopage() {
 
@@ -99,6 +101,7 @@ export default function Infopage() {
         }
 
         setCompanyNameState(userInput["companyName"]);
+        setTicker(userInput["symbol"])
 
         // Store Market Data(IntraDay(15min / 60min), Daily(20years)) to STATE
         GetMarketData(userInput);
@@ -109,10 +112,13 @@ export default function Infopage() {
     useEffect(() => {
         // Update Graph every 5 sec
         const intervalId = setInterval(() => {
-            setIncreaseFAKETime(increaseFAKETime + 5000); // 15min - 900000 / 5sec 5000
             // console.log("Interval")
-            const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime);
+            setIncreaseFAKETime(increaseFAKETime + 5000); // 15min - 900000 / 5sec 5000
+            
+            // Display Realtime Value
+            let afterFifteenMinDifference = GetCurrentValueForLive(intraDayStockState, increaseFAKETime);
 
+            const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime);
             // console.log("traceStateIntraDay in Interval");
             // console.log(setTraceStateIntraDay);
 
@@ -124,6 +130,17 @@ export default function Infopage() {
                 setTraceState(setTraceStateIntraDay);
                 setVolume(setVolumeIntraDay);
                 setRangeState(rangeIntraDay);
+
+                if(operatorForCurrentValue === "+"){
+                    setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference/180) + afterFifteenMinDifference);
+                    setOperatorForCurrentValue("-");
+                    // console.log("+")
+                }else{
+                    setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference/180) - afterFifteenMinDifference);
+                    setOperatorForCurrentValue("+")
+                    // console.log("-")
+                }
+
             }
 
         }, 5000)
@@ -131,6 +148,7 @@ export default function Infopage() {
         return () => clearInterval(intervalId);
     }, [increaseFAKETime, setTraceState])
 
+    // Call IntraDay market data
     function IntraDayMarketDATACall(API_ONEDAY_Call) {
         API.getStockMarketData(API_ONEDAY_Call)
             .then(res => {
@@ -139,15 +157,17 @@ export default function Infopage() {
                 console.log("IntraDay MARKET DATA - check")
                 console.log(res.data)
                 const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketDataForFirstGraph(res.data, 0);
-
+                // console.log(setTraceStateIntraDay);
                 setTraceState(setTraceStateIntraDay);
                 setVolume(setVolumeIntraDay);
                 setRangeState(rangeIntraDay);
                 setIntraDayStockState(res.data);
+                setCurrentValueState(setTraceStateIntraDay["close"][setTraceStateIntraDay["close"].length - 1]);
             })
             .catch(err => console.log(err))
     }
 
+    // Call OneWeekMarket market data (INTRADATE 60 MIN)
     function OneWeekMarketDATACall(API_ONEWEEK_Call) {
         API.getStockMarketData(API_ONEWEEK_Call)
             .then(res => {
@@ -158,7 +178,7 @@ export default function Infopage() {
             .catch(err => console.log(err))
     }
 
-    // API_TotalDailyMArketData_Call
+    // API_TotalDailyMArketData_Call(Fullsize-20years)
     function TotalDailyMarketDATACall(API_ONEWEEK_Call) {
         API.getStockMarketData(API_ONEWEEK_Call)
             .then(res => {
