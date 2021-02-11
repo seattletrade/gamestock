@@ -99,6 +99,7 @@ export default function Infopage() {
         }
 
         setCompanyNameState(userInput["companyName"]);
+        setTicker(userInput["symbol"])
 
         // Store Market Data(IntraDay(15min / 60min), Daily(20years)) to STATE
         GetMarketData(userInput);
@@ -131,6 +132,7 @@ export default function Infopage() {
         return () => clearInterval(intervalId);
     }, [increaseFAKETime, setTraceState])
 
+    // Call IntraDay market data
     function IntraDayMarketDATACall(API_ONEDAY_Call) {
         API.getStockMarketData(API_ONEDAY_Call)
             .then(res => {
@@ -148,6 +150,7 @@ export default function Infopage() {
             .catch(err => console.log(err))
     }
 
+    // Call OneWeekMarket market data (INTRADATE 60 MIN)
     function OneWeekMarketDATACall(API_ONEWEEK_Call) {
         API.getStockMarketData(API_ONEWEEK_Call)
             .then(res => {
@@ -158,7 +161,7 @@ export default function Infopage() {
             .catch(err => console.log(err))
     }
 
-    // API_TotalDailyMArketData_Call
+    // API_TotalDailyMArketData_Call(Fullsize-20years)
     function TotalDailyMarketDATACall(API_ONEWEEK_Call) {
         API.getStockMarketData(API_ONEWEEK_Call)
             .then(res => {
