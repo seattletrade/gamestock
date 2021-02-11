@@ -270,7 +270,7 @@ export default function Infopage() {
             if (setTraceStateIntraDay["null"] === "") {
                 console.log("Pass - Undefined from GetIntraDayMarketData Func on InfoPAGE")
             }
-             else {
+            else {
                 // console.log('Check else in Interval ');
                 setTraceState(setTraceStateIntraDay);
                 setVolume(setVolumeIntraDay);
@@ -496,6 +496,10 @@ export default function Infopage() {
     return (
 
         <>
+            <div>
+                <Search />
+
+            </div>
             {loading ? (<div>Loding...</div>) : (
 
                 <div style={{ background: "black", height: "1000px" }}>
@@ -532,11 +536,6 @@ export default function Infopage() {
 
 
             )}
-            <div>
-                <Search />
-            info
-
-        </div>
         </>
     )
 }
