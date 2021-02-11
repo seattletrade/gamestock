@@ -1,18 +1,18 @@
 import GetFakeDate from '../GetFakeDate';
 
 export default function GetOneWeekMarketData(oneWeekStockState, increaseFAKETime) {
-    console.log("Inside GetOneWeekMarketData function")
-    console.log(oneWeekStockState)
+    // console.log("Inside GetOneWeekMarketData function")
+    // console.log(oneWeekStockState)
 
     if (oneWeekStockState === undefined) {
-        console.log("Pass - Undefined in GetIntraDayMarketData Func")
+        // console.log("Pass - Undefined in GetIntraDayMarketData Func")
         return {
             "setTraceStateIntraDay": { "null": "" },
             "setVolumeIntraDay": { "null": "" },
             "rangeIntraDay": { "null": "" }
         };
     } else {
-        console.log(dataProcessing(oneWeekStockState, increaseFAKETime));
+        // console.log(dataProcessing(oneWeekStockState, increaseFAKETime));
         return (dataProcessing(oneWeekStockState, increaseFAKETime));
     }
 
@@ -37,7 +37,7 @@ export default function GetOneWeekMarketData(oneWeekStockState, increaseFAKETime
             }
 
 
-            if (Date.parse(fakeDate) - (aDayTomiliSec * 8) < Date.parse(date) && Date.parse(date) < Date.parse(fakeDate) - aDayTomiliSec) {
+            if (Date.parse(fakeDate) - (aDayTomiliSec * 8) < Date.parse(date) && Date.parse(date) < Date.parse(fakeDate) + increasorFAKETime - aDayTomiliSec) {
                 // console.log(date[11] + date[12]);
                 if (date[11] + date[12] === "05" || date[11] + date[12] === "06" || date[11] + date[12] === "19" || date[11] + date[12] === "20") {
                     console.log("Pass the data")

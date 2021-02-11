@@ -7,7 +7,7 @@ import ChartCompanyInfo from '../ChartCompanyInfo'
 
 import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../GetIntraDayMarketData'
 import GetOneWeekMarketData from '../GetOneWeekMarketData'
-import GetDailyMarketData from '../GetDailyMarketData'
+import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData, GetFiveYearMarketData } from '../GetDailyMarketData'
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
 import { set } from "mongoose";
 
@@ -90,7 +90,7 @@ export default function Infopage() {
         // // Call Oneweek market data
         OneWeekMarketDATACall(API_ONEWEEK_Call)
         // // Call Total Daily market data
-        // TotalDailyMarketDATACall(API_DAILY_Call)
+        TotalDailyMarketDATACall(API_DAILY_Call)
     }
 
     // Display first Graph
@@ -138,15 +138,19 @@ export default function Infopage() {
                     break;
                 case "1M":
                     console.log("switchState 1M");
+                    graphDate = (GetOneMonthMarketData(totalDailyStockState ,increaseFAKETime));
                     break;
                 case "3M":
                     console.log("switchState 3M");
+                    graphDate = GetThreeMonthMarketData(totalDailyStockState ,increaseFAKETime)
                     break;
                 case "1Y":
                     console.log("switchState 1Y");
+                    graphDate = GetOneYearMarketData(totalDailyStockState ,increaseFAKETime)
                     break;
                 case "5Y":
                     console.log("switchState 5Y");
+                    graphDate = GetFiveYearMarketData(totalDailyStockState ,increaseFAKETime)
                     break;
             }
             
@@ -273,6 +277,12 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetOneMonthMarketData(totalDailyStockState, increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
 
                 break;
             }
@@ -284,6 +294,12 @@ export default function Infopage() {
                 setButton3MState(btnWithoutOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetThreeMonthMarketData(totalDailyStockState ,increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
                 break;
             }
             case "1Y": {
@@ -294,6 +310,12 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithoutOutline)
                 setButton5YState(btnWithOutline)
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetOneYearMarketData(totalDailyStockState ,increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
                 break;
             }
             case "5Y": {
@@ -304,6 +326,12 @@ export default function Infopage() {
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithoutOutline)
                 setSwitchState("5Y")
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetFiveYearMarketData(totalDailyStockState ,increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
                 break;
             }
         }
