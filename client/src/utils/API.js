@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default {
-    authUser: function(userInfo) {
-        return axios.post("/api/user/login", userInfo);
-    } 
+    getStockMarketData: (endPoint) => {
+        return axios.get(endPoint);
+    },
 };
