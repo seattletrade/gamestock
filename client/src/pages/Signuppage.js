@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import Signup from '../components/Signup'
 import Login from '../components/Login'
 
-export default function Authpage() {
+export default function Signuppage() {
+
     return (
         <div>
             <Signup />
@@ -11,8 +12,7 @@ export default function Authpage() {
             <Link className="ml-2"
                 to="/gamestock/login">
                    Log In
-            </Link> 
-                
+            </Link>                 
             </p>       
         </div>
     )

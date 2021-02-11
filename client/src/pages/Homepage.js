@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import Signup from '../components/Signup/index'
+
 
 export default function Homepage() {
     
