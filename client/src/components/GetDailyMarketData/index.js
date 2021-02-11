@@ -20,11 +20,11 @@ function GetOneMonthMarketData(totalDailyStockState, increaseFAKETime) {
 
 // THREE MONTH STOCK DATA
 function GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime) {
-    console.log("Inside GetOneMonthMarketData function")
+    console.log("Inside GetThreeMonthMarketData function")
     console.log(totalDailyStockState)
 
     if (totalDailyStockState === undefined) {
-        console.log("Pass - Undefined in GetOneMonthMarketData Func")
+        console.log("Pass - Undefined in GetThreeMonthMarketData Func")
         return {
             "setTraceStateIntraDay": { "null": "" },
             "setVolumeIntraDay": { "null": "" },
@@ -38,19 +38,37 @@ function GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime) {
 
 // ONE YEAR STOCK DATA
 function GetOneYearMarketData(totalDailyStockState, increaseFAKETime) {
-    console.log("Inside GetOneMonthMarketData function")
+    console.log("Inside GetOneYearMarketData function")
     console.log(totalDailyStockState)
 
     if (totalDailyStockState === undefined) {
-        console.log("Pass - Undefined in GetOneMonthMarketData Func")
+        console.log("Pass - Undefined in GetOneYearMarketData Func")
         return {
             "setTraceStateIntraDay": { "null": "" },
             "setVolumeIntraDay": { "null": "" },
             "rangeIntraDay": { "null": "" }
         };
     } else {
-        console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 6));
-        return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 6));
+        console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 5));
+        return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 5));
+    }
+}
+
+// FIVE YEAR STOCK DATA
+function GetFiveYearMarketData(totalDailyStockState, increaseFAKETime) {
+    console.log("Inside GetFiveYearMarketData function")
+    console.log(totalDailyStockState)
+
+    if (totalDailyStockState === undefined) {
+        console.log("Pass - Undefined in GetFiveYearMarketData Func")
+        return {
+            "setTraceStateIntraDay": { "null": "" },
+            "setVolumeIntraDay": { "null": "" },
+            "rangeIntraDay": { "null": "" }
+        };
+    } else {
+        console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 1825, 25));
+        return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 1825, 25));
     }
 }
 
@@ -226,5 +244,6 @@ function dataProcessingForYears(totalDailyStockState, increaseFAKETime, days, ra
 export {
     GetOneMonthMarketData,
     GetThreeMonthMarketData,
-    GetOneYearMarketData
+    GetOneYearMarketData,
+    GetFiveYearMarketData
 }

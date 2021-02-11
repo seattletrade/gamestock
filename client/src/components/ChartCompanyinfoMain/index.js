@@ -7,7 +7,7 @@ import ChartCompanyInfo from '../ChartCompanyInfo'
 
 import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../GetIntraDayMarketData'
 import GetOneWeekMarketData from '../GetOneWeekMarketData'
-import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData } from '../GetDailyMarketData'
+import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData, GetFiveYearMarketData } from '../GetDailyMarketData'
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
 import { set } from "mongoose";
 
@@ -150,6 +150,7 @@ export default function Infopage() {
                     break;
                 case "5Y":
                     console.log("switchState 5Y");
+                    graphDate = GetFiveYearMarketData(totalDailyStockState ,increaseFAKETime)
                     break;
             }
             
@@ -325,6 +326,12 @@ export default function Infopage() {
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithoutOutline)
                 setSwitchState("5Y")
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetFiveYearMarketData(totalDailyStockState ,increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
                 break;
             }
         }
