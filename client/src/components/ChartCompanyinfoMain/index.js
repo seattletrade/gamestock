@@ -7,7 +7,7 @@ import ChartCompanyInfo from '../ChartCompanyInfo'
 
 import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../GetIntraDayMarketData'
 import GetOneWeekMarketData from '../GetOneWeekMarketData'
-import { GetOneMonthMarketData } from '../GetDailyMarketData'
+import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData } from '../GetDailyMarketData'
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
 import { set } from "mongoose";
 
@@ -142,9 +142,11 @@ export default function Infopage() {
                     break;
                 case "3M":
                     console.log("switchState 3M");
+                    graphDate = GetThreeMonthMarketData(totalDailyStockState ,increaseFAKETime)
                     break;
                 case "1Y":
                     console.log("switchState 1Y");
+                    graphDate = GetOneYearMarketData(totalDailyStockState ,increaseFAKETime)
                     break;
                 case "5Y":
                     console.log("switchState 5Y");
@@ -291,6 +293,12 @@ export default function Infopage() {
                 setButton3MState(btnWithoutOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetThreeMonthMarketData(totalDailyStockState ,increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
                 break;
             }
             case "1Y": {
@@ -301,6 +309,12 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithoutOutline)
                 setButton5YState(btnWithOutline)
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay,  type, visible } = GetOneYearMarketData(totalDailyStockState ,increaseFAKETime);
+                useTypeState(type);
+                useVisibleState(visible);
+                setTraceState(setTraceStateIntraDay);
+                setVolume(setVolumeIntraDay);
+                setRangeState(rangeIntraDay);
                 break;
             }
             case "5Y": {
