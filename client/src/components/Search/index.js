@@ -4,6 +4,7 @@ import ChartCompanyinfoMain from '../ChartCompanyinfoMain';
 
 export default function Search() {
     const [searchInput, setSearchInput] = useState();
+    const [searchResults, setSearchResults] = useState();
 
     function searchEndpoint(inputState) {
         const API_KEY = process.env.REACT_APP_API_KEY;
@@ -18,7 +19,12 @@ export default function Search() {
         searchEndpoint(searchInput)
             .then(result => {
                 console.log("API RESULT:");
-                console.log(result); // result.data.bestMatches (this is an array, map over it, see https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=microso&apikey=demod for rest of path)
+                console.log(result.data.bestMatches[0])
+                let resultsData = result.data.bestMatches[0];
+                console.log(resultsData);
+                setSearchResults(resultsData);
+                console.log(searchResults)
+
             })
             .catch(err => console.log(err));
 
@@ -35,7 +41,9 @@ export default function Search() {
                     <button className="btn btn-danger" type="submit">Search</button>
                 </div>
             </form >
+            <div>
 
+            </div>
             <ChartCompanyinfoMain />
 
         </>
