@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import ChartCompanyinfoMain from '../ChartCompanyinfoMain';
+import Autocomplete from "react-autocomplete";
 
 export default function Search() {
     const [searchInput, setSearchInput] = useState();
@@ -19,11 +20,12 @@ export default function Search() {
         searchEndpoint(searchInput)
             .then(result => {
                 console.log("API RESULT:");
-                console.log(result.data.bestMatches[0])
-                let resultsData = result.data.bestMatches[0];
+                console.log(result.data.bestMatches[0]["1. symbol"])
+                let resultsData = result.data.bestMatches[0]["1. symbol"].toString();
                 console.log(resultsData);
                 setSearchResults(resultsData);
-                console.log(searchResults)
+                console.log(searchResults) //toString made this not undefined
+                //searchResults state holds the user's inputted symbol to be used in the graph api call
 
             })
             .catch(err => console.log(err));
@@ -44,6 +46,8 @@ export default function Search() {
             <div>
 
             </div>
+
+
             <ChartCompanyinfoMain />
 
         </>
