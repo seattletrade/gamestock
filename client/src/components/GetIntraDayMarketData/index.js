@@ -4,7 +4,7 @@ function GetIntraDayMarketDataForFirstGraph(oneDayStockState, increaseFAKETime) 
     // It is inside IntraDayMarketDATACall func on info PAGE
     // console.log("Inside oneDayStockState FOR FIRST GRAPH function")
     // console.log(oneDayStockState)
-    console.log(dataProcessing(oneDayStockState, increaseFAKETime));
+    // console.log(dataProcessing(oneDayStockState, increaseFAKETime));
     return (dataProcessing(oneDayStockState, increaseFAKETime));
 }
 
