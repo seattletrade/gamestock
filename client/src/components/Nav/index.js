@@ -66,11 +66,11 @@ export default function Nav() {
                 </ul>
                 {!currentUser ?
                     <>
-                        <Link className="ml-auto text-white" variant="link" to="/gamestock/login">Login</Link>
+                        <Link className="ml-auto text-white" to="/gamestock/login">Login</Link>
                         <Link className="mx-2 text-white" to="/gamestock/signup">Signup</Link>
                     </> :
                     <>
-                        <Link className="ml-auto text-white" variant="link">Email: {currentUser.email}</Link>
+                        <Link className="ml-auto text-white" >Email: {currentUser.email}</Link>
                         <Link className="mx-2 text-white" onClick={handleLogout} variant="link">logout</Link>
                     </>
                 }
