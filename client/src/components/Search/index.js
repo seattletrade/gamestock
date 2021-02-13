@@ -44,13 +44,10 @@ export default function Search() {
                         {item.symbol} {item.label}
                     </div>
                 }
+                inputProps={{ placeholder: 'Search' }}
                 value={searchInput}
-                //set inputstate here^
                 onChange={handleChange}
-                //need to handle delete display at some point
-                onSelect={(item) => {
-                    setSearchResults(item)
-                }}
+                onSelect={(item) => setSearchResults(item)}
             />
             {/* the searchResults state holds the symbol the user selected from the list, can be passed down and used in other part of the app i think */}
             <ChartCompanyinfoMain />
