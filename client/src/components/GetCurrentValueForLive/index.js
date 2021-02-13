@@ -4,7 +4,7 @@ export default function GetCurrentValueForLive(oneDayStockState, increaseFAKETim
     // console.log("In GetCurrentValueForLive")
 
     if (oneDayStockState === undefined) {
-        console.log("Pass - Undefined in GetIntraDayMarketData Func")
+        // console.log("Pass - Undefined in GetIntraDayMarketData Func")
         return {
             "setTraceStateIntraDay": { "null": "" },
             "setVolumeIntraDay": { "null": "" },

@@ -1,5 +1,4 @@
 const axios = require("axios");
-const router = require("express").Router();
 require('dotenv').config()
 
 module.exports = {
@@ -21,7 +20,7 @@ module.exports = {
     },
 
     intraMarketData: function (req, res) {
-        console.log(req.params.interval);
+        // console.log(req.params.interval);
         axios.get(`${process.env.ALPHAVANTAGE_QUERY_INTRADAY}&symbol=${req.params.companySymbol}&interval=${req.params.interval}&apikey=${process.env.ALPHAVANTAGE_API_KEY}`)
         .then(data =>{
             res.json(data.data);

@@ -20,44 +20,44 @@ function GetOneMonthMarketData(totalDailyStockState, increaseFAKETime) {
 
 // THREE MONTH STOCK DATA
 function GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime) {
-    console.log("Inside GetThreeMonthMarketData function")
-    console.log(totalDailyStockState)
+    // console.log("Inside GetThreeMonthMarketData function")
+    // console.log(totalDailyStockState)
 
     if (totalDailyStockState === undefined) {
-        console.log("Pass - Undefined in GetThreeMonthMarketData Func")
+        // console.log("Pass - Undefined in GetThreeMonthMarketData Func")
         return {
             "setTraceStateIntraDay": { "null": "" },
             "setVolumeIntraDay": { "null": "" },
             "rangeIntraDay": { "null": "" }
         };
     } else {
-        console.log(dataProcessing(totalDailyStockState, increaseFAKETime, 90));
+        // console.log(dataProcessing(totalDailyStockState, increaseFAKETime, 90));
         return (dataProcessing(totalDailyStockState, increaseFAKETime, 90));
     }
 }
 
 // ONE YEAR STOCK DATA
 function GetOneYearMarketData(totalDailyStockState, increaseFAKETime) {
-    console.log("Inside GetOneYearMarketData function")
-    console.log(totalDailyStockState)
+    // console.log("Inside GetOneYearMarketData function")
+    // console.log(totalDailyStockState)
 
     if (totalDailyStockState === undefined) {
-        console.log("Pass - Undefined in GetOneYearMarketData Func")
+        // console.log("Pass - Undefined in GetOneYearMarketData Func")
         return {
             "setTraceStateIntraDay": { "null": "" },
             "setVolumeIntraDay": { "null": "" },
             "rangeIntraDay": { "null": "" }
         };
     } else {
-        console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 5));
+        // console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 5));
         return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 5));
     }
 }
 
 // FIVE YEAR STOCK DATA
 function GetFiveYearMarketData(totalDailyStockState, increaseFAKETime) {
-    console.log("Inside GetFiveYearMarketData function")
-    console.log(totalDailyStockState)
+    // console.log("Inside GetFiveYearMarketData function")
+    // console.log(totalDailyStockState)
 
     if (totalDailyStockState === undefined) {
         console.log("Pass - Undefined in GetFiveYearMarketData Func")
@@ -67,7 +67,7 @@ function GetFiveYearMarketData(totalDailyStockState, increaseFAKETime) {
             "rangeIntraDay": { "null": "" }
         };
     } else {
-        console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 1825, 25));
+        // console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 1825, 25));
         return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 1825, 25));
     }
 }
