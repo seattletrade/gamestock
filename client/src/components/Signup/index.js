@@ -17,6 +17,9 @@ export default function Signup() {
         if(passwordRef.current.value !== passwordConfirmRef.current.value){
             return setError("Password confirmation do not match the password")
         }
+        if(passwordRef.current.value.length < 6){
+            return setError("Password should be at least six characters")
+        }
         try{
             setError('')
             setLoading(true)
