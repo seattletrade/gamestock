@@ -14,8 +14,7 @@ export default function AboutCompany(promps) {
         <div className="aboutCompany">
 
             <h4>About {promps.companyInfo.Name}</h4>
-            <hr />
-            <Accordion defaultActiveKey="1">
+            <Accordion defaultActiveKey="1" style={{marginTop:"25px"}}>
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="0">
                         <span className="companyDescription">{promps.companyInfo.Description}</span>
@@ -25,7 +24,7 @@ export default function AboutCompany(promps) {
                     </Accordion.Collapse>
                 </Card>
             </Accordion>
-            <hr />
+            <hr className="myHr" />
             <Row>
                 <Col className="aboutCompany-title">
                     Headquarters
@@ -34,7 +33,7 @@ export default function AboutCompany(promps) {
                     {`${headQuartersAddress[1]}, ${headQuartersAddress[2]} ${promps.companyInfo.Country}`}
                 </Col>
             </Row>
-            <hr />
+            <hr className="myHr" />
             <Row>
                 <Col className="aboutCompany-title">
                     Employees
@@ -43,7 +42,7 @@ export default function AboutCompany(promps) {
                     {NumberComma(promps.companyInfo.FullTimeEmployees)}
                 </Col>
             </Row>
-            <hr />
+            <hr className="myHr" />
             <Row>
                 <Col className="aboutCompany-title">
                     Industry
@@ -52,6 +51,7 @@ export default function AboutCompany(promps) {
                     {promps.companyInfo.Industry}
                 </Col>
             </Row>
+            <hr className="myHr" />
 
 
         </div>

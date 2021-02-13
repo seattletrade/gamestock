@@ -31,7 +31,7 @@ export default function StatsCompany(promps) {
 
     return (
         <div>
-            <h4>Stats</h4>
+            <h4 id="companyStats">Stats</h4>
             <div style={{marginTop:"25px"}}>
             <Row>
                 <Col className="statsCompany-title">
@@ -47,7 +47,7 @@ export default function StatsCompany(promps) {
                 {promps.companyInfo["Symbol"]}
                 </Col>
             </Row>
-            <hr />
+            <hr className="myHr" />
 
             <Row>
                 <Col className="statsCompany-title">
@@ -63,7 +63,7 @@ export default function StatsCompany(promps) {
                 {parseFloat(promps.companyInfo["200DayMovingAverage"]).toFixed(2)}
                 </Col>
             </Row>
-            <hr />
+            <hr className="myHr" />
 
             <Row>
                 <Col className="statsCompany-title">
@@ -79,7 +79,7 @@ export default function StatsCompany(promps) {
                 {resultMktCap}
                 </Col>
             </Row>
-            <hr />
+            <hr className="myHr" />
 
             <Row>
                 <Col className="statsCompany-title">
@@ -95,7 +95,7 @@ export default function StatsCompany(promps) {
                     {parseFloat(promps.companyInfo["PERatio"]).toFixed(2)}
                 </Col>
             </Row>
-            <hr />
+            <hr className="myHr" />
 
             <Row>
                 <Col className="statsCompany-title">
@@ -111,7 +111,7 @@ export default function StatsCompany(promps) {
                    {(parseFloat(promps.companyInfo["DividendYield"]) * 100).toFixed(2)}
                 </Col>
             </Row>
-            <hr />
+            <hr className="myHr" />
            
             </div>
         </div>
