@@ -24,15 +24,6 @@ export default function Search() {
         searchEndpoint(searchInput)
             .then(result => {
                 handleList(result.data.bestMatches);
-                // let resultsData = result.data.bestMatches[0]["1. symbol"].toString();
-                // console.log(resultsData);
-
-
-                // ;
-
-                // console.log(searchResults) //toString made this not undefined? sometimes? not always?
-                //searchResults state holds the user's inputted symbol to be used in the graph api call
-
             })
             .catch(err => console.log(err));
 
@@ -67,7 +58,7 @@ export default function Search() {
                 items={searchList}
                 renderItem={(item, isHighlighted) =>
                     <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                        {item.label}
+                        {item.symbol} {item.label}
                     </div>
                 }
                 value={searchInput}
@@ -78,8 +69,7 @@ export default function Search() {
 
                 onSelect={(val) => {
                     setSearchResults(val)
-                    // return value = val
-                    //set state here?
+                    // change val to somehow connect the symbol
                 }}
             />
 
