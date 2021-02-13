@@ -1,9 +1,9 @@
 import GetFakeDate from '../GetFakeDate';
 
 // ONE MONTH STOCK DATA
-function GetOneMonthMarketData(totalDailyStockState, increaseFAKETime) {
+function GetOneMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime) {
     // console.log("Inside GetOneMonthMarketData function")
-    // console.log(totalDailyStockState)
+    // console.log(currentFakeTime)
 
     if (totalDailyStockState === undefined) {
         console.log("Pass - Undefined in GetOneMonthMarketData Func")
@@ -14,14 +14,14 @@ function GetOneMonthMarketData(totalDailyStockState, increaseFAKETime) {
         };
     } else {
         // console.log(dataProcessing(totalDailyStockState, increaseFAKETime, 31));
-        return (dataProcessing(totalDailyStockState, increaseFAKETime, 31));
+        return (dataProcessing(totalDailyStockState, increaseFAKETime, 31, currentFakeTime));
     }
 }
 
 // THREE MONTH STOCK DATA
-function GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime) {
+function GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime) {
     // console.log("Inside GetThreeMonthMarketData function")
-    // console.log(totalDailyStockState)
+    // console.log(currentFakeTime)
 
     if (totalDailyStockState === undefined) {
         // console.log("Pass - Undefined in GetThreeMonthMarketData Func")
@@ -32,14 +32,14 @@ function GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime) {
         };
     } else {
         // console.log(dataProcessing(totalDailyStockState, increaseFAKETime, 90));
-        return (dataProcessing(totalDailyStockState, increaseFAKETime, 90));
+        return (dataProcessing(totalDailyStockState, increaseFAKETime, 90, currentFakeTime));
     }
 }
 
 // ONE YEAR STOCK DATA
-function GetOneYearMarketData(totalDailyStockState, increaseFAKETime) {
+function GetOneYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime) {
     // console.log("Inside GetOneYearMarketData function")
-    // console.log(totalDailyStockState)
+    // console.log(currentFakeTime)
 
     if (totalDailyStockState === undefined) {
         // console.log("Pass - Undefined in GetOneYearMarketData Func")
@@ -50,14 +50,14 @@ function GetOneYearMarketData(totalDailyStockState, increaseFAKETime) {
         };
     } else {
         // console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 5));
-        return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 5));
+        return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 365, 5, currentFakeTime));
     }
 }
 
 // FIVE YEAR STOCK DATA
-function GetFiveYearMarketData(totalDailyStockState, increaseFAKETime) {
+function GetFiveYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime) {
     // console.log("Inside GetFiveYearMarketData function")
-    // console.log(totalDailyStockState)
+    // console.log(currentFakeTime)
 
     if (totalDailyStockState === undefined) {
         console.log("Pass - Undefined in GetFiveYearMarketData Func")
@@ -68,12 +68,12 @@ function GetFiveYearMarketData(totalDailyStockState, increaseFAKETime) {
         };
     } else {
         // console.log(dataProcessingForYears(totalDailyStockState, increaseFAKETime, 1825, 25));
-        return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 1825, 25));
+        return (dataProcessingForYears(totalDailyStockState, increaseFAKETime, 1825, 25, currentFakeTime));
     }
 }
 
 
-function dataProcessing(totalDailyStockState, increaseFAKETime, days) {
+function dataProcessing(totalDailyStockState, increaseFAKETime, days, currentFakeTime) {
 
     let increasorFAKETime = increaseFAKETime;
     let currentXAxis = [];
@@ -88,12 +88,12 @@ function dataProcessing(totalDailyStockState, increaseFAKETime, days) {
     const fakeDate = GetFakeDate();
 
     for (let date in totalDailyStockState["Time Series (Daily)"]) {
-        if (Date.parse(fakeDate) - (aDayTomiliSec * days) < Date.parse(date) && Date.parse(date)) {
+        if (Date.parse(currentFakeTime) - (aDayTomiliSec * days) < Date.parse(date) && Date.parse(date)) {
             // Fake Date -> Change Previous day to Today
             currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)).toString().substring(4, 21));
         }
 
-        if (Date.parse(fakeDate) - (aDayTomiliSec * days) < Date.parse(date) && Date.parse(date) < Date.parse(fakeDate) + increasorFAKETime - aDayTomiliSec) {
+        if (Date.parse(currentFakeTime) - (aDayTomiliSec * days) < Date.parse(date) && Date.parse(date) < Date.parse(currentFakeTime) - aDayTomiliSec) {
 
             currentOpenValue.unshift(totalDailyStockState["Time Series (Daily)"][date]['1. open']);
             currentHighValue.unshift(totalDailyStockState["Time Series (Daily)"][date]['2. high']);
@@ -140,7 +140,7 @@ function dataProcessing(totalDailyStockState, increaseFAKETime, days) {
 
 
 // Data Processing for 1, 5 year
-function dataProcessingForYears(totalDailyStockState, increaseFAKETime, days, range) {
+function dataProcessingForYears(totalDailyStockState, increaseFAKETime, days, range, currentFakeTime) {
 
     let increasorFAKETime = increaseFAKETime;
     let currentXAxis = [];
@@ -166,7 +166,7 @@ function dataProcessingForYears(totalDailyStockState, increaseFAKETime, days, ra
 
     for (let date in totalDailyStockState["Time Series (Daily)"]) {
         count++;
-        if (Date.parse(fakeDate) - (aDayTomiliSec * days) < Date.parse(date) && Date.parse(date)) {
+        if (Date.parse(currentFakeTime) - (aDayTomiliSec * days) < Date.parse(date) && Date.parse(date)) {
             tempXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)).toString().substring(4, 15));
             if(count % range === 0){
                 // Fake Date -> Change Previous day to Today
@@ -176,7 +176,7 @@ function dataProcessingForYears(totalDailyStockState, increaseFAKETime, days, ra
             }
         }
 
-        if (Date.parse(fakeDate) - (aDayTomiliSec * days) < Date.parse(date) && Date.parse(date) < Date.parse(fakeDate) + increasorFAKETime - aDayTomiliSec) {
+        if (Date.parse(currentFakeTime) - (aDayTomiliSec * days) < Date.parse(date) && Date.parse(date) < Date.parse(currentFakeTime) - aDayTomiliSec) {
             tempVolume += parseFloat(totalDailyStockState["Time Series (Daily)"][date]['5. volume']);
             tempOpenValue += parseFloat(totalDailyStockState["Time Series (Daily)"][date]['1. open']);
             tempHighValue += parseFloat(totalDailyStockState["Time Series (Daily)"][date]['2. high']);

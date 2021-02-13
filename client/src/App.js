@@ -16,7 +16,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import UserFormContainer from './components/UserFormContainer'
 import PrivateRoute from './PrivateRoute'
 import GetFakeDate from './components/GetFakeDate'
-
+import FakeCurrentTimeContext from './contexts/FakeCurrentTimeContext'
 
 function App() {
 
@@ -42,6 +42,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
+        <FakeCurrentTimeContext.Provider value={fakeCurrentTime}>
       <div style={{zIndex:10, fontSize:"11px", color:"white", textAlign:"right", paddingRight:"25px", position:"fixed", top: 70, right:0}}>
         {fakeCurrentTime.substring(0,25)}
         </div>  
@@ -73,6 +74,7 @@ function App() {
           </Switch>
           <Footer />
         </Container>
+        </FakeCurrentTimeContext.Provider>
       </AuthProvider>
     </Router>
   );
