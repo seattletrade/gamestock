@@ -9,7 +9,6 @@ import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../Ge
 import GetOneWeekMarketData from '../GetOneWeekMarketData'
 import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData, GetFiveYearMarketData } from '../GetDailyMarketData'
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
-import { set } from "mongoose";
 
 export default function Infopage() {
 
@@ -74,24 +73,18 @@ export default function Infopage() {
 
     // Fetch Martke Data from API (Alpha Vantage) 
     function GetMarketData(userInput) {
-        // Add .env file root in client
-        const API_KEY = process.env.REACT_APP_API_KEY;
 
         let symbol = userInput.symbol;
         let companyName = userInput.companyName;
 
         setCompanyNameState(companyName);
 
-        const API_ONEDAY_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=15min&apikey=${API_KEY}`;
-        const API_ONEWEEK_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=60min&apikey=${API_KEY}`;
-        const API_DAILY_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=${API_KEY}`;
-
         // Call IntraDay market data
-        IntraDayMarketDATACall(API_ONEDAY_Call)
+        IntraDayMarketDATACall(symbol)
         // Call Oneweek market data
-        OneWeekMarketDATACall(API_ONEWEEK_Call)
+        OneWeekMarketDATACall(symbol)
         // Call Total Daily market data
-        TotalDailyMarketDATACall(API_DAILY_Call)
+        TotalDailyMarketDATACall(symbol)
     }
 
     // Display first Graph
@@ -192,15 +185,11 @@ export default function Infopage() {
     }, [increaseFAKETime, switchState])
 
     // Call IntraDay market data
-    function IntraDayMarketDATACall(API_ONEDAY_Call) {
-        API.getStockMarketData(API_ONEDAY_Call)
+    function IntraDayMarketDATACall(symbol) {
+        API.getIntraMarketData(symbol, "15min")
             .then(res => {
-                // setLoading(false)
                 setLoading(false)
-                // console.log("IntraDay MARKET DATA - check")
-                // console.log(res.data)
                 const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketDataForFirstGraph(res.data, 0);
-                // console.log(setTraceStateIntraDay);
                 setTraceState(setTraceStateIntraDay);
                 setVolume(setVolumeIntraDay);
                 setRangeState(rangeIntraDay);
@@ -211,8 +200,8 @@ export default function Infopage() {
     }
 
     // Call OneWeekMarket market data (INTRADATE 60 MIN)
-    function OneWeekMarketDATACall(API_ONEWEEK_Call) {
-        API.getStockMarketData(API_ONEWEEK_Call)
+    function OneWeekMarketDATACall(symbol) {
+        API.getIntraMarketData(symbol, "60min")
             .then(res => {
                 // console.log("ONEWEEK MARKET DATA")
                 // console.log(res.data)
@@ -222,8 +211,8 @@ export default function Infopage() {
     }
 
     // API_TotalDailyMArketData_Call(Fullsize-20years)
-    function TotalDailyMarketDATACall(API_ONEWEEK_Call) {
-        API.getStockMarketData(API_ONEWEEK_Call)
+    function TotalDailyMarketDATACall(symbol) {
+        API.getDailyMarketData(symbol, "full")
             .then(res => {
                 // console.log("setTotalDailyStockState")
                 // console.log(res.data)
@@ -231,18 +220,6 @@ export default function Infopage() {
             })
             .catch(err => console.log(err))
     }
-
-    // // API_getCompnayInfoDATA
-    // function getCompanyInfoData(symbol) {
-    //     // console.log("Start CompanyInfoData API")
-    //     API.getCompanyInfoData(symbol)
-    //         .then(res => {
-    //             console.log("End CompanyInfoData API")
-    //             console.log(res.data)
-    //             setCompanyInfo(res.data);
-    //         })
-    //         .catch(err => console.log(err));
-    // }
 
     function myFetch(e) {
         const btnWithOutline = "btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2";
