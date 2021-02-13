@@ -356,7 +356,7 @@ export default function Infopage() {
 
         <>
             {loading ? (<div>Loding...</div>) : (
-                <div style={{ background: "black", height: "400px" }}>
+                <div style={{ background: "black", height: "400px", margin:"0 -15px"}}>
                     <div className="pl-3 pt-5 mt-5" style={{ color: "white" }}>
                         <p style={{ fontSize: "14px", marginBottom: "0" }}>{ticker}</p>
                         <h3>{companyNameState}</h3>

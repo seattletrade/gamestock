@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import API from '../../utils/API'
 
+import StatsCompany from './StatsCompany';
 import AboutCompany from './AboutCompany';
+
 
 // Company STATS / ERNINGS / ABOUT COMPANY
 export default function CompanyInformation() {
@@ -45,8 +47,13 @@ export default function CompanyInformation() {
     return (
         <>
         {loading ? (<div></div>) : (
-        <div style={{ marginBottom: "50px" }}>
+        <div style={{ margin: "50px 0" }}>
+            <div>
+            <StatsCompany companyInfo = {companyInfo} />
+            </div>
+            <div>
             <AboutCompany companyInfo = {companyInfo} />
+            </div>
         </div>)}
         </>
     )

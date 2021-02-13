@@ -30,7 +30,7 @@ export default function AboutCompany(promps) {
                 <Col className="aboutCompany-title">
                     Headquarters
                 </Col>
-                <Col className="text-right">
+                <Col className="text-right aboutCompany-contents">
                     {`${headQuartersAddress[1]}, ${headQuartersAddress[2]} ${promps.companyInfo.Country}`}
                 </Col>
             </Row>
@@ -39,7 +39,7 @@ export default function AboutCompany(promps) {
                 <Col className="aboutCompany-title">
                     Employees
                 </Col>
-                <Col className="text-right">
+                <Col className="text-right aboutCompany-contents">
                     {NumberComma(promps.companyInfo.FullTimeEmployees)}
                 </Col>
             </Row>
@@ -48,7 +48,7 @@ export default function AboutCompany(promps) {
                 <Col className="aboutCompany-title">
                     Industry
                 </Col>
-                <Col className="text-right">
+                <Col className="text-right aboutCompany-contents">
                     {promps.companyInfo.Industry}
                 </Col>
             </Row>
