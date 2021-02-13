@@ -12,8 +12,8 @@ export default function Search() {
     const [searchList, setSearchList] = useState([]);
 
     useEffect(() => {
-        console.log('State changed!', searchResults);
-    }, [searchResults, searchInput]);
+        console.log('State changed!', 'searchInput:' + searchInput, 'searchResults:' + searchResults, 'searchList:' + searchList);
+    }, [searchInput, searchResults, searchList]);
 
     const handleChange = e => {
         e.preventDefault();
@@ -23,7 +23,6 @@ export default function Search() {
                 handleList(result.data.bestMatches);
             })
             .catch(err => console.log(err));
-
         ;
     };
 
@@ -38,7 +37,7 @@ export default function Search() {
     return (
         <>
             <Autocomplete
-                getItemValue={(item) => item.label}
+                getItemValue={(item) => item.symbol}
                 items={searchList}
                 renderItem={(item, isHighlighted) =>
                     <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
@@ -49,11 +48,11 @@ export default function Search() {
                 //set inputstate here^
                 onChange={handleChange}
                 //need to handle delete display at some point
-                onSelect={(val) => {
-                    setSearchResults(val)
-                    // change val to somehow connect the symbol
+                onSelect={(item) => {
+                    setSearchResults(item)
                 }}
             />
+            {/* the searchResults state holds the symbol the user selected from the list, can be passed down and used in other part of the app i think */}
             <ChartCompanyinfoMain />
             <CompanyInformation />
         </>
