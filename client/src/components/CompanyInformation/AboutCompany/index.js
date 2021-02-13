@@ -5,11 +5,11 @@ import './style.scss';
 import NumberComma from '../../NumberComma';
 
 export default function AboutCompany(promps) {
-    console.log(promps)
+    // console.log(promps)
 
     let headQuartersAddress = promps.companyInfo.Address.split(",")
-    console.log("headQuartersAddress");
-    console.log(headQuartersAddress);
+    // console.log("headQuartersAddress");
+    // console.log(headQuartersAddress);
     return (
         <div className="aboutCompany">
 

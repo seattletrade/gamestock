@@ -7,7 +7,7 @@ import AboutCompany from './AboutCompany';
 
 // Company STATS / ERNINGS / ABOUT COMPANY
 export default function CompanyInformation() {
-    console.log("Inside CompanyInformation component")
+    // console.log("Inside CompanyInformation component")
 
     // Store Company info
     const [loading, setLoading] = useState(true);
@@ -29,15 +29,8 @@ export default function CompanyInformation() {
 
     // CALL API MARKET DATA and COMPANY INFO
     function CallAPIDATA(symbol) {
-        // API_getCompnayInfoDATA
-        getCompanyInfoData(symbol)
-
-    }
-
-    function getCompanyInfoData(symbol) {
         API.getCompanyInfoData(symbol)
             .then(res => {
-                console.log(res.data)
                 setCompanyInfo(res.data);
                 setLoading(false)
             })
