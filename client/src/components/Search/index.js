@@ -36,6 +36,7 @@ export default function Search() {
     }
     return (
         <>
+        <div style={{marginTop:"30px"}}>
             <Autocomplete
                 getItemValue={(item) => item.symbol}
                 items={searchList}
@@ -49,6 +50,7 @@ export default function Search() {
                 onChange={handleChange}
                 onSelect={(item) => setSearchResults(item)}
             />
+        </div>
             {/* the searchResults state holds the symbol the user selected from the list, can be passed down and used in other part of the app i think */}
             <ChartCompanyinfoMain />
             <CompanyInformation />
