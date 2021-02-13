@@ -15,7 +15,7 @@ export default function Search() {
         return axios.get(API_SearchEndpoint_Call);
     }
     useEffect(() => {
-        console.log('State changed!', searchInput);
+        console.log('State changed!', searchResults);
     }, [searchResults, searchInput]);
 
     const handleChange = e => {
@@ -28,7 +28,7 @@ export default function Search() {
                 // console.log(resultsData);
 
 
-                // setSearchResults(resultsData);
+                // ;
 
                 // console.log(searchResults) //toString made this not undefined? sometimes? not always?
                 //searchResults state holds the user's inputted symbol to be used in the graph api call
@@ -54,16 +54,13 @@ export default function Search() {
     return (
 
         <>
-            <form className="input-group mb-3 col-sm-4">
+            {/* <form className="input-group mb-3 col-sm-4">
                 <input type="text" className="form-control" placeholder="Symbol" aria-label="Search" onChange={handleChange} />
 
                 <div className="input-group-append" >
                     <button className="btn btn-danger" type="submit">Search</button>
                 </div>
-            </form >
-            <div>
-
-            </div>
+            </form > */}
 
             <Autocomplete
                 getItemValue={(item) => item.label}
@@ -74,14 +71,15 @@ export default function Search() {
                     </div>
                 }
                 value={searchInput}
-                onChange={(e) => {
-                    setSearchInput(e.target.value)
-                    return value = e.target.value
-                }}
+                //set inputstate here^
+                onChange={handleChange}
+                //need to handle delete display at some point
+
 
                 onSelect={(val) => {
-                    console.log(val)
+                    setSearchResults(val)
                     // return value = val
+                    //set state here?
                 }}
             />
 
