@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useHistory } from "react-router-dom";
 import "./style.scss"
 import Logo from "../Logo";
@@ -14,11 +14,11 @@ export default function Nav() {
 
     const handleLogout = async () => {
         setError('')
-        try{
-          await logout();
-          history.push("/gamestock")
+        try {
+            await logout();
+            history.push("/gamestock")
         } catch {
-          setError('Failed to logout')
+            setError('Failed to logout')
         }
     }
 
@@ -62,25 +62,17 @@ export default function Nav() {
                             search
                         </Link>
                     </li>
-                    {/* auth link text needs work based on state? */}
-                    <li className="nav-item">
-                        <Link
-                            to="/gamestock/login"
-                            className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"}
-                        >
-                            auth
-        </Link>
-                    </li>
+
                 </ul>
-                {!currentUser ?  
+                {!currentUser ?
                     <>
-                        <Link className="ml-auto text-white"  to="/gamestock/login">Login</Link>
+                        <Link className="ml-auto text-white" to="/gamestock/login">Login</Link>
                         <Link className="mx-2 text-white" to="/gamestock/signup">Signup</Link>
                     </> :
                     <>
                         <Link className="ml-auto text-white" >Email: {currentUser.email}</Link>
-                        <Link className="mx-2 text-white" onClick={handleLogout} variant="link">logout</Link> 
-                    </>                 
+                        <Link className="mx-2 text-white" onClick={handleLogout} variant="link">logout</Link>
+                    </>
                 }
             </div>
 
