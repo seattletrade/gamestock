@@ -1,44 +1,60 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import API from "../../utils/API";
+
 import ChartCompanyinfoMain from '../ChartCompanyinfoMain';
+import CompanyInformation from '../CompanyInformation'
+import Autocomplete from "react-autocomplete";
 
 export default function Search() {
     const [searchInput, setSearchInput] = useState();
+    const [searchResults, setSearchResults] = useState();
+    const [searchList, setSearchList] = useState([]);
 
-    function searchEndpoint(inputState) {
-        const API_KEY = process.env.REACT_APP_API_KEY;
-        const keyword = inputState;
-        const API_SearchEndpoint_Call = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${keyword}&apikey=${API_KEY}`;
-        return axios.get(API_SearchEndpoint_Call);
-    }
+    useEffect(() => {
+        console.log('State changed!', 'searchInput:' + searchInput, 'searchResults:' + searchResults, 'searchList:' + searchList);
+    }, [searchInput, searchResults, searchList]);
 
-    const handleSubmit = e => {
+    const handleChange = e => {
         e.preventDefault();
-        console.log("user entered  " + searchInput); //searchInput is the state, console log is displaying the state
-        searchEndpoint(searchInput)
+        setSearchInput(e.target.value);
+        API.searchEndpoint(searchInput)
             .then(result => {
-                console.log("API RESULT:");
-                console.log(result); // result.data.bestMatches (this is an array, map over it, see https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=microso&apikey=demod for rest of path)
+                handleList(result.data.bestMatches);
             })
             .catch(err => console.log(err));
-
         ;
     };
 
+    const handleList = res => {
+        const list = [];
+        res.map((item) => {
+            console.log(item["1. symbol"] + " name " + item["2. name"])
+            list.push({ label: item["2. name"], symbol: item["1. symbol"] })
+        })
+        setSearchList(list);
+    }
     return (
-
         <>
-            <form className="input-group mb-3 col-sm-4" onSubmit={handleSubmit}>
-                <input type="text" className="form-control" placeholder="Symbol" aria-label="Search" onChange={e => setSearchInput(e.target.value)} />
-
-                <div className="input-group-append" >
-                    <button className="btn btn-danger" type="submit">Search</button>
-                </div>
-            </form >
-
+            <Autocomplete
+                getItemValue={(item) => item.symbol}
+                items={searchList}
+                renderItem={(item, isHighlighted) =>
+                    <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                        {item.symbol} {item.label}
+                    </div>
+                }
+                value={searchInput}
+                //set inputstate here^
+                onChange={handleChange}
+                //need to handle delete display at some point
+                onSelect={(item) => {
+                    setSearchResults(item)
+                }}
+            />
+            {/* the searchResults state holds the symbol the user selected from the list, can be passed down and used in other part of the app i think */}
             <ChartCompanyinfoMain />
-
+            <CompanyInformation />
         </>
-
     )
 }
