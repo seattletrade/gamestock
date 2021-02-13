@@ -1,21 +1,21 @@
 import GetFakeDate from '../GetFakeDate';
 
-function GetIntraDayMarketDataForFirstGraph(oneDayStockState, increaseFAKETime) {
+function GetIntraDayMarketDataForFirstGraph(oneDayStockState, increaseFAKETime, currentFakeTime) {
     // It is inside IntraDayMarketDATACall func on info PAGE
     // console.log("Inside oneDayStockState FOR FIRST GRAPH function")
     // console.log(oneDayStockState)
     // console.log(dataProcessing(oneDayStockState, increaseFAKETime));
-    return (dataProcessing(oneDayStockState, increaseFAKETime));
+    return (dataProcessing(oneDayStockState, increaseFAKETime, currentFakeTime));
 }
 
-function GetIntraDayMarketData(oneDayStockState, increaseFAKETime) {
+function GetIntraDayMarketData(oneDayStockState, increaseFAKETime, currentFakeTime) {
     // It is inside setInterval in useEffect on info PAGE
 
     // console.log("Inside oneDayStockState function")
-    // console.log(oneDayStockState)
+    // console.log(currentFakeTime)
     // console.log(increaseFAKETime);
     if (oneDayStockState === undefined) {
-        console.log("Pass - Undefined in GetIntraDayMarketData Func")
+        // console.log("Pass - Undefined in GetIntraDayMarketData Func")
         return {
             "setTraceStateIntraDay": { "null": "" },
             "setVolumeIntraDay": { "null": "" },
@@ -23,13 +23,13 @@ function GetIntraDayMarketData(oneDayStockState, increaseFAKETime) {
         };
     } else {
         // console.log(dataProcessing(oneDayStockState, increaseFAKETime));
-        return (dataProcessing(oneDayStockState, increaseFAKETime));
+        return (dataProcessing(oneDayStockState, increaseFAKETime, currentFakeTime));
     }
 
 }
 
 // Manage data to use it with Graph
-function dataProcessing(oneDayStockState, increaseFAKETime) {
+function dataProcessing(oneDayStockState, increaseFAKETime, currentFakeTime) {
     // console.log("Inside dataProcessing")
     // console.log(oneDayStockState)
 
@@ -54,15 +54,15 @@ function dataProcessing(oneDayStockState, increaseFAKETime) {
 
     for (let date in oneDayStockState["Time Series (15min)"]) {
 
-        if (new Date(Date.parse(date)).getDate() === fakeDate.getDate() - 1) {
+        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 1 ) {
             // Fake Date -> Change Previous day to Today
             currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)));
             // currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)).toString().substring(4, 21));
         }
 
         // get Current data for Graph
-        if (new Date(Date.parse(date)).getDate() === fakeDate.getDate() - 1 &&
-            Date.parse(date) < (Date.parse(fakeDate) + increasorFAKETime - aDayTomiliSec)) {
+        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 1  &&
+            Date.parse(date) < (Date.parse(currentFakeTime) + increasorFAKETime - aDayTomiliSec)) {
             currentOpenValue.unshift(oneDayStockState["Time Series (15min)"][date]['1. open']);
             currentHighValue.unshift(oneDayStockState["Time Series (15min)"][date]['2. high']);
             currentLowValue.unshift(oneDayStockState["Time Series (15min)"][date]['3. low']);

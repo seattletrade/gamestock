@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Row, Col } from 'react-bootstrap';
 import AnimatedNumber from "animated-number-react";
+import FakeCurrentTimeContext from '../../contexts/FakeCurrentTimeContext'
 
 import API from '../../utils/API'
 import ChartCompanyInfo from '../ChartCompanyInfo'
@@ -11,6 +12,9 @@ import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData, G
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
 
 export default function Infopage() {
+
+    // Take FakeCurrentTime from App.js by Context
+    const currentFakeTime = useContext(FakeCurrentTimeContext);
 
     // Increase FAKE Time state
     const [increaseFAKETime, setIncreaseFAKETime] = useState(0);
@@ -117,7 +121,7 @@ export default function Infopage() {
             let graphDate = {}
 
             // Display Realtime Value
-            let afterFifteenMinDifference = GetCurrentValueForLive(intraDayStockState, increaseFAKETime);
+            let afterFifteenMinDifference = GetCurrentValueForLive(intraDayStockState, increaseFAKETime, currentFakeTime);
 
             // Swich Statment - 1D , 1W , 1M , 3M , 1Y , 5Y
             // console.log("switchState");
@@ -125,27 +129,27 @@ export default function Infopage() {
             switch (switchState) {
                 case "1D":
                     // console.log("switchState 1D");
-                    graphDate = GetIntraDayMarketData(intraDayStockState, increaseFAKETime);
+                    graphDate = GetIntraDayMarketData(intraDayStockState, increaseFAKETime, currentFakeTime);
                     break;
                 case "1W":
                     // console.log("switchState 1W");
-                    graphDate = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime);
+                    graphDate = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime, currentFakeTime);
                     break;
                 case "1M":
                     // console.log("switchState 1M");
-                    graphDate = (GetOneMonthMarketData(totalDailyStockState, increaseFAKETime));
+                    graphDate = (GetOneMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime));
                     break;
                 case "3M":
                     // console.log("switchState 3M");
-                    graphDate = GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime)
+                    graphDate = GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime)
                     break;
                 case "1Y":
                     // console.log("switchState 1Y");
-                    graphDate = GetOneYearMarketData(totalDailyStockState, increaseFAKETime)
+                    graphDate = GetOneYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime)
                     break;
                 case "5Y":
                     // console.log("switchState 5Y");
-                    graphDate = GetFiveYearMarketData(totalDailyStockState, increaseFAKETime)
+                    graphDate = GetFiveYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime)
                     break;
             }
 
@@ -189,7 +193,7 @@ export default function Infopage() {
         API.getIntraMarketData(symbol, "15min")
             .then(res => {
                 setLoading(false)
-                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketDataForFirstGraph(res.data, 0);
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay } = GetIntraDayMarketDataForFirstGraph(res.data, 0, currentFakeTime);
                 setTraceState(setTraceStateIntraDay);
                 setVolume(setVolumeIntraDay);
                 setRangeState(rangeIntraDay);
@@ -236,7 +240,7 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
-                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime)
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime, currentFakeTime)
                 useTypeState(type);
                 useVisibleState(visible);
                 setTraceState(setTraceStateIntraDay);
@@ -252,7 +256,7 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
-                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime);
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime, currentFakeTime);
                 useTypeState(type);
                 useVisibleState(visible);
                 setTraceState(setTraceStateIntraDay);
@@ -268,7 +272,7 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
-                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneMonthMarketData(totalDailyStockState, increaseFAKETime);
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
                 useTypeState(type);
                 useVisibleState(visible);
                 setTraceState(setTraceStateIntraDay);
@@ -285,7 +289,7 @@ export default function Infopage() {
                 setButton3MState(btnWithoutOutline)
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithOutline)
-                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime);
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
                 useTypeState(type);
                 useVisibleState(visible);
                 setTraceState(setTraceStateIntraDay);
@@ -301,7 +305,7 @@ export default function Infopage() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithoutOutline)
                 setButton5YState(btnWithOutline)
-                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneYearMarketData(totalDailyStockState, increaseFAKETime);
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
                 useTypeState(type);
                 useVisibleState(visible);
                 setTraceState(setTraceStateIntraDay);
@@ -317,7 +321,7 @@ export default function Infopage() {
                 setButton1YState(btnWithOutline)
                 setButton5YState(btnWithoutOutline)
                 setSwitchState("5Y")
-                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetFiveYearMarketData(totalDailyStockState, increaseFAKETime);
+                const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetFiveYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
                 useTypeState(type);
                 useVisibleState(visible);
                 setTraceState(setTraceStateIntraDay);
@@ -334,7 +338,7 @@ export default function Infopage() {
         <>
             {loading ? (<div>Loding...</div>) : (
                 <div style={{ background: "black", height: "400px", margin:"0 -15px"}}>
-                    <div className="pl-3 pt-5 mt-5" style={{ color: "white" }}>
+                    <div className="pl-3 pt-5" style={{ color: "white" }}>
                         <p style={{ fontSize: "14px", marginBottom: "0" }}>{ticker}</p>
                         <h3>{companyNameState}</h3>
                         <h3>$<AnimatedNumber value={parseFloat(currentValueState).toFixed(2)}
