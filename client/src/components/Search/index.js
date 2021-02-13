@@ -65,7 +65,6 @@ export default function Search() {
 
             </div>
 
-
             <Autocomplete
                 getItemValue={(item) => item.label}
                 items={searchList}
@@ -74,7 +73,7 @@ export default function Search() {
                         {item.label}
                     </div>
                 }
-                value={""}
+                value={searchInput}
                 onChange={(e) => {
                     setSearchInput(e.target.value)
                     return value = e.target.value
@@ -82,7 +81,7 @@ export default function Search() {
 
                 onSelect={(val) => {
                     console.log(val)
-                    return value = val
+                    // return value = val
                 }}
             />
 
