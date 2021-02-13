@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import ChartCompanyinfoMain from '../ChartCompanyinfoMain';
+import CompanyInformation from '../CompanyInformation'
 import Autocomplete from "react-autocomplete";
 
 export default function Search() {
@@ -74,7 +75,7 @@ export default function Search() {
             />
 
             <ChartCompanyinfoMain />
-
+            <CompanyInformation />
 
         </>
 

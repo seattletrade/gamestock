@@ -1,0 +1,37 @@
+.companyDescription{
+  display: block;
+  width: 300px;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  &:hover {
+      cursor: pointer;
+  }
+}
+
+.full-description{
+    font-size: 12px;
+  }
+
+.aboutCompany{
+    margin-top: 50px;
+    h4{
+        color:white
+    }
+}
+
+.aboutCompany-title{
+    font-size:11px;
+    color: lightgrey;
+}
+
+.aboutCompany-contents{
+    font-size:12px;
+    font-weight: bold;
+    color: white;
+}
+
+.accordionAboutCompany{
+    border: none;
+}

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col } from 'react-bootstrap';
 import API from '../../utils/API'
+
+import StatsCompany from './StatsCompany';
+import AboutCompany from './AboutCompany';
+
 
 // Company STATS / ERNINGS / ABOUT COMPANY
 export default function CompanyInformation() {
     console.log("Inside CompanyInformation component")
 
     // Store Company info
+    const [loading, setLoading] = useState(true);
     const [companyInfo, setCompanyInfo] = useState();
 
     useEffect(() => {
@@ -17,26 +21,40 @@ export default function CompanyInformation() {
             "companyName": 'Microsoft'
         }
 
-        // Call Company Info data
-        getCompanyInfoData(userInput.symbol);
+        // Call API MARKET DATA and COMPANY INFO
+        CallAPIDATA(userInput.symbol);
+
     }, [])
 
-    // API_getCompnayInfoDATA
+
+    // CALL API MARKET DATA and COMPANY INFO
+    function CallAPIDATA(symbol) {
+        // API_getCompnayInfoDATA
+        getCompanyInfoData(symbol)
+
+    }
+
     function getCompanyInfoData(symbol) {
-        // console.log("Start CompanyInfoData API")
         API.getCompanyInfoData(symbol)
             .then(res => {
-                console.log("End CompanyInfoData API")
                 console.log(res.data)
                 setCompanyInfo(res.data);
+                setLoading(false)
             })
-            .catch(err => console.log(err));
+            .catch(err => {console.log(err); setLoading(false);});
     }
 
     return (
-        <div style={{marginBottom:"50px"}}>
-            <h1>TEST</h1>
-            <p>{companyInfo.Name}</p>
-        </div>
+        <>
+        {loading ? (<div></div>) : (
+        <div style={{ margin: "50px 0" }}>
+            <div>
+            <StatsCompany companyInfo = {companyInfo} />
+            </div>
+            <div>
+            <AboutCompany companyInfo = {companyInfo} />
+            </div>
+        </div>)}
+        </>
     )
 }
