@@ -3,7 +3,7 @@ import "./style.scss";
 
 export default function Form() {
     return (
-        <div>
+        <>
             <form>
                 <div className="form-group row">
                     <form-label for="searchSymbol" className="col-xs-2 col-form-label">Symbol</form-label>
@@ -33,6 +33,6 @@ export default function Form() {
                     </div>
                 </div>
             </form>
-        </div>
+        </>
     )
 }

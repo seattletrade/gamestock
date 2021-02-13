@@ -4,9 +4,11 @@ import Form from "../components/Form";
 
 export default function Tradepage() {
     return (
-        <div>
-            <Form />
-            {/* add modals to confirm, or confirmation page content? */}
-        </div>
+        <>
+            <div>
+                <Form />
+                {/* add modals to confirm, or confirmation page content? */}
+            </div>
+        </>
     )
 }
