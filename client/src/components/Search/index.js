@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import API from "../../utils/API";
 
@@ -21,8 +20,6 @@ export default function Search() {
         API.searchEndpoint(searchInput)
             .then(result => {
                 handleList(result.data.bestMatches)
-                // searchList.filter((item) => item.region === 'United States')
-                // .sort({ matchScore: "desc" })
             })
             .catch(err => console.log(err));
 
