@@ -11,27 +11,9 @@ mongoose.connect(
 const stockSeed = [
   {
     user_email: "olya@test.com" ,
-    amount: 1  ,/// Schema.Types.Decimal128
+    amount: 4  ,/// Schema.Types.Decimal128
     symbol: "MSFT",
-    price_initial: 105.00  
-  },
-  {
-    user_email: "olya@test.com" ,
-    amount: 2  ,/// Schema.Types.Decimal128
-    symbol: "MSFT",
-    price_initial: 100.30 
-  },
-  {
-    user_email: "olya@test.com" ,
-    amount: 3  ,/// Schema.Types.Decimal128
-    symbol: "MSFT",
-    price_initial: 110.00  
-  },
-  {
-    user_email: "olya@test.com" ,
-    amount: 1  ,/// Schema.Types.Decimal128
-    symbol: "AMZN",
-    price_initial: 120.50 
+    price_initial: 100.00  
   },
   {
     user_email: "olya@test.com" ,
