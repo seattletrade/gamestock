@@ -5,7 +5,7 @@ const stockSchema = new Schema({
   user_email: {type: String, required:true},
   amount: {type: Number, required:true} ,/// Schema.Types.Decimal128
   symbol: {type: String, required:true},
-  price_initial: {type:Number, required:true }
+  avg_price: {type:Number, required:true }
   //date: { type: Date, default: Date.now }
   
 });

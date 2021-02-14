@@ -5,7 +5,7 @@ const transactionSchema = new Schema({
   user_email: {type: String, required:true},
   amount: {type: Number, required:true} ,/// Schema.Types.Decimal128
   symbol: {type: String, required:true},
-  price: {type:Schema.Types.Decimal128, required:true },
+  price: {type: Number, required:true },
   date: { type: Date, default: Date.now },
   buy: {type: Boolean, required: true, default: true}
 });
