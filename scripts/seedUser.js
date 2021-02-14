@@ -10,10 +10,14 @@ mongoose.connect(
 
 const userSeed = [
   {
-    email: "olya@test.com"
+    email: "olya@test.com",
+    balance: 10000,
+    investingStartDay:  Date.now()
   },
   {
-    email: "dima@test.com"
+    email: "dima@test.com",
+    balance: 9555.55,
+    investingStartDay:  Date.now()
   },
 ];
 

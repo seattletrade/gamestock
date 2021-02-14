@@ -23,6 +23,7 @@ module.exports = {
           res.status(401).json(data);
         }
         else{
+          ///forget to update balance !!!!!!!!
           /// add transaction, add stock data
           db.Transaction.create({
             user_email: req.body.email,
