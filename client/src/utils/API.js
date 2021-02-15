@@ -1,6 +1,9 @@
 import axios from "axios";
 
 export default {
+    createUser: (email)=> {
+        return axios.post("/api/user", email)
+    },
     getStockMarketData: (endPoint) => {
         return axios.get(endPoint);
     },

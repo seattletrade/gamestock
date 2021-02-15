@@ -6,20 +6,16 @@ import AboutCompany from './AboutCompany';
 
 
 // Company STATS / ERNINGS / ABOUT COMPANY
-export default function CompanyInformation() {
+export default function CompanyInformation(promps) {
     // console.log("Inside CompanyInformation component")
-
     // Store Company info
     const [loading, setLoading] = useState(true);
     const [companyInfo, setCompanyInfo] = useState();
 
     useEffect(() => {
-
+        console.log(promps);
         // TODO: Get the data from a User when they click a company from Search PAGE
-        let userInput = {
-            "symbol": 'MSFT',
-            "companyName": 'Microsoft'
-        }
+        let userInput = promps; 
 
         // Call API MARKET DATA and COMPANY INFO
         CallAPIDATA(userInput.symbol);

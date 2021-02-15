@@ -1,6 +1,6 @@
 import GetFakeDate from '../GetFakeDate';
 
-export default function GetOneWeekMarketData(oneWeekStockState, increaseFAKETime) {
+export default function GetOneWeekMarketData(oneWeekStockState, increaseFAKETime, currentFakeTime) {
     // console.log("Inside GetOneWeekMarketData function")
     // console.log(oneWeekStockState)
 
@@ -13,11 +13,11 @@ export default function GetOneWeekMarketData(oneWeekStockState, increaseFAKETime
         };
     } else {
         // console.log(dataProcessing(oneWeekStockState, increaseFAKETime));
-        return (dataProcessing(oneWeekStockState, increaseFAKETime));
+        return (dataProcessing(oneWeekStockState, increaseFAKETime, currentFakeTime));
     }
 
     // Manage data to use it with Graph
-    function dataProcessing(oneWeekStockState, increaseFAKETime) {
+    function dataProcessing(oneWeekStockState, increaseFAKETime, currentFakeTime) {
 
         let increasorFAKETime = increaseFAKETime;
         let currentXAxis = [];
@@ -30,17 +30,19 @@ export default function GetOneWeekMarketData(oneWeekStockState, increaseFAKETime
         let aDayTomiliSec = 86400000;
 
         const fakeDate = GetFakeDate();
-
+        // console.log("Inside one week");
+        // console.log(currentFakeTime);
+        // console.log(fakeDate);
         for (let date in oneWeekStockState["Time Series (60min)"]) {
-            if (Date.parse(fakeDate) - (aDayTomiliSec * 8) < Date.parse(date) && Date.parse(date)) {
+            if (Date.parse(currentFakeTime) - (aDayTomiliSec * 8) < Date.parse(date) && Date.parse(date)) {
                 currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)).toString().substring(4, 21));
             }
 
 
-            if (Date.parse(fakeDate) - (aDayTomiliSec * 8) < Date.parse(date) && Date.parse(date) < Date.parse(fakeDate) + increasorFAKETime - aDayTomiliSec) {
+            if (Date.parse(currentFakeTime) - (aDayTomiliSec * 8) < Date.parse(date) && Date.parse(date) < Date.parse(currentFakeTime) - aDayTomiliSec) {
                 // console.log(date[11] + date[12]);
                 if (date[11] + date[12] === "05" || date[11] + date[12] === "06" || date[11] + date[12] === "19" || date[11] + date[12] === "20") {
-                    console.log("Pass the data")
+                    // console.log("Pass the data")
                 } else {
                     // Fake Date -> Change Previous day to Today
                     // console.log(typeof (new Date(Date.parse(date) + aDayTomiliSec)));
