@@ -53,8 +53,13 @@ export default function Search() {
                 />
             </div>
             {/* the searchResults state holds the symbol the user selected from the list, can be passed down and used in other part of the app i think */}
-            <ChartCompanyinfoMain />
-            <CompanyInformation />
+            {searchResults ? (
+                <>
+                <ChartCompanyinfoMain symbol = {searchResults} companyName = {searchInput}  />
+                <CompanyInformation symbol = {searchResults} companyName = {searchInput}/>
+                </>
+            ):(<div></div>)}
+            
         </>
     )
 }
