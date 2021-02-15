@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage";
 import Userpage from "./pages/Userpage";
 import Infopage from "./pages/Infopage";
 import Tradepage from "./pages/Tradepage";
+import Notfound from "./pages/Notfoundpage";
 import Container from "./components/Container";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -36,36 +37,36 @@ function App() {
   function currentFakeTime() {
     // console.log(GetFakeDate().toString())
     setFakeCurrentTime((new Date(Date.parse(fakeCurrentTime) + 1000)).toString());
-    
+
   }
 
   return (
     <Router>
       <AuthProvider>
         <FakeCurrentTimeContext.Provider value={fakeCurrentTime}>
-      <div style={{zIndex:10, fontSize:"11px", color:"white", textAlign:"right", paddingRight:"25px", position:"fixed", top: 70, right:0}}>
-        {fakeCurrentTime.substring(0,25)}
-        </div>  
-        <Container>
-          <Nav />          
-         <Switch>
-            <Route exact path="/gamestock/" component={Homepage} />
-            <Route exact path="/gamestock/signup" >
-              <UserFormContainer>
-                <Signup />
-              </UserFormContainer>
-            </Route>
-            <Route exact path="/gamestock/login" >
-              <UserFormContainer>
-                <Login />
-              </UserFormContainer>
-            </Route>
-            <Route exact path="/gamestock/forgot-password" >
-              <UserFormContainer>
-                <ForgotPassword />
-              </UserFormContainer>
-            </Route>
-            {/* <Route exact path="/gamestock/login" component={Login} />
+          <div style={{ zIndex: 10, fontSize: "11px", color: "white", textAlign: "right", paddingRight: "25px", position: "fixed", top: 70, right: 0 }}>
+            {fakeCurrentTime.substring(0, 25)}
+          </div>
+          <Container>
+            <Nav />
+            <Switch>
+              <Route exact path="/gamestock/" component={Homepage} />
+              <Route exact path="/gamestock/signup" >
+                <UserFormContainer>
+                  <Signup />
+                </UserFormContainer>
+              </Route>
+              <Route exact path="/gamestock/login" >
+                <UserFormContainer>
+                  <Login />
+                </UserFormContainer>
+              </Route>
+              <Route exact path="/gamestock/forgot-password" >
+                <UserFormContainer>
+                  <ForgotPassword />
+                </UserFormContainer>
+              </Route>
+              {/* <Route exact path="/gamestock/login" component={Login} />
           <Route exact path="/gamestock/forgot-password" component={ForgotPassword} /> */}
             <PrivateRoute exact path="/gamestock/user" component={Userpage} />
             <UserFormContainer>
