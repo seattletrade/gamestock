@@ -11,39 +11,24 @@ export default function MyStockList() {
     const [ returnTest , seReturnTest] = useState()
     const [ myStockLists , setMyStockLists] = useState([
         {
-            symbol: "MSFT",
-            amount: 175,
-            currentValue: "245.29"
+            symbol: "GOOG",
+            companyName: "Alphabet Class C",
+            currentValue: "2,106.00"
         },
         {
-            symbol: "TSLA",
-            amount: 10,
-            currentValue: "817.90"
+            symbol: "GOOGL",
+            companyName: "Alphabet Class A",
+            currentValue: "2,087.96"
         },
         {
-            symbol: "ORCL",
-            amount: 7,
-            currentValue: "63.15"
-        },
-        {
-            symbol: "IBM",
-            amount: 12,
-            currentValue: "120.90"
-        },
-        {
-            symbol: "AMZN",
-            amount: 125,
-            currentValue: "3276.50"
-        },
-        {
-            symbol: "AMD",
-            amount: 55,
-            currentValue: "93.79"
+            symbol: "INTC",
+            companyName: "Intel",
+            currentValue: "62.00"
         },
     ])
     return (
         <>
-            <h4>Stocks</h4>
+            <h4>Watch Lists</h4>
             <div className="myStockLists">
                 {myStockLists.map(company => {
                     return(<div>
@@ -53,7 +38,7 @@ export default function MyStockList() {
                                     {company.symbol}
                                 </Row>
                                 <Row style={{ margin: "auto", color: "grey", fontSize: "10px" }}>
-                                    {company.amount} shares
+                                    {company.companyName}
                                 </Row>
                             </Col>
                             <Col className="text-center" style={{ margin: "auto" }}>
