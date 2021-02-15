@@ -14,6 +14,9 @@ export default function Signup() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        if(!emailRef.current.value || !passwordRef.current.value || !passwordConfirmRef.current.value){
+            return setError("No input field can be left empty")
+        }
         if(passwordRef.current.value !== passwordConfirmRef.current.value){
             return setError("Password confirmation do not match the password")
         }
@@ -25,10 +28,13 @@ export default function Signup() {
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value)
             history.push("/gamestock/user")
+            API.createUser({
+                email: emailRef.current.value
+            })
         } catch {
             setError('Account creation failed')
         }
-        setLoading(false)
+        setLoading(false)       
     }
 
     return (
@@ -50,12 +56,12 @@ export default function Signup() {
                             <Form.Label>Password Confirmation</Form.Label>
                             <Form.Control type="password" ref={passwordConfirmRef} />
                         </Form.Group>
-                        <Button disabled={loading} className="w-100" type="submit">Sign Up</Button>
+                        <Button disabled={loading} className="w-100" type="submit" style={{backgroundColor: "#FD0000"}}>Sign Up</Button>
                     </Form>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
-                Already have an account? <Link to="/gamestock/login">Log In</Link>
+            <div className="w-100 text-center mt-2 text-white">
+                Already have an account? <Link to="/gamestock/login" style={{color: "#FD0000"}}>Log In</Link>
             </div>
         </>
     )

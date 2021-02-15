@@ -4,6 +4,19 @@ export default {
     getStockMarketData: (endPoint) => {
         return axios.get(endPoint);
     },
+    getCurrentPrice: (companySymbol) => {
+        return axios.get("/api/alphaVantage/currentPrice/" + companySymbol)
+    },
+    // saveTransaction: (boughtStockData) => {
+    //     return axios.post("/api/transaction", boughtStockData)
+    // },
+    // investedMoeny: (totalInvested) => {
+    //     return axios.post("/api/userInfo", totalInvested)
+    // },
+
+    createUser: (email)=> {
+        return axios.post("/api/user", email)
+    },
 
     getCompanyInfoData: (companySymbol) => {
         return axios.get("/api/alphaVantage/companyInfo/" + companySymbol);
