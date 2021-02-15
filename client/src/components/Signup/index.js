@@ -14,6 +14,9 @@ export default function Signup() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        if(!emailRef.current.value || !passwordRef.current.value || !passwordConfirmRef.current.value){
+            return setError("No input field can be left empty")
+        }
         if(passwordRef.current.value !== passwordConfirmRef.current.value){
             return setError("Password confirmation do not match the password")
         }
@@ -24,6 +27,9 @@ export default function Signup() {
             setError('')
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value)
+            API.createUser({
+                email: emailRef.current.value
+            })
             history.push("/gamestock/user")
         } catch {
             setError('Account creation failed')
