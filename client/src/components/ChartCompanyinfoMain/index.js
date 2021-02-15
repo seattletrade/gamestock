@@ -11,7 +11,7 @@ import GetOneWeekMarketData from '../GetOneWeekMarketData'
 import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData, GetFiveYearMarketData } from '../GetDailyMarketData'
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
 
-export default function Infopage() {
+export default function Infopage(promps) {
 
     // Take FakeCurrentTime from App.js by Context
     const currentFakeTime = useContext(FakeCurrentTimeContext);
@@ -97,10 +97,7 @@ export default function Infopage() {
         // API.getTest().then((res) => console.log(res));
 
         // TODO: Get the data from a User when they click a company from Search PAGE
-        let userInput = {
-            "symbol": 'MSFT',
-            "companyName": 'Microsoft'
-        }
+        let userInput = promps
 
         setCompanyNameState(userInput["companyName"]);
         setTicker(userInput["symbol"])

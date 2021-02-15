@@ -1,11 +1,12 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import ChartUserInfo from "../../components/ChartUserInfo"
 import "./style.scss";
 
 export default function Userpage() {
     return (
         <div>
-            user portfolio graph here
+            <ChartUserInfo />
             <br />
             <div className="flexbox-container">
                 <Link
