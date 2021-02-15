@@ -68,7 +68,9 @@ function App() {
             {/* <Route exact path="/gamestock/login" component={Login} />
           <Route exact path="/gamestock/forgot-password" component={ForgotPassword} /> */}
             <PrivateRoute exact path="/gamestock/user" component={Userpage} />
-            <PrivateRoute exact path="/gamestock/trade" component={Tradepage} />
+            <UserFormContainer>
+              <PrivateRoute exact path="/gamestock/trade" component={Tradepage} />
+            </UserFormContainer>
             <PrivateRoute exact path="/gamestock/search" component={Infopage} />
             {/* create 404 page */}
           </Switch>
