@@ -47,6 +47,17 @@ module.exports = {
       })
       .catch(err => res.status(422).json(err))
 
+    },
+
+    sellStock : function(req,res){
+      db.Stock.findOne({user_email:req.body.email, symbol: req.body.symbol}).then(data => {
+        if (data.amount < req.body.amount){
+          res.status(401).json(data);
+        }
+        else{
+          //create transaction, update user balance, update or delete stock balance 
+        }
+      })
     }
       
 }
