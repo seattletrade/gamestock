@@ -7,9 +7,12 @@ const stocksController = require("../../controllers/stockController");
 router.route("/buy")
 .post(stocksController.buyStock);
 
+
+/// all stocks person have
 router.route("/all/:email")
 .get(stocksController.findByUser);
 
+/// Invstma balance 
 router.route("/total/:email")
 .get(stocksController.totalInvByUser);
 
