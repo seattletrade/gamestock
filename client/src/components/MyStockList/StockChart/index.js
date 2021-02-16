@@ -28,7 +28,7 @@ export default function ChartUser(props) {
                 },
                 xaxis: {
                     // TODO:get range date!!,
-                    // range: [2020, 2021],
+                    range: [props.company.graphData.x[0], props.company.graphData.x[props.company.graphData.x.length -1]],
                     rangeslider: {
                         visible: false
                     },
