@@ -31,14 +31,14 @@ module.exports = {
               if (stocks.length ===0){
                 db.Stock.create(
                   {user_email: req.body.email,
-                  amount: req.body.amount ,/// Schema.Types.Decimal128
+                  amount: parseFloat( req.body.amount) ,/// Schema.Types.Decimal128
                   symbol: req.body.symbol,
                   avg_price: req.body.price
                 })
                 .then(dbModel => res.json(dbModel))
               }
               else{
-                db.Stock.updateOne({user_email:req.body.email, symbol: req.body.symbol},{amount: stocks[0].amount+req.body.amount,avg_price: (req.body.price*req.body.amount+stocks[0].avg_price*stocks[0].amount)/(stocks[0].amount+req.body.amount)})
+                db.Stock.updateOne({user_email:req.body.email, symbol: req.body.symbol},{amount: stocks[0].amount+ parseFloat(req.body.amount),avg_price: (req.body.price*req.body.amount+stocks[0].avg_price*stocks[0].amount)/(stocks[0].amount+parseFloat(req.body.amount))})
                 .then(dbModel => res.json(dbModel))
               }
             })
