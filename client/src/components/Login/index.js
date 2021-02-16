@@ -13,7 +13,7 @@ export default function Login() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();        
-        try{
+        try {
             setError('')
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
@@ -39,7 +39,7 @@ export default function Login() {
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} />
                         </Form.Group>                        
-                        <Button disabled={loading} className="w-100" type="submit">Log In</Button>
+                        <Button disabled={loading} className="w-100" type="submit" style={{backgroundColor: "#FD0000"}}>Log In</Button>
                     </Form>
                     <div className="w-100 text-center mt-3">
                         <Link to="/gamestock/forgot-password">Forgot password?</Link>
