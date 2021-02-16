@@ -7,5 +7,8 @@ const stocksController = require("../../controllers/stockController");
 router.route("/buy")
 .post(stocksController.buyStock);
 
+router.route(":email")
+.get(stocksController.findByUser);
+
 
 module.exports = router;
