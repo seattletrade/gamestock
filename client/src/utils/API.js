@@ -1,6 +1,15 @@
 import axios from "axios";
 
 export default {
+    createUser: (email)=> {
+        return axios.post("/api/user", email)
+    },
+    saveBuyTransaction: (stockPurchased) => {
+        return axios.post("/api/stocks/buy", stockPurchased)
+    },
+    getCurrentPrice: (companySymbol) => {
+        return axios.get("/api/alphaVantage/currentPrice/" + companySymbol)
+    },
     getStockMarketData: (endPoint) => {
         return axios.get(endPoint);
     },

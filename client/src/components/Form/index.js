@@ -46,27 +46,26 @@ export default function PurchaseForm() {
 
     function handleSubmit(event) {
         event.preventDefault();
-    //     // if(buyOrSell === "buy") {
-            if(calculateTotal() > userData.balance){
-                setError("You don't have enough money")
-            } 
+        // if(buyOrSell === "buy") {
+            // if(calculateTotal() > userData.balance){
+            //     setError("You don't have enough money")
+            // } 
             // else {
     //             // setCashOnHand(cashOnHand - calculateTotal())
-    //             API.saveTransaction({
-    //                 user: currentUser.email,
-    //                 symbol: formObject.symbol,
-    //                 amount: formObject.amount,
-    //                 buyOrSell: buyOrSell,
-    //                 cashOnHand: cashOnHand
-    //             })
-    //             .then(res => console.log(res))                              
-    //             .catch(err => console.log(err))   
+            API.saveBuyTransaction({
+                email: currentUser.email,
+                symbol: formObject.symbol,
+                amount: formObject.amount,
+                price: currentPrice                   
+            })
+            .then(res => console.log(res))                              
+            .catch(err => console.log(err))   
                 
-    //             API.investedMoeny({
-    //                 investedMoney: calculateTotal()
-    //             })
-    //             .then(res => console.log(res))
-    //         }    
+                // API.investedMoeny({
+                //     investedMoney: calculateTotal()
+                // })
+                // .then(res => console.log(res))
+                // }    
     //     // }
     //     // else if(buyOrSell === "sell") {
             
@@ -86,7 +85,6 @@ export default function PurchaseForm() {
     //         ${buyOrSell}          
     //     `)
     }
-
 
     return (
         <>
