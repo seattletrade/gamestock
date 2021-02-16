@@ -92,17 +92,31 @@ export default function MyStockList() {
                 API.getIntraMarketData(stock.symbol, "15min")
                     .then(marketData => {
                         //Get Current Value & Graph Data
-                        finalData.push(StockArr.map(stock => {
-                            // console.log(stock)
+                        // TODO: Use reduce instead of map
+                        finalData.push(
+                            StockArr.reduce(function(result, stock) {
+                            console.log(stock)
                             let graphData = stockDataProcessing(marketData.data, currentFakeTime);
                             if(stock["symbol"] === graphData.symbol){
                                 stock["graphData"] = graphData
                                 console.log(stock)
-                                return stock
-                            }else{
-                                return null;
+                                result = stock;
                             }
-                        }))
+                            return result;
+                        })
+
+                        // StockArr.map(stock => {
+                        //     // console.log(stock)
+                        //     let graphData = stockDataProcessing(marketData.data, currentFakeTime);
+                        //     if(stock["symbol"] === graphData.symbol){
+                        //         stock["graphData"] = graphData
+                        //         console.log(stock)
+                        //         return stock
+                        //     }else{
+                        //         return null;
+                        //     }
+                        // })
+                        )
                         console.log(finalData);
                     })
                     .catch(err => console.log(err))
