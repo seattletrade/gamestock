@@ -11,7 +11,7 @@ function dataProcessing(stockData, currentFakeTime) {
     let currentOpenValue = [];
     let openValueAt930 = 0;
     let currentValue = 0;
-    let days = 4;
+    let days = 1;
     // 86400000 sec (= 1 day )
     let aDayTomiliSec = 86400000;
     let fiveHourmiliSec = 18000000;
