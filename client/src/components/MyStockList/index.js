@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col } from 'react-bootstrap';
 
 import UserPageAPI from '../../utils/UserPageAPI';
+import API from '../../utils/API';
 import { useAuth } from '../../contexts/AuthContext';
 
 import StockChart from './StockChart';
@@ -46,11 +47,29 @@ export default function MyStockList() {
     ])
 
     useEffect(() => {
+        let StockArr = []
+
         UserPageAPI.getStockList(currentUser.email)
         .then(res => {
             console.log(res.data);
+            res.data.map(stock => {
+                API.getIntraMarketData(stock.symbol, "15min")
+                    .then(stock => {
+                        console.log(stock)
+                        StockArr.push(stock);
+                    })
+                    .catch(err => console.log(err))
+            })
         })
         .catch(err => console.log(err))
+
+    // Get Current Value inside API.getIntraMarketDATA
+    function currentValue(stock) {
+
+    }
+
+    // Put Currten Value with symbols and shares which are from Stock DB to setMyStockLists
+        
     }, [])
     return (
         <>
