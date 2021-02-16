@@ -25,6 +25,12 @@ const stockSeed = [
       "symbol": "GME",
       "avg_price": 177.47
   },
+  {
+    "user_email": "cong@hotmail.com",
+    "amount": 25,
+    "symbol": "IBM",
+    "avg_price": 157.00
+},
 
 ]
 
