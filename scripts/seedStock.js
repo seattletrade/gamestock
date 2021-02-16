@@ -19,6 +19,12 @@ const stockSeed = [
         "symbol": "TSLA",
         "avg_price": 316.76
     },
+    {
+      "user_email": "cong@hotmail.com",
+      "amount": 55,
+      "symbol": "GME",
+      "avg_price": 177.47
+  },
 
 ]
 

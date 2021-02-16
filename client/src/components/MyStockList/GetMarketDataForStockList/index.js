@@ -17,14 +17,14 @@ function dataProcessing(stockData, currentFakeTime) {
 
     for (let date in stockData["Time Series (15min)"]) {
 
-        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 4 ) {
+        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 1 ) {
             // Fake Date -> Change Previous day to Today
             currentXAxis.push((new Date(Date.parse(date) + aDayTomiliSec)));
             // currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)).toString().substring(4, 21));
         }
 
         // get Current data for Graph
-        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 4  &&
+        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 1  &&
             Date.parse(date) < (Date.parse(currentFakeTime) - aDayTomiliSec)) {
                 // console.log(date.substring(12, 16))
                 if(date.substring(12, 16) === "9:30"){
@@ -56,6 +56,7 @@ function dataProcessing(stockData, currentFakeTime) {
         symbol: symbol,
         x: currentXAxis,
         y: currentOpenValue,
+        currentValue: currentValue,
         marker:{ color : marker },
     }
 

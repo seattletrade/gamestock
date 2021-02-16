@@ -56,6 +56,23 @@ const transactionSeed = [
         "buy": true     
     },
 
+    {
+        "user_email": "cong@hotmail.com",
+        "amount": 25,
+        "symbol": "GME",
+        "price": 40.20,
+        "date": "2021-01-15",
+        "buy": true     
+    },
+    {
+        "user_email": "cong@hotmail.com",
+        "amount": 30,
+        "symbol": "GME",
+        "price": 300.20,
+        "date": "2021-02-10",
+        "buy": true     
+    },
+
 ]
 
 db.Transaction
