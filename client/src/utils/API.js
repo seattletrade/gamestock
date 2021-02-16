@@ -34,4 +34,8 @@ export default {
     getSymbols: function () {
         return axios.get("/api/symbols");
     },
+
+    getNews: function () {
+        return axios.get("/api/finnhub/getNews");
+    }
 }

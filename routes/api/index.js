@@ -4,6 +4,9 @@ const bookRoutes = require("./books");
 // AlpahVantage API - Stock markek Data
 const alphaVantage = require("./alphaVantage");
 
+// Finnhub API - News Data
+const finnhub = require("./finnhub");
+
 //stocks from db
 const stockRoutes = require("./stocks");
 //users from db
@@ -17,5 +20,6 @@ router.use("/books", bookRoutes);
 router.use("/stocks", stockRoutes);
 router.use("/user/", userRoutes);
 router.use("/symbols", symbolNameRoutes);
+router.use("/finnhub", finnhub);
 
 module.exports = router;
