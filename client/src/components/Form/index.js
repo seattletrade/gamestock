@@ -54,10 +54,10 @@ export default function PurchaseForm() {
             // else {
     //             // setCashOnHand(cashOnHand - calculateTotal())
             API.saveBuyTransaction({
-                user: currentUser.email,
+                email: currentUser.email,
                 symbol: formObject.symbol,
                 amount: formObject.amount,
-                currentPrice: currentPrice                   
+                price: currentPrice                   
             })
             .then(res => console.log(res))                              
             .catch(err => console.log(err))   
