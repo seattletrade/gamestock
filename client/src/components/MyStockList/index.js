@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from 'react-bootstrap';
 
+import UserPageAPI from '../../utils/UserPageAPI';
+import { useAuth } from '../../contexts/AuthContext';
+
 import StockChart from './StockChart';
 
 import "./style.scss";
@@ -8,7 +11,7 @@ import "./style.scss";
 export default function MyStockList() {
 
     //Dummy Data
-    const [ returnTest , seReturnTest] = useState()
+    const { currentUser } = useAuth();
     const [ myStockLists , setMyStockLists] = useState([
         {
             symbol: "MSFT",
@@ -39,8 +42,16 @@ export default function MyStockList() {
             symbol: "AMD",
             amount: 55,
             currentValue: "93.79"
-        },
+        }
     ])
+
+    useEffect(() => {
+        UserPageAPI.getStockList(currentUser.email)
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch(err => console.log(err))
+    }, [])
     return (
         <>
             <h4>Stocks</h4>
