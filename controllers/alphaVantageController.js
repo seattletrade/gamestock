@@ -2,6 +2,13 @@ const axios = require("axios");
 require('dotenv').config()
 
 module.exports = {
+    getCurrentPrice: function (req, res) {
+        axios.get(`${process.env.QUOTE_ENDPOINT_ALPHAVANTAGE}&symbol=${req.params.companySymbol}&apikey=${process.env.ALPHAVANTAGE_API_KEY}`)
+        .then(data =>{
+            res.json(data.data);
+        })
+        .catch(err => console.log(err))
+    },
     getCompanyInfo: function (req, res) {
         axios.get(`${process.env.COMPANYINFO_ALPHAVANTAGE}&symbol=${req.params.companySymbol}&apikey=${process.env.ALPHAVANTAGE_API_KEY}`)
         .then(data =>{

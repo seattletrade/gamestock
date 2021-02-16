@@ -4,6 +4,9 @@ const alphaVantageController = require("../../controllers/alphaVantageController
 // Matches with "/api/alphaVantage/companyInfo/:companyName"
 router.route("/companyInfo/:companySymbol")
 .get(alphaVantageController.getCompanyInfo);
+// Matches with "/api/alphaVantage/currentPrice/:companyName"
+router.route("/currentPrice/:companySymbol")
+.get(alphaVantageController.getCurrentPrice);
   
 // Matches with "/api/alphaVantage/dailyMargetData/:companyName/:outputSize"
 router.route("/dailyMargetData/:companySymbol/:outputSize")
