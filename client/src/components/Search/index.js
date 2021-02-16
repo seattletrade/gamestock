@@ -43,7 +43,8 @@ export default function Search() {
                         .filter((searchList) => searchList.region === 'United States')
                     }
                     renderItem={(item, isHighlighted) =>
-                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}
+                            key={item.symbol}>
                             {item.symbol} {item.label}
                             {setNameResult(item.label)}
                         </div>
