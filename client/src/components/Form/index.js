@@ -54,7 +54,7 @@ export default function PurchaseForm() {
     //             // setCashOnHand(cashOnHand - calculateTotal())
             API.saveBuyTransaction({
                 email: currentUser.email,
-                symbol: formObject.symbol,
+                symbol: formObject.symbol.toUpperCase(),
                 amount: formObject.amount,
                 price: currentPrice                   
             })
