@@ -7,8 +7,7 @@ const usersController = require("../../controllers/userController");
 router.route("/")
 .post(usersController.createUser);
 
-router
-  .route("/:email")
+router.route("/:email")
   .get(usersController.findUser);
 
 module.exports = router;

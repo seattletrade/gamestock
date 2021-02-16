@@ -10,6 +10,26 @@ module.exports = {
         .catch(err => res.status(422).json(err));
     },
 
+    totalInvByUser: function(req,res){
+      db.Stock
+      .aggregate([
+        {$match : { user_email : req.params.email }},
+        {
+          $group : { 
+              "_id" : null, 
+              "invBalance" : { 
+                  $sum : { 
+                      $multiply : ["$avg_price", "$amount"]
+                  }
+              }
+          }
+        }
+      ]).then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+
+    },
+
+
     buyStock : function(req, res){
       
       db.User.findOne({email:req.body.email})

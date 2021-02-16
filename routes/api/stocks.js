@@ -10,5 +10,8 @@ router.route("/buy")
 router.route(":email")
 .get(stocksController.findByUser);
 
+router.route("/total/:email")
+.get(stocksController.totalInvByUser);
+
 
 module.exports = router;
