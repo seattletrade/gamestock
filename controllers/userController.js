@@ -8,4 +8,13 @@ module.exports = {
           .then(dbModel => res.json(dbModel))
           .catch(err => res.status(422).json(err));
       },
+
+      getUserInfo: function(req, res) {
+        db.User
+            .find({"email": req.params.email})
+            .then(user => res.json(user))
+            .catch(err => res.status(422).json(err))
+      }
 };
+
+        // .find({"email" : req.params.email})

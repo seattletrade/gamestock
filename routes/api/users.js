@@ -7,5 +7,8 @@ const usersController = require("../../controllers/userController");
 router.route("/")
 .post(usersController.createUser);
 
+// Matches with "/api/user/:email"
+router.route("/:email")
+.get(usersController.getUserInfo);
 
 module.exports = router;

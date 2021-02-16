@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from "react";
 import ChartUser from './ChartUser';
 import { Link, useLocation } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
 
+import UserPageAPI from '../../utils/UserPageAPI';
+import { useAuth } from '../../contexts/AuthContext';
+
+import NumberComma from '../NumberComma'
+
 export default function ChartUserInfo() {
+
+    const { currentUser } = useAuth();
+    const [ userBalance, setUserBalance ] = useState(0);
+
+    useEffect(() => {
+        UserPageAPI.getUserInfo(currentUser.email)
+        .then(res => {
+            setUserBalance(NumberComma(res.data[0].balance));
+        })
+        .catch(err => console.log(err))
+    }, [])
+
     function myFetch(e) {
         e.preventDefault();
         console.log(e.target.innerText)
@@ -80,7 +97,7 @@ export default function ChartUserInfo() {
                         Balance
                     </Col>
                     <Col className="text-right pr-4">
-                        $2,500.45
+                        ${userBalance}
                     </Col>
                 </Row>
             </div>
