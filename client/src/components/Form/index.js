@@ -3,8 +3,10 @@ import "./style.scss";
 import API from '../../utils/API'
 import { useAuth } from '../../contexts/AuthContext'
 import { Alert, Card, Button, Form } from 'react-bootstrap'
+import {useHistory} from 'react-router-dom';
 
 export default function PurchaseForm() {
+    const history = useHistory();
     const [formObject, setFormObject] = useState({
         symbol: "", 
         amount: 0        
@@ -52,14 +54,16 @@ export default function PurchaseForm() {
             // } 
             // else {
     //             // setCashOnHand(cashOnHand - calculateTotal())
-            API.saveBuyTransaction({
-                email: currentUser.email,
-                symbol: formObject.symbol.toUpperCase(),
-                amount: formObject.amount,
-                price: currentPrice                   
-            })
-            .then(res => console.log(res))                              
-            .catch(err => console.log(err))   
+        API.saveBuyTransaction({
+            email: currentUser.email,
+            symbol: formObject.symbol.toUpperCase(),
+            amount: formObject.amount,
+            price: currentPrice                   
+        })
+        .then(res => console.log(res))                              
+        .catch(err => console.log(err))   
+
+        history.push("/gamestock/user")
                 
                 // API.investedMoeny({
                 //     investedMoney: calculateTotal()
