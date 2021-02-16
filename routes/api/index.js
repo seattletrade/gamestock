@@ -8,12 +8,14 @@ const alphaVantage = require("./alphaVantage");
 const stockRoutes = require("./stocks");
 //users from db
 const userRoutes = require("./users")
-
+//symbols from db
+const symbolNameRoutes = require("./symbolName");
 
 // routes
 router.use("/alphaVantage", alphaVantage);
 router.use("/books", bookRoutes);
-router.use("/stocks",stockRoutes);
-router.use("/user/",userRoutes);
+router.use("/stocks", stockRoutes);
+router.use("/user/", userRoutes);
+router.use("/symbols", symbolNameRoutes);
 
 module.exports = router;

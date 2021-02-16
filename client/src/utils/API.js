@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default {
-    createUser: (email)=> {
+    createUser: (email) => {
         return axios.post("/api/user", email)
     },
     saveBuyTransaction: (stockPurchased) => {
@@ -29,5 +29,9 @@ export default {
     // interval=> 15min or 60min
     getIntraMarketData: (companySymbol, interval) => {
         return axios.get("/api/alphaVantage/intraMarketData/" + companySymbol + "/" + interval);
-    }
+    },
+
+    getSymbols: function () {
+        return axios.get("/api/symbols");
+    },
 }
