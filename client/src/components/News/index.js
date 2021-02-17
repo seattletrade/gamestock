@@ -8,9 +8,15 @@ export default function News() {
 
     //usestate setup here, to useeffect below
     useEffect(() => {
+        let newsArr = []
+        let businessArr = []
         API.getNews()
             .then(res => {
-                setApiResults(res.data)
+                newsArr = res.data;
+                console.log(newsArr);
+                businessArr = newsArr.filter((item) => item.category === "business");
+                console.log(businessArr);
+                setApiResults(businessArr)
             }
             )
     }, [])
@@ -24,7 +30,7 @@ export default function News() {
 
     return (
         <>
-            <h4>Financial News</h4>
+            <h4>Business News</h4>
             {apiResults ? <div className="newsList">
                 {apiResults.map(item => {
                     return (
@@ -39,7 +45,7 @@ export default function News() {
                                 </Col>
                                 <Row>
                                     <Col className="col-sm-8">
-                                        {item.summary ? item.summary + "..." : <div></div>}
+                                        {item.summary ? item.summary + "..." : <div>Loading...</div>}
                                     </Col>
                                 </Row>
                             </Row>

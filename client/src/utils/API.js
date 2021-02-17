@@ -10,6 +10,12 @@ export default {
     getCurrentPrice: (companySymbol) => {
         return axios.get("/api/alphaVantage/currentPrice/" + companySymbol)
     },
+    getUserBalance: (email) => {
+        return axios.get("/api/user/" + email)
+    },
+    getAllStocks: (email) => {
+        return axios.get("/api/stocks/all/" + email)
+    },
     getStockMarketData: (endPoint) => {
         return axios.get(endPoint);
     },
