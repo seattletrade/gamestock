@@ -7,6 +7,9 @@ const stocksController = require("../../controllers/stockController");
 router.route("/buy")
 .post(stocksController.buyStock);
 
+router.route("/sell")
+.post(stocksController.sellStock);
+
 
 /// all stocks person have
 router.route("/all/:email")

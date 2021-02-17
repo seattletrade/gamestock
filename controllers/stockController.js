@@ -80,6 +80,7 @@ module.exports = {
           res.status(401).json(data);
         }
         else{
+          newStockBalance = data.amount - req.body.amount;
           //create transaction, update user balance, update or delete stock balance 
           db.Transaction.create({
             user_email: req.body.email,
@@ -88,7 +89,24 @@ module.exports = {
             price: req.body.price,
             buy: false
           })
-          .then()
+          .then( () => {
+            db.User.find({email:req.body.email})
+            .then(data =>{
+              new_bal = data.balance - req.body.price*req.body.amount;
+              db.User.updateOne({email:req.body.email},{balance:new_bal}).
+              then( ()=>{
+                if (newStockBalance ===0){
+                  ///delete stock
+                  db.Stock.deleteOne({user_email:req.body.email, symbol:req.body.symbol}).then(dbModel => res.json(dbModel))
+                }
+                else{
+                  db.Stock.updateOne({user_email:req.body.email, symbol:req.body.symbol},{amount: newStockBalance}).then(dbModel => res.json(dbModel))
+                }
+
+                
+              })
+            })
+          })
         }
       })
     }
