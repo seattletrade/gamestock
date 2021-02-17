@@ -3,20 +3,17 @@ import API from '../../utils/API'
 import { Row, Col } from 'react-bootstrap';
 
 
-export default function News() {
-    const [apiResults, setApiResults] = useState();
+export default function CompanyNews(props) {
+    const [companyNews, setCompanyNews] = useState();
 
     //usestate setup here, to useeffect below
     useEffect(() => {
         let newsArr = []
-        let businessArr = []
-        API.getNews()
+        API.getCompanyNews(props.symbol)
             .then(res => {
-                newsArr = res.data;
-                console.log(newsArr);
-                businessArr = newsArr.filter((item) => item.category === "business").slice(0, 25);
-                console.log(businessArr);
-                setApiResults(businessArr)
+                newsArr = res.data.slice(0, 15);
+                console.log(newsArr)
+                setCompanyNews(newsArr);
             }
             )
     }, [])
@@ -30,9 +27,9 @@ export default function News() {
 
     return (
         <>
-            <h4>Business News</h4>
-            {apiResults ? <div className="newsList">
-                {apiResults.map(item => {
+            <h4>Latest News</h4>
+            {companyNews ? <div className="newsList">
+                {companyNews.map(item => {
                     return (
                         <div key={item.id}>
                             <Row>
@@ -43,7 +40,7 @@ export default function News() {
                                 </Col>
                                 <Row>
                                     <Col className="col-sm-8">
-                                        {item.summary ? item.summary + "..." : <></>}
+                                        {item.summary ? item.summary + "..." : <div></div>}
                                     </Col>
                                 </Row>
                             </Row>
@@ -53,9 +50,7 @@ export default function News() {
                 })
 
                 }
-            </div>
-                :
-                <div>No news to display</div>}
+            </div> : <div>No news to display</div>}
         </>
     )
 }

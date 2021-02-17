@@ -46,5 +46,9 @@ export default {
 
     getNews: function () {
         return axios.get("/api/finnhub/getNews");
+    },
+
+    getCompanyNews: (symbol) => {
+        return axios.get("/api/finnhub/getCompanyNews/" + symbol);
     }
 }
