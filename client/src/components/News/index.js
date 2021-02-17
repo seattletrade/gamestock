@@ -14,7 +14,7 @@ export default function News() {
             .then(res => {
                 newsArr = res.data;
                 console.log(newsArr);
-                businessArr = newsArr.filter((item) => item.category === "business");
+                businessArr = newsArr.filter((item) => item.category === "business").slice(0, 25);
                 console.log(businessArr);
                 setApiResults(businessArr)
             }
@@ -36,16 +36,14 @@ export default function News() {
                     return (
                         <div key={item.id}>
                             <Row>
-                                <Col className="col-sm-2">
-                                    <img style={{ width: "200px", float: "left" }} src={item.image} />
-                                </Col>
+                                {item.image ? <Col className="col-sm-2"> <img style={{ width: "200px", float: "left" }} src={item.image} /> </Col> : <></>}
                                 <Col className="col-sm-10">
                                     <a href={item.url}><h5>{item.headline}</h5></a>
                                     <sub>{formatDate(item.datetime)}</sub>
                                 </Col>
                                 <Row>
                                     <Col className="col-sm-8">
-                                        {item.summary ? item.summary + "..." : <div>Loading...</div>}
+                                        {item.summary ? item.summary + "..." : <></>}
                                     </Col>
                                 </Row>
                             </Row>
@@ -57,7 +55,7 @@ export default function News() {
                 }
             </div>
                 :
-                <div></div>}
+                <div>No news to display</div>}
         </>
     )
 }
