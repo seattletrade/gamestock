@@ -15,8 +15,12 @@ export default function PurchaseForm() {
     const [buyOrSell, setbuyOrSell] = useState();   
     const [error, setError] = useState();
     const [cashOnHand, setCashOnHand] = useState(10000); 
+    const [userData, setUserData] = useState({
+        balance: 0,
+        email: ""
+    })
 
-    const { currentUser, userData } = useAuth(); 
+    const { currentUser } = useAuth(); 
 
     function calculateTotal(){
         let total;
@@ -44,50 +48,34 @@ export default function PurchaseForm() {
         .then(res => setCurrentPrice(res.data['Global Quote']['05. price']))
         .catch(err => console.log(err))
     }
+         
+
+    useEffect(()=>{
+        API.getUserBalance(currentUser.email)        
+        .then(data => setUserData({...userData, balance: data.data.balance, email: data.data.email}))  
+        // API.getAllStocks(currentUser.email)
+        // .then(data => console.log(data))     
+    }, [userData])
     
 
     function handleSubmit(event) {
-        event.preventDefault();
-        // if(buyOrSell === "buy") {
-            // if(calculateTotal() > userData.balance){
-            //     setError("You don't have enough money")
-            // } 
-            // else {
-    //             // setCashOnHand(cashOnHand - calculateTotal())
-        API.saveBuyTransaction({
-            email: currentUser.email,
-            symbol: formObject.symbol.toUpperCase(),
-            amount: formObject.amount,
-            price: currentPrice                   
-        })
-        .then(res => console.log(res))                              
-        .catch(err => console.log(err))   
+        event.preventDefault();        
+            console.log("userData",userData)            
+            if(calculateTotal() > userData.balance){
+                setError(`You don't have enough money. Your balance is ${userData.balance}`)
+            } 
+            else {    
+                API.saveBuyTransaction({
+                    email: currentUser.email,
+                    symbol: formObject.symbol.toUpperCase(),
+                    amount: formObject.amount,
+                    price: currentPrice                   
+                })
+                .then(res => console.log(res))                              
+                .catch(err => console.log(err))   
 
-        history.push("/gamestock/user")
-                
-                // API.investedMoeny({
-                //     investedMoney: calculateTotal()
-                // })
-                // .then(res => console.log(res))
-                // }    
-    //     // }
-    //     // else if(buyOrSell === "sell") {
-            
-    //     //     API.saveTransaction({
-    //     //         user: currentUser.email,
-    //     //         symbol: formObject.symbol,
-    //     //         amount: formObject.amount,
-    //     //         buyOrSell: buyOrSell
-    //     //     })
-    //     //     .then(res => console.log(res))
-    //     //     .catch(err => console.log(err))
-    //     // }
-    //     console.log(`
-    //         ${formObject.symbol},
-    //         ${formObject.amount},
-    //         ${currentUser.email},
-    //         ${buyOrSell}          
-    //     `)
+                history.push("/gamestock/user")               
+            }     
     }
 
     return (
