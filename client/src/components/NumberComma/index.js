@@ -1,7 +1,7 @@
 function NumberComma( num ) {
     // console.log("In currencyComma")
     var str = num.toString().split('.');
-    console.log(str);
+    // console.log(str);
     if (str[0].length >= 4) {
         str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
     }
