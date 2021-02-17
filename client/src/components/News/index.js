@@ -30,7 +30,7 @@ export default function News() {
 
     return (
         <>
-            <h4>Financial News</h4>
+            <h4>Business News</h4>
             {apiResults ? <div className="newsList">
                 {apiResults.map(item => {
                     return (
@@ -45,7 +45,7 @@ export default function News() {
                                 </Col>
                                 <Row>
                                     <Col className="col-sm-8">
-                                        {item.summary ? item.summary + "..." : <div></div>}
+                                        {item.summary ? item.summary + "..." : <div>Loading...</div>}
                                     </Col>
                                 </Row>
                             </Row>
