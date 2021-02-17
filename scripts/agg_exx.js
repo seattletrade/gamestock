@@ -7,7 +7,7 @@ mongoose.connect(
   process.env.MONGODB_URI ||
   "mongodb://localhost/gamestock"
 );
-
+/*
 db.Stock
 .aggregate([
   {$match : { user_email : "polina@test.com" }},
@@ -25,7 +25,12 @@ db.Stock
   console.log(data);
   process.exit(0);
 })
-
+*/
+db.Stock.find({user_email: "polina@test.com"}).
+then(data =>{
+  console.log(data);
+  process.exit(0);
+})
 
 /*  
 ///// All stocks for user
