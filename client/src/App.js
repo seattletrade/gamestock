@@ -65,19 +65,16 @@ function App() {
                 <UserFormContainer>
                   <ForgotPassword />
                 </UserFormContainer>
-              </Route>
-              {/* <Route exact path="/gamestock/login" component={Login} />
-          <Route exact path="/gamestock/forgot-password" component={ForgotPassword} /> */}
-              <PrivateRoute exact path="/gamestock/user" component={Userpage} />
-              <PrivateRoute exact path="/gamestock/trade" component={Tradepage} />
-              <PrivateRoute exact path="/gamestock/search" component={Infopage} />
-              {/* create 404 page */}
-              <Route>
-                <Notfound />
-              </Route>
-            </Switch>
-            <Footer />
-          </Container>
+              </Route>              
+            <PrivateRoute exact path="/gamestock/search" component={Infopage} />
+            <PrivateRoute exact path="/gamestock/user" component={Userpage} />            
+            <PrivateRoute exact path="/gamestock/trade" component={Tradepage} />
+            <Route>
+              <Notfound/>  
+            </Route>          
+          </Switch>
+          <Footer />
+        </Container>
         </FakeCurrentTimeContext.Provider>
       </AuthProvider>
     </Router>
