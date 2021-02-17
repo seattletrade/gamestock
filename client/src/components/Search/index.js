@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import API from "../../utils/API";
 
+
 import ChartCompanyinfoMain from '../ChartCompanyinfoMain';
-import CompanyInformation from '../CompanyInformation'
+import CompanyInformation from '../CompanyInformation';
+import CompanyNews from '../CompanyNews';
 import Autocomplete from "react-autocomplete";
 
 export default function Search() {
@@ -61,6 +63,8 @@ export default function Search() {
                 <>
                     <ChartCompanyinfoMain symbol={searchResults} companyName={nameResult} />
                     <CompanyInformation symbol={searchResults} />
+                    <CompanyNews symbol={searchResults} />
+
                 </>
             ) : (<div></div>)}
 
