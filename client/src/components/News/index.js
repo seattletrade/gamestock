@@ -40,7 +40,7 @@ export default function News() {
                                 </Col>
                                 <Row>
                                     <Col className="col-sm-8">
-                                        {item.summary}...
+                                        {item.summary ? item.summary + "..." : <div></div>}
                                     </Col>
                                 </Row>
 
