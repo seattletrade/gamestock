@@ -8,9 +8,15 @@ export default function News() {
 
     //usestate setup here, to useeffect below
     useEffect(() => {
+        let newsArr = []
+        let businessArr = []
         API.getNews()
             .then(res => {
-                setApiResults(res.data)
+                newsArr = res.data;
+                console.log(newsArr);
+                businessArr = newsArr.filter((item) => item.category === "business");
+                console.log(businessArr);
+                setApiResults(businessArr)
             }
             )
     }, [])
