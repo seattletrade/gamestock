@@ -338,15 +338,22 @@ export default function Infopage(promps) {
                 <div style={{ background: "black", height: "400px", margin: "0 -15px" }}>
                     <div className="pl-3 pt-5" style={{ color: "white" }}>
                         <p style={{ fontSize: "14px", marginBottom: "0" }}>{ticker}</p>
-                        <h3>{companyNameState}</h3>
+                        <Row>
+                            <Col className="text-left" style={{ margin: "auto" }}>
+                                <h3>{companyNameState}</h3>
+                            </Col>
+                            <Col className="mr-4" xs={3}>
+                                <Link
+                                    to="/gamestock/trade"
+                                    className={location.pathname === "/gamestock/trade" ? "nav-link active" : "nav-link"}
+                                >
+                                    <button type="button" className="btn btn-danger"> trade</button>
+                                </Link>
+                            </Col>
+                        </Row>
                         <h3>$<AnimatedNumber value={parseFloat(currentValueState).toFixed(2)}
                             formatValue={n => n.toFixed(2)} /></h3>
-                        <Link
-                            to="/gamestock/trade"
-                            className={location.pathname === "/gamestock/trade" ? "nav-link active" : "nav-link"}
-                        >
-                            <button type="button" className="btn btn-danger"> trade</button>
-                        </Link>
+
                     </div>
 
                     <ChartCompanyInfo traceState={traceState} volumeState={volumeState} range={rangeState} typeState={typeState} visible={visibleState} />
