@@ -30,7 +30,6 @@ export default function News() {
                     return (
                         <div key={item.id}>
                             <Row>
-
                                 <Col className="col-sm-2">
                                     <img style={{ width: "200px", float: "left" }} src={item.image} />
                                 </Col>
@@ -43,9 +42,7 @@ export default function News() {
                                         {item.summary ? item.summary + "..." : <div></div>}
                                     </Col>
                                 </Row>
-
                             </Row>
-
                             <hr className="myHr" />
                         </div>
                     )
