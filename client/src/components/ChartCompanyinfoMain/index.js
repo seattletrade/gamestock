@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
 import AnimatedNumber from "animated-number-react";
 import FakeCurrentTimeContext from '../../contexts/FakeCurrentTimeContext'
@@ -334,12 +335,18 @@ export default function Infopage(promps) {
 
         <>
             {loading ? (<div>Loding...</div>) : (
-                <div style={{ background: "black", height: "400px", margin:"0 -15px"}}>
+                <div style={{ background: "black", height: "400px", margin: "0 -15px" }}>
                     <div className="pl-3 pt-5" style={{ color: "white" }}>
                         <p style={{ fontSize: "14px", marginBottom: "0" }}>{ticker}</p>
                         <h3>{companyNameState}</h3>
                         <h3>$<AnimatedNumber value={parseFloat(currentValueState).toFixed(2)}
                             formatValue={n => n.toFixed(2)} /></h3>
+                        <Link
+                            to="/gamestock/trade"
+                            className={location.pathname === "/gamestock/trade" ? "nav-link active" : "nav-link"}
+                        >
+                            <button type="button" className="btn btn-danger"> trade</button>
+                        </Link>
                     </div>
 
                     <ChartCompanyInfo traceState={traceState} volumeState={volumeState} range={rangeState} typeState={typeState} visible={visibleState} />
