@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef} from 'react';
 import "./style.scss";
 import API from '../../utils/API'
 import { useAuth } from '../../contexts/AuthContext'
-import { Alert, Card, Button, Form } from 'react-bootstrap'
+import { Alert, Card, Button, Form, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import {useHistory} from 'react-router-dom';
 
 export default function PurchaseForm() {
@@ -12,13 +12,10 @@ export default function PurchaseForm() {
         amount: 0        
     });
     const [currentPrice, setCurrentPrice] = useState();
-    const [buyOrSell, setbuyOrSell] = useState();   
-    const [error, setError] = useState();
-    const [cashOnHand, setCashOnHand] = useState(10000); 
-    const [userData, setUserData] = useState({
-        balance: 0,
-        email: ""
-    })
+    const [buyOrSell, setbuyOrSell] = useState("buy");   
+    const [error, setError] = useState();    
+    const [userBalance, setUserBalance] = useState(0)
+    const [stocksPortfolio, setStocksPortfolio] = useState([])
 
     const { currentUser } = useAuth(); 
 
@@ -52,22 +49,27 @@ export default function PurchaseForm() {
 
     useEffect(()=>{
         API.getUserBalance(currentUser.email)        
-        .then(data => setUserData({...userData, balance: data.data.balance, email: data.data.email}))  
-        // API.getAllStocks(currentUser.email)
-        // .then(data => console.log(data))     
-    }, [userData])
+        .then(data => setUserBalance(data.data.balance))  
+        API.getAllStocks(currentUser.email)
+        // .then(data => console.log(data.data)) 
+        .then(data => setStocksPortfolio(data.data))  
+         
+    }, [])
     
 
     function handleSubmit(event) {
         event.preventDefault();        
-            console.log("userData",userData)            
-            if(calculateTotal() > userData.balance){
-                setError(`You don't have enough money. Your balance is ${userData.balance}`)
+            console.log("userBalance",userBalance) 
+            console.log(buyOrSell)  
+            console.log(stocksPortfolio)
+        if(buyOrSell ==="buy"){         
+            if(calculateTotal() > userBalance){
+                setError(`You don't have enough money. Your balance is ${userBalance}`)
             } 
             else {    
                 API.saveBuyTransaction({
                     email: currentUser.email,
-                    symbol: formObject.symbol.toUpperCase(),
+                    symbol: formObject.symbol.toUpperCase().trim(),
                     amount: formObject.amount,
                     price: currentPrice                   
                 })
@@ -75,7 +77,32 @@ export default function PurchaseForm() {
                 .catch(err => console.log(err))   
 
                 history.push("/gamestock/user")               
-            }     
+            }   
+        }
+        if(buyOrSell === "sell"){
+            stocksPortfolio.forEach(stock => {
+                if(!stock.symbol.includes(formObject.symbol.toUpperCase().trim())){
+                    setError(`You don't own any ${formObject.symbol.toUpperCase().trim()} shares`)
+                    return;
+                }
+            })
+            stocksPortfolio.forEach(stock => {
+                if(stock.symbol.includes(formObject.symbol.toUpperCase().trim()) && stock.amount <= parseFloat(formObject.amount)){
+                    setError(`You only have ${stock.amount} shares to sell`)
+                    return;
+                }                  
+            })
+            API.saveSellTransaction({
+                email: currentUser.email,
+                symbol: formObject.symbol.toUpperCase().trim(),
+                amount: formObject.amount,
+                price: currentPrice 
+            })
+            .then(data => console.log("selling info", data))  
+            .catch(err => console.log(err))
+
+            history.push("/gamestock/user") 
+        }  
     }
 
     return (
@@ -101,8 +128,24 @@ export default function PurchaseForm() {
                             />
                         <div id="previewTotal" className="form-text text-muted">Total: {calculateTotal()}</div>
                         </Form.Group>
-                        <Button onClick={handleSubmit} type="submit" className="btn w-100" style={{backgroundColor: "#FD0000"}}>Purchase</Button>
-                        
+
+                        <label>
+                            Buy 
+                            <input className="mx-1"
+                                type="radio"
+                                value="buy"
+                                checked={buyOrSell==="buy"}
+                                onChange={handleClick}/>
+                        </label>
+                        <label className="ml-3">
+                            Sell 
+                            <input className="mx-1"
+                                type="radio"
+                                value="sell"
+                                checked={buyOrSell==="sell"}
+                                onChange={handleClick}/>
+                        </label>                        
+                        <Button onClick={handleSubmit} type="submit" className="btn w-100" style={{backgroundColor: "#FD0000"}}>Purchase</Button>                        
                     </Form>
                 </Card.Body>
             </Card>
