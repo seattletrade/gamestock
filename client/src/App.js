@@ -65,16 +65,16 @@ function App() {
                 <UserFormContainer>
                   <ForgotPassword />
                 </UserFormContainer>
-              </Route>              
-            <PrivateRoute exact path="/gamestock/search" component={Infopage} />
-            <PrivateRoute exact path="/gamestock/user" component={Userpage} />            
-            <PrivateRoute exact path="/gamestock/trade" component={Tradepage} />
-            <Route>
-              <Notfound/>  
-            </Route>          
-          </Switch>
-          <Footer />
-        </Container>
+              </Route>
+              <PrivateRoute exact path="/gamestock/search" component={Infopage} />
+              <PrivateRoute exact path="/gamestock/user" component={Userpage} />
+              <PrivateRoute exact path="/gamestock/trade" component={Tradepage} />
+              <Route>
+                <Notfound />
+              </Route>
+            </Switch>
+            {/* <Footer /> */}
+          </Container>
         </FakeCurrentTimeContext.Provider>
       </AuthProvider>
     </Router>
