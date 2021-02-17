@@ -10,6 +10,6 @@ const symbolNameSchema = new Schema({
     "Symbol": { type: String, required: true },
 });
 
-const Book = mongoose.model("SymbolName", symbolNameSchema);
+const SymbolName = mongoose.model("SymbolName", symbolNameSchema);
 
-module.exports = Book;
+module.exports = SymbolName;

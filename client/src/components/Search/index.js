@@ -9,9 +9,10 @@ export default function Search() {
     const [searchInput, setSearchInput] = useState();
     const [searchResults, setSearchResults] = useState();
     const [searchList, setSearchList] = useState([]);
+    const [nameResult, setNameResult] = useState();
 
     useEffect(() => {
-        console.log('State changed!', 'searchInput:' + searchInput, 'searchResults:' + searchResults, 'searchList:' + searchList);
+        console.log('State changed!', 'searchInput:' + searchInput, 'searchResults:' + searchResults, 'nameResult:' + nameResult, 'searchList:' + searchList);
     }, [searchInput, searchResults, searchList]);
 
     const handleChange = e => {
@@ -42,24 +43,27 @@ export default function Search() {
                         .filter((searchList) => searchList.region === 'United States')
                     }
                     renderItem={(item, isHighlighted) =>
-                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}
+                            key={item.symbol}>
                             {item.symbol} {item.label}
+                            {setNameResult(item.label)}
                         </div>
                     }
                     inputProps={{ placeholder: 'Search' }}
                     value={searchInput}
                     onChange={handleChange}
-                    onSelect={(item) => setSearchResults(item)}
+                    onSelect={(item) => {
+                        setSearchResults(item)
+                    }}
                 />
             </div>
-            {/* the searchResults state holds the symbol the user selected from the list, can be passed down and used in other part of the app i think */}
             {searchResults ? (
                 <>
-                <ChartCompanyinfoMain symbol = {searchResults} companyName = {searchInput}  />
-                <CompanyInformation symbol = {searchResults} companyName = {searchInput}/>
+                    <ChartCompanyinfoMain symbol={searchResults} companyName={nameResult} />
+                    <CompanyInformation symbol={searchResults} />
                 </>
-            ):(<div></div>)}
-            
+            ) : (<div></div>)}
+
         </>
     )
 }

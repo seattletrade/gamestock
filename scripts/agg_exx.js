@@ -8,6 +8,25 @@ mongoose.connect(
   "mongodb://localhost/gamestock"
 );
 
+db.Stock
+.aggregate([
+  {$match : { user_email : "polina@test.com" }},
+  {
+    $group : { 
+        "_id" : null, 
+        "invBalance" : { 
+            $sum : { 
+                $multiply : ["$avg_price", "$amount"]
+            }
+        }
+    }
+  }
+]).then(data => {
+  console.log(data);
+  process.exit(0);
+})
+
+
 /*  
 ///// All stocks for user
 db.Stock
@@ -74,6 +93,7 @@ db.Stock
     process.exit(1);
   });
 */
+/*
 let sell_am = 4
 
 db.Stock
@@ -107,3 +127,4 @@ db.Stock
    process.exit(1);
  });
 
+*/
