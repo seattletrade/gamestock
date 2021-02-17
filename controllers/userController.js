@@ -16,3 +16,5 @@ module.exports = {
           .catch(err => res.status(422).json(err));
       },
 };
+
+        // .find({"email" : req.params.email})
