@@ -7,6 +7,9 @@ export default {
     saveBuyTransaction: (stockPurchased) => {
         return axios.post("/api/stocks/buy", stockPurchased)
     },
+    saveSellTransaction: (stockSold) => {
+        return axios.post("/api/stocks/sell", stockSold)
+    },
     getCurrentPrice: (companySymbol) => {
         return axios.get("/api/alphaVantage/currentPrice/" + companySymbol)
     },
