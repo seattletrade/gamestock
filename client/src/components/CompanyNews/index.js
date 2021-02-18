@@ -26,7 +26,7 @@ export default function CompanyNews(props) {
     }
 
     return (
-        <>
+        <div className="pt-5" style={{ color: "white" }}>
             <h4>Latest News</h4>
             {companyNews ? <div className="newsList">
                 {companyNews.map(item => {
@@ -51,6 +51,6 @@ export default function CompanyNews(props) {
 
                 }
             </div> : <div>No news to display</div>}
-        </>
+        </div>
     )
 }

@@ -31,7 +31,7 @@ export default function MyStockList() {
             <h4>Watch Lists</h4>
             <div className="myStockLists">
                 {myStockLists.map(company => {
-                    return(<div>
+                    return(<div key={company.symbol}>
                         <Row>
                             <Col>
                                 <Row style={{ margin: "auto" }}>

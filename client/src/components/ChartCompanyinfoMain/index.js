@@ -13,6 +13,7 @@ import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData, G
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
 
 export default function Infopage(promps) {
+    const [propsState, setPropsState] = useState({ "symbol": "", "companyName": "" });
 
     // Take FakeCurrentTime from App.js by Context
     const currentFakeTime = useContext(FakeCurrentTimeContext);
@@ -78,7 +79,7 @@ export default function Infopage(promps) {
 
     // Fetch Martke Data from API (Alpha Vantage) 
     function GetMarketData(userInput) {
-
+        // console.log(userInput);
         let symbol = userInput.symbol;
         let companyName = userInput.companyName;
 
@@ -92,16 +93,38 @@ export default function Infopage(promps) {
         TotalDailyMarketDATACall(symbol)
     }
 
+    // console.log(propsState);
+    if (propsState["companyName"] !== promps["companyName"]) {
+        // console.log("propsState Changed")
+        setPropsState(promps);
+    }
+    // console.log(propsState);
+    useEffect(() => {
+        // console.log("Check")
+        if (propsState["companyName"] === undefined) {
+            console.log("Undefined")
+        } else {
+            setCompanyNameState(propsState["companyName"]);
+            setTicker(propsState["symbol"])
+
+            // Store Market Data(IntraDay(15min / 60min), Daily(20years)) to STATE
+            GetMarketData(propsState);
+        }
+    }, [propsState])
+
     // Display first Graph
     useEffect(() => {
-        console.log("First")
+        // console.log("First")
+        setPropsState(promps)
         // API.getTest().then((res) => console.log(res));
 
-        // TODO: Get the data from a User when they click a company from Search PAGE
+        // Get the data from a User when they click a company from Search PAGE
         let userInput = promps
-
+        // console.log(userInput);
+        // console.log(userInput.symbol);
+        // console.log(userInput["companyName"]);
         setCompanyNameState(userInput["companyName"]);
-        setTicker(userInput["symbol"])
+        setTicker(userInput.symbol)
 
         // Store Market Data(IntraDay(15min / 60min), Daily(20years)) to STATE
         GetMarketData(userInput);
@@ -120,7 +143,7 @@ export default function Infopage(promps) {
 
             // Display Realtime Value
             let afterFifteenMinDifference = GetCurrentValueForLive(intraDayStockState, increaseFAKETime, currentFakeTime);
-
+            // console.log(intraDayStockState);
             // Swich Statment - 1D , 1W , 1M , 3M , 1Y , 5Y
             // console.log("switchState");
             // console.log(switchState);
@@ -159,7 +182,7 @@ export default function Infopage(promps) {
             // console.log(setTraceStateIntraDay);
 
             if (graphDate.setTraceStateIntraDay["null"] === "") {
-                console.log("Pass - Undefined from GetIntraDayMarketData Func on InfoPAGE")
+                // console.log("Pass - Undefined from GetIntraDayMarketData Func on InfoPAGE")
             }
             else {
                 // console.log('Check else in Interval ');
@@ -168,15 +191,18 @@ export default function Infopage(promps) {
                 setTraceState(graphDate.setTraceStateIntraDay);
                 setVolume(graphDate.setVolumeIntraDay);
                 setRangeState(graphDate.rangeIntraDay);
-
+                
+                // if(currentValueState )
                 if (operatorForCurrentValue === "+") {
                     setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference / 180) + afterFifteenMinDifference);
                     setOperatorForCurrentValue("-");
                     // console.log("+")
+                    // console.log(currentValueState);
                 } else {
                     setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference / 180) - afterFifteenMinDifference);
                     setOperatorForCurrentValue("+")
                     // console.log("-")
+                    // console.log(currentValueState);
                 }
 
             }
@@ -184,7 +210,7 @@ export default function Infopage(promps) {
         }, 5000)
 
         return () => clearInterval(intervalId);
-    }, [increaseFAKETime, switchState])
+    }, [increaseFAKETime, switchState, currentValueState])
 
     // Call IntraDay market data
     function IntraDayMarketDATACall(symbol) {
@@ -338,15 +364,22 @@ export default function Infopage(promps) {
                 <div style={{ background: "black", height: "400px", margin: "0 -15px" }}>
                     <div className="pl-3 pt-5" style={{ color: "white" }}>
                         <p style={{ fontSize: "14px", marginBottom: "0" }}>{ticker}</p>
-                        <h3>{companyNameState}</h3>
+                        <Row>
+                            <Col className="text-left" style={{ margin: "auto" }}>
+                                <h3>{companyNameState}</h3>
+                            </Col>
+                            <Col className="mr-4" xs={3}>
+                                <Link
+                                    to="/gamestock/trade"
+                                    className={location.pathname === "/gamestock/trade" ? "nav-link active" : "nav-link"}
+                                >
+                                    <button type="button" className="btn btn-danger"> trade</button>
+                                </Link>
+                            </Col>
+                        </Row>
                         <h3>$<AnimatedNumber value={parseFloat(currentValueState).toFixed(2)}
                             formatValue={n => n.toFixed(2)} /></h3>
-                        <Link
-                            to="/gamestock/trade"
-                            className={location.pathname === "/gamestock/trade" ? "nav-link active" : "nav-link"}
-                        >
-                            <button type="button" className="btn btn-danger"> trade</button>
-                        </Link>
+
                     </div>
 
                     <ChartCompanyInfo traceState={traceState} volumeState={volumeState} range={rangeState} typeState={typeState} visible={visibleState} />
