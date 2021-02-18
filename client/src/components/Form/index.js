@@ -96,7 +96,7 @@ export default function PurchaseForm() {
                 setError(`You don't own any ${formObject.symbol.toUpperCase().trim()} shares`)
             } 
             else if(parseInt(formObject.amount) > parseInt(numberOfStocks) ){                   
-                setError(`You only have ${numberOfStocks} shares to sell`)
+                setError(`You only have ${numberOfStocks} ${formObject.symbol.toUpperCase().trim()} shares to sell`)
             }  else {
                 API.saveSellTransaction({
                     email: currentUser.email,
@@ -116,7 +116,7 @@ export default function PurchaseForm() {
         <>
             <Card>
                 <Card.Body>
-                    <h1 className="text-center mb-4">Buy a stock</h1>                                        
+                    <h1 className="text-center mb-4 text-white" style={{backgroundColor: "#FD0000"}}>Stock Market Place: Trade Shares Here</h1>                                        
                     {error && <Alert variant="danger">{error}</Alert> }
                     <Form >
                         <Form.Group id="symbol">
@@ -125,7 +125,7 @@ export default function PurchaseForm() {
                                 name="symbol" 
                                 onChange={handleInputChange}
                             />
-                        <div id="previewPrice" className="form-text text-muted">current price: {currentPrice}</div>    
+                        <div id="previewPrice" className="form-text text-muted">Current price: {currentPrice}</div>    
                         </Form.Group>
                         <Form.Group id="amount">
                             <Form.Label>Amount</Form.Label>
@@ -152,7 +152,7 @@ export default function PurchaseForm() {
                                 checked={buyOrSell==="sell"}
                                 onChange={handleClick}/>
                         </label>                        
-                        <Button onClick={handleSubmit} type="submit" className="btn w-100" style={{backgroundColor: "#FD0000"}}>Purchase</Button>                        
+                        <Button onClick={handleSubmit} type="submit" className="btn w-100" style={{backgroundColor: "#FD0000"}}>Complete Transaction</Button>                        
                     </Form>
                 </Card.Body>
             </Card>
