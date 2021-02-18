@@ -79,7 +79,7 @@ export default function Infopage(promps) {
 
     // Fetch Martke Data from API (Alpha Vantage) 
     function GetMarketData(userInput) {
-        console.log(userInput);
+        // console.log(userInput);
         let symbol = userInput.symbol;
         let companyName = userInput.companyName;
 
@@ -95,12 +95,12 @@ export default function Infopage(promps) {
 
     // console.log(propsState);
     if (propsState["companyName"] !== promps["companyName"]) {
-        console.log("propsState Changed")
+        // console.log("propsState Changed")
         setPropsState(promps);
     }
     // console.log(propsState);
     useEffect(() => {
-        console.log("Check")
+        // console.log("Check")
         if (propsState["companyName"] === undefined) {
             console.log("Undefined")
         } else {
@@ -114,15 +114,15 @@ export default function Infopage(promps) {
 
     // Display first Graph
     useEffect(() => {
-        console.log("First")
+        // console.log("First")
         setPropsState(promps)
         // API.getTest().then((res) => console.log(res));
 
         // Get the data from a User when they click a company from Search PAGE
         let userInput = promps
-        console.log(userInput);
-        console.log(userInput.symbol);
-        console.log(userInput["companyName"]);
+        // console.log(userInput);
+        // console.log(userInput.symbol);
+        // console.log(userInput["companyName"]);
         setCompanyNameState(userInput["companyName"]);
         setTicker(userInput.symbol)
 
@@ -182,10 +182,10 @@ export default function Infopage(promps) {
             // console.log(setTraceStateIntraDay);
 
             if (graphDate.setTraceStateIntraDay["null"] === "") {
-                console.log("Pass - Undefined from GetIntraDayMarketData Func on InfoPAGE")
+                // console.log("Pass - Undefined from GetIntraDayMarketData Func on InfoPAGE")
             }
             else {
-                console.log('Check else in Interval ');
+                // console.log('Check else in Interval ');
                 useTypeState(graphDate.typeState);
                 useVisibleState(graphDate.visible);
                 setTraceState(graphDate.setTraceStateIntraDay);
@@ -196,13 +196,13 @@ export default function Infopage(promps) {
                 if (operatorForCurrentValue === "+") {
                     setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference / 180) + afterFifteenMinDifference);
                     setOperatorForCurrentValue("-");
-                    console.log("+")
-                    console.log(currentValueState);
+                    // console.log("+")
+                    // console.log(currentValueState);
                 } else {
                     setCurrentValueState(parseFloat(currentValueState) + parseFloat(afterFifteenMinDifference / 180) - afterFifteenMinDifference);
                     setOperatorForCurrentValue("+")
-                    console.log("-")
-                    console.log(currentValueState);
+                    // console.log("-")
+                    // console.log(currentValueState);
                 }
 
             }

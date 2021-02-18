@@ -13,9 +13,9 @@ export default function News() {
         API.getNews()
             .then(res => {
                 newsArr = res.data;
-                console.log(newsArr);
+                // console.log(newsArr);
                 businessArr = newsArr.filter((item) => item.category === "business").slice(0, 25);
-                console.log(businessArr);
+                // console.log(businessArr);
                 setApiResults(businessArr)
             }
             )

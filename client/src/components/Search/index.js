@@ -85,7 +85,7 @@ export default function Search() {
                 <>
                     <ChartCompanyinfoMain companyName= {searchResult["companyName"]} symbol={searchResult["symbol"]} />
                     <CompanyInformation symbol={searchResult["symbol"]} />
-                    <CompanyNews symbol={searchResults} />
+                    <CompanyNews symbol={searchResult["symbol"]} />
                 </>
             ) : (<div></div>)}
 

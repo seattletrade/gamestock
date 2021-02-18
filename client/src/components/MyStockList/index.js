@@ -43,7 +43,7 @@ export default function MyStockList() {
                                 return false
                             }
                         })[0])
-                        console.log(finalData);
+                        // console.log(finalData);
                         setMyStockLists(finalData);
                     })
                     .catch(err => console.log(err))
