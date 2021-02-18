@@ -17,7 +17,6 @@ export default function MyStockList() {
     // Take FakeCurrentTime from App.js by Context
     const currentFakeTime = useContext(FakeCurrentTimeContext);
 
-    //Dummy Data
     const { currentUser } = useAuth();
     const [ myStockLists , setMyStockLists] = useState([])
 
@@ -62,7 +61,9 @@ export default function MyStockList() {
                 {myStockLists.length ? (
 
                 myStockLists.map(company => {
-                    return(<div>
+                    
+                    return(
+                    <div key={company.symbol}>
                         <Row>
                             <Col>
                                 <Row style={{ margin: "auto" }}>
@@ -80,7 +81,8 @@ export default function MyStockList() {
                             </Col>
                         </Row>
                         <hr className="myHr" />
-                    </div>)
+                    </div>
+                    )
                    })
                 
                 

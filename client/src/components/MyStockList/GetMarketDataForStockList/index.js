@@ -39,8 +39,8 @@ function dataProcessing(stockData, currentFakeTime) {
 
     currentValue = currentOpenValue[currentOpenValue.length - 1];
 
-    console.log(openValueAt930);
-    console.log(currentValue);
+    // console.log(openValueAt930);
+    // console.log(currentValue);
 
     let marker = ""
     if(currentValue >= openValueAt930){
