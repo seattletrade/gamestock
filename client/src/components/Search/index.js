@@ -35,7 +35,7 @@ export default function Search() {
         let searchQuery = searchListFromDB.filter(list => {
             // console.log(list["Symbol"].toLowerCase())
             // console.log(userInput);
-            return (list["Symbol"].toLowerCase().includes(userInput.toLowerCase()))
+            return ((list["Symbol"] + list["Company Name"] ).toLowerCase().includes(userInput.toLowerCase()))
         })
         let searchListsUnder10 = []
         if (searchQuery.length > 10) {
@@ -72,7 +72,7 @@ export default function Search() {
     // }
     return (
         <>
-            <div style={{ marginTop: "30px" }}>
+            <div style={{ zIndex: 10, marginTop: "", position: "absolute" }} >
                 <Autocomplete
                     getItemValue={(item) => item.Symbol}
                     items={searchList}
