@@ -1,7 +1,5 @@
 const axios = require("axios");
-if (process.env.NODE_ENV !== 'production'){
-    require('dotenv').config()
-}
+require('dotenv').config()
 
 module.exports = {
     getNews: function (req, res) {
