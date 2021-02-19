@@ -23,46 +23,50 @@ export default function MyWatchList() {
 
     const { currentUser } = useAuth();
     const history = useHistory()
-    const [ myWatchLists , setMyWatchLists] = useState([])
-    
+    const [ myWatchLists , setMyWatchLists] = useState([])   
 
     function loadWatchList(){
         let WatchArr = []
         let finalData = []
         API.getAllOnWatchList(currentUser.email)
         .then(watchLists => {
-            console.log(watchLists.data);
-            WatchArr = [...watchLists.data];
-            // console.log(StockArr);
-            watchLists.data.map(stock => {
-                API.getIntraMarketData(stock.symbol, "15min")
-                    .then(marketData => {
-                        // console.log(StockArr);
-                        // console.log(marketData);
-                        //Get Current Value & Graph Data
-                        finalData.push(WatchArr.filter(stock => {
-                            let graphData = stockDataProcessing(marketData.data, currentFakeTime);
-                            if(stock["symbol"] === graphData.symbol){
-                                stock["graphData"] = graphData
-                                return stock
-                            }else{
-                                return false
-                            }
-                        })[0])
-                        // console.log(finalData);
-                        setMyWatchLists(finalData);
-                    })
-                    .catch(err => console.log(err))
-            })
+           console.log(watchLists.data)
+            if(watchLists.data.length){
+                WatchArr = [...watchLists.data];           
+                watchLists.data.map(stock => {
+                    API.getIntraMarketData(stock.symbol, "15min")
+                        .then(marketData => {
+                            // console.log(StockArr);
+                            // console.log(marketData);
+                            //Get Current Value & Graph Data
+                            finalData.push(WatchArr.filter(stock => {
+                                let graphData = stockDataProcessing(marketData.data, currentFakeTime);
+                                if(stock["symbol"] === graphData.symbol){
+                                    stock["graphData"] = graphData
+                                    return stock
+                                }else{
+                                    return false
+                                }
+                            })[0])
+                            // console.log(finalData);
+                            setMyWatchLists(finalData);
+                        })
+                        .catch(err => console.log(err))
+                })
+            } else {
+                setMyWatchLists([])
+            }
+
         })
         .catch(err => console.log(err))       
     }
 
     function handleDelete(email, symbol){
+        // console.log(watchList);
         API.deleteOneOnWatchList(email, symbol)
         .then((res) => loadWatchList())
         .catch(err => console.log(err)); 
-        history.push("/gamestock/user")       
+        // history.push("/gamestock/user")       
     }
 
     useEffect(() => {
