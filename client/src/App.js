@@ -50,6 +50,7 @@ function App() {
           <Container>
             <Nav />
             <Switch>
+              <Route exact path="/" component={Homepage} />
               <Route exact path="/gamestock/" component={Homepage} />
               <Route exact path="/gamestock/signup" >
                 <UserFormContainer>

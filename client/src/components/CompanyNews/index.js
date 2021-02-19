@@ -5,18 +5,30 @@ import { Row, Col } from 'react-bootstrap';
 
 export default function CompanyNews(props) {
     const [companyNews, setCompanyNews] = useState();
+    const [propsState, setPropsState] = useState({ "symbol": "" });
 
-    //usestate setup here, to useeffect below
-    useEffect(() => {
+    if (propsState["symbol"] !== props["symbol"]) {
+        setPropsState(props)
+    }
+
+    function callApi(symbol) {
         let newsArr = []
-        API.getCompanyNews(props.symbol)
+        API.getCompanyNews(symbol)
             .then(res => {
                 newsArr = res.data.slice(0, 15);
                 console.log(newsArr)
                 setCompanyNews(newsArr);
             }
             )
-    }, [])
+    }
+
+    useEffect(() => {
+        if (propsState["symbol"] === undefined) {
+
+        } else {
+            callApi(propsState["symbol"]);
+        }
+    }, [propsState])
 
     function formatDate(timestamp) {
         const milliseconds = timestamp * 1000
@@ -26,7 +38,7 @@ export default function CompanyNews(props) {
     }
 
     return (
-        <>
+        <div className="pt-5" style={{ color: "white" }}>
             <h4>Latest News</h4>
             {companyNews ? <div className="newsList">
                 {companyNews.map(item => {
@@ -51,6 +63,6 @@ export default function CompanyNews(props) {
 
                 }
             </div> : <div>No news to display</div>}
-        </>
+        </div>
     )
 }

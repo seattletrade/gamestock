@@ -22,6 +22,7 @@ const symbolNameRoutes = require("./symbolName");
 router.use("/alphaVantage", alphaVantage);
 router.use("/books", bookRoutes);
 router.use("/stocks",stockRoutes);
+// router.use("/user/",userRoutes);
 //router.use("/user/",userRoutes);
 router.use("/userPage",userPageRoutes);
 router.use("/user",userRoutes);
