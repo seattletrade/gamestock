@@ -1,14 +1,22 @@
-.statsCompany-title{
-    font-size:11px;
-    color: lightgrey;
+.statsCompany-title {
+  font-size: 11px;
+  color: lightgrey;
 }
 
-.statsCompany-contents{
-    font-size:12px;
-    font-weight: bold;
-    color: white
+.statsCompany-contents {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
 }
 
-#companyStats{
-    color:white
+#companyStats {
+  color: white;
+}
+
+.tooltiplink {
+  color: white;
+}
+.tooltiplink:hover {
+  text-decoration: none;
+  color: red;
 }
