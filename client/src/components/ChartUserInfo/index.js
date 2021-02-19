@@ -16,7 +16,7 @@ export default function ChartUserInfo() {
     useEffect(() => {
         UserPageAPI.getUserInfo(currentUser.email)
         .then(res => {
-            setUserBalance(NumberComma(res.data[0].balance));
+            setUserBalance(NumberComma(res.data[0].balance.toFixed(2)));
         })
         .catch(err => console.log(err))
     }, [])

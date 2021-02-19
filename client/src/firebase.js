@@ -8,6 +8,7 @@ const fireApp = firebase.initializeApp({
     storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_MESSEGING_SENDET_ID,
     appId: process.env.REACT_APP_APP_ID,
+    databaseURL: ""
 })
 
 export const auth = fireApp.auth();
