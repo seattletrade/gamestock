@@ -26,8 +26,8 @@ db.Stock
   process.exit(0);
 })
 */
-db.Stock.find({user_email: "polina@test.com"}).
-then(data =>{
+db.Stock.find({user_email: "polina@test.com"}).sort("symbol")
+.then(data =>{
   console.log(data);
   process.exit(0);
 })

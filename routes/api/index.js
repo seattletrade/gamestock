@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const bookRoutes = require("./books");
 
 // AlpahVantage API - Stock markek Data
 const alphaVantage = require("./alphaVantage");
@@ -18,9 +17,11 @@ const userPageRoutes = require("./userPage");
 //symbols from db
 const symbolNameRoutes = require("./symbolName");
 
+// watchlist from db
+const watchlistRoutes  = require("./watchlists");
+
 // routes
 router.use("/alphaVantage", alphaVantage);
-router.use("/books", bookRoutes);
 router.use("/stocks",stockRoutes);
 // router.use("/user/",userRoutes);
 //router.use("/user/",userRoutes);
@@ -28,5 +29,6 @@ router.use("/userPage",userPageRoutes);
 router.use("/user",userRoutes);
 router.use("/finnhub", finnhub);
 router.use("/symbols", symbolNameRoutes);
+router.use("/watchlist",watchlistRoutes);
 
 module.exports = router;
