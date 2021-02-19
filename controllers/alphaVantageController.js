@@ -1,5 +1,5 @@
 const axios = require("axios");
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 
 module.exports = {
     getCurrentPrice: function (req, res) {
