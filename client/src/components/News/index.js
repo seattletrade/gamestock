@@ -38,7 +38,7 @@ export default function News() {
                             <Row>
                                 {item.image ? <Col className="col-sm-2"> <img style={{ width: "200px", float: "left" }} src={item.image} /> </Col> : <></>}
                                 <Col className="col-sm-10">
-                                    <a href={item.url}><h5>{item.headline}</h5></a>
+                                    <a href={item.url} target="_blank"><h5>{item.headline}</h5></a>
                                     <sub>{formatDate(item.datetime)}</sub>
                                 </Col>
                                 <Row>
