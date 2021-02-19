@@ -11,6 +11,7 @@ import { GetIntraDayMarketDataForFirstGraph, GetIntraDayMarketData } from '../Ge
 import GetOneWeekMarketData from '../GetOneWeekMarketData'
 import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData, GetFiveYearMarketData } from '../GetDailyMarketData'
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
+import {useAuth} from '../../contexts/AuthContext'
 
 export default function Infopage(promps) {
     const [propsState, setPropsState] = useState({ "symbol": "", "companyName": "" });
@@ -75,8 +76,21 @@ export default function Infopage(promps) {
     // CurrentValueState
     const [currentValueState, setCurrentValueState] = useState();
     const [operatorForCurrentValue, setOperatorForCurrentValue] = useState("+");
+    const { currentUser} = useAuth();
 
-
+    function handleClick(event){
+        event.preventDefault();
+        API.saveOnWatchList({
+            email: currentUser.email,
+            symbol: ticker,
+            companyName: companyNameState
+        })
+        .then(data => console.log(data))
+        // console.log(`
+        //     symbol: ${ticker},
+        //     companyName: ${companyNameState}
+        // `)
+    }
     // Fetch Martke Data from API (Alpha Vantage) 
     function GetMarketData(userInput) {
         // console.log(userInput);
@@ -374,6 +388,12 @@ export default function Infopage(promps) {
                                     className={location.pathname === "/gamestock/trade" ? "nav-link active" : "nav-link"}
                                 >
                                     <button type="button" className="btn btn-danger"> trade</button>
+                                </Link>
+                                <Link
+                                    to="/gamestock/user"
+                                    className={location.pathname === "/gamestock/user" ? "nav-link active" : "nav-link"}
+                                >
+                                    <button onClick={handleClick} type="button" className="btn btn-danger"> watch</button>
                                 </Link>
                             </Col>
                         </Row>
