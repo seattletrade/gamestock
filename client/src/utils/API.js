@@ -20,13 +20,13 @@ export default {
         return axios.get("/api/stocks/all/" + email)
     },
     getAllOnWatchList: (email) => {
-        return axios.get("api/watchlist/all/" + email)
+        return axios.get("/api/watchlist/all/" + email)
     },
     deleteOneOnWatchList: (email, symbol) => {
-        return axios.delete(`api/watchlist/delete/${email}/${symbol}`)
+        return axios.delete(`/api/watchlist/delete/${email}/${symbol}`)
     },
     saveOnWatchList: (beingWatched) => {
-        return axios.post("api/watchlist/new", beingWatched)
+        return axios.post("/api/watchlist/new", beingWatched)
     },
     getStockMarketData: (endPoint) => {
         return axios.get(endPoint);
