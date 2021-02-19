@@ -12,6 +12,7 @@ import GetOneWeekMarketData from '../GetOneWeekMarketData'
 import { GetOneMonthMarketData, GetThreeMonthMarketData, GetOneYearMarketData, GetFiveYearMarketData } from '../GetDailyMarketData'
 import GetCurrentValueForLive from '../GetCurrentValueForLive'
 import {useAuth} from '../../contexts/AuthContext'
+import {useHistory } from "react-router-dom";
 
 export default function Infopage(promps) {
     const [propsState, setPropsState] = useState({ "symbol": "", "companyName": "" });
@@ -77,6 +78,7 @@ export default function Infopage(promps) {
     const [currentValueState, setCurrentValueState] = useState();
     const [operatorForCurrentValue, setOperatorForCurrentValue] = useState("+");
     const { currentUser} = useAuth();
+    const history = useHistory();
 
     function handleClick(event){
         event.preventDefault();
@@ -86,6 +88,7 @@ export default function Infopage(promps) {
             companyName: companyNameState
         })
         .then(data => console.log(data))
+        history.push("/gamestock/user")
         // console.log(`
         //     symbol: ${ticker},
         //     companyName: ${companyNameState}
@@ -393,7 +396,7 @@ export default function Infopage(promps) {
                                     to="/gamestock/user"
                                     className={location.pathname === "/gamestock/user" ? "nav-link active" : "nav-link"}
                                 >
-                                    <button onClick={handleClick} type="button" className="btn btn-danger"> watch</button>
+                                    <button  type="button" className="btn btn-danger" onClick={handleClick}> watch</button>
                                 </Link>
                             </Col>
                         </Row>
