@@ -41,8 +41,9 @@ export default function ChartUserInfo() {
                                     ? "nav-link active"
                                     : "nav-link"
                             }
+                            style={{margin:"auto", padding:"0"}}
                         >
-                            search
+                            <button type="button" style={{backgroundColor:"#FD0000", color:"white"}}  className="btn">search</button>
                         </Link>
                     </Col>
                 </Row>
@@ -57,9 +58,9 @@ export default function ChartUserInfo() {
                                 location.pathname === "/gamestock/trade"
                                     ? "nav-link active"
                                     : "nav-link"
-                            }
+                            } style={{margin:"auto", padding:"0"}}
                         >
-                            trade
+                            <button type="button" style={{backgroundColor:"#FD0000", color:"white"}} className="btn">trade</button>
                         </Link>
                     </Col>
                 </Row>
