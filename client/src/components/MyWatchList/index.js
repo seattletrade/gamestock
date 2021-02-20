@@ -70,39 +70,7 @@ export default function MyWatchList() {
     }
 
     useEffect(() => {
-        loadWatchList()
-        // let WatchArr = []
-        // let finalData = []
-        // API.getAllOnWatchList(currentUser.email)
-        // .then(watchLists => {
-        //     console.log(watchLists.data);
-        //     WatchArr = [...watchLists.data];
-        //     // console.log(StockArr);
-        //     watchLists.data.map(stock => {
-        //         API.getIntraMarketData(stock.symbol, "15min")
-        //             .then(marketData => {
-        //                 // console.log(StockArr);
-        //                 // console.log(marketData);
-        //                 //Get Current Value & Graph Data
-        //                 finalData.push(WatchArr.filter(stock => {
-        //                     let graphData = stockDataProcessing(marketData.data, currentFakeTime);
-        //                     if(stock["symbol"] === graphData.symbol){
-        //                         stock["graphData"] = graphData
-        //                         return stock
-        //                     }else{
-        //                         return false
-        //                     }
-        //                 })[0])
-        //                 // console.log(finalData);
-        //                 setMyWatchLists(finalData);
-        //             })
-        //             .catch(err => console.log(err))
-        //     })
-        // })
-        // .catch(err => console.log(err))
-
-    // Put Currten Value with symbols and shares which are from Stock DB to setMyStockLists
-        
+        loadWatchList()        
     }, [])
 
     return (

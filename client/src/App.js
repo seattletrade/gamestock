@@ -74,7 +74,7 @@ function App() {
                 <Notfound />
               </Route>
             </Switch>
-            {/* <Footer /> */}
+            <Footer />
           </Container>
         </FakeCurrentTimeContext.Provider>
       </AuthProvider>
