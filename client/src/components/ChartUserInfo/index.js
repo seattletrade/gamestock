@@ -67,10 +67,11 @@ export default function ChartUserInfo() {
     }
 
     function getMarketData(stockLists) {
-        // console.log(stockLists);
-
+        console.log(stockLists);
+        if(stockLists.length > 0){
         // Call IntraDay market data
         IntraDayMarketDATACall(stockLists)
+        }
 
     }
 
@@ -196,7 +197,7 @@ export default function ChartUserInfo() {
                 }
             </div>
             <div style={{ margin: "0 -15px" }}>{
-                (totalInvestmentState)?(<ChartUser totalInvestmentState={totalInvestmentState} />):(<div>Loading...</div>)
+                (totalInvestmentState)?(<ChartUser totalInvestmentState={totalInvestmentState} />):(<div style={{textAlign:"center", margin:"50px 0"}}><h1>No stocks</h1></div>)
             }
                 
             </div>
