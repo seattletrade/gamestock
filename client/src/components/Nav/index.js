@@ -17,8 +17,9 @@ export default function Nav() {
     useEffect(() => {
         if(currentUser){
             API.getUserData(currentUser.email)
-            .then(data => setNickname(data.data.nickname))
-        }        
+            .then(data => setNickname(data.data.nickName))
+        }   
+        console.log(currentUser)     
     }, [])
     
 

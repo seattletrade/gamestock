@@ -31,7 +31,7 @@ export default function Signup() {
             await signup(emailRef.current.value, passwordRef.current.value)
             API.createUser({
                 email: emailRef.current.value,
-                nickname: nicknameRef.current.value
+                nickName: nicknameRef.current.value
             })            
             history.push("/gamestock/user")
         } catch {
