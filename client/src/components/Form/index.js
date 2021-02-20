@@ -58,7 +58,7 @@ export default function PurchaseForm() {
          
 
     useEffect(()=>{
-        API.getUserBalance(currentUser.email)        
+        API.getUserData(currentUser.email)        
         .then(data => setUserBalance(data.data.balance))  
         API.getAllStocks(currentUser.email)
         // .then(data => console.log(data.data)) 

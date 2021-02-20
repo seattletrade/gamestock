@@ -6,6 +6,7 @@ import API from '../../utils/API'
 
 export default function Signup() {
     const emailRef = useRef()
+    const nicknameRef = useRef();
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
     const { signup } = useAuth()
@@ -29,8 +30,9 @@ export default function Signup() {
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value)
             API.createUser({
-                email: emailRef.current.value
-            })
+                email: emailRef.current.value,
+                nickName: nicknameRef.current.value
+            })            
             history.push("/gamestock/user")
         } catch {
             setError('Account creation failed')
@@ -48,6 +50,10 @@ export default function Signup() {
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} />
+                        </Form.Group>
+                        <Form.Group id="nickname">
+                            <Form.Label>Nickname</Form.Label>
+                            <Form.Control type="text" ref={nicknameRef} />
                         </Form.Group>
                         <Form.Group id="password">
                             <Form.Label>Password</Form.Label>
