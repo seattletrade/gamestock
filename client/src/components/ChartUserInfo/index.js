@@ -12,14 +12,37 @@ export default function ChartUserInfo() {
 
     const { currentUser } = useAuth();
     const [ userBalance, setUserBalance ] = useState(0);
+    const [ totalInvestmentState, setTotalInvestmentState ] = useState(0);
+    const [ investingStartDay, setInvestingStartDay] = useState("");
 
     useEffect(() => {
         UserPageAPI.getUserInfo(currentUser.email)
         .then(res => {
+            // console.log(res.data);
+            setInvestingStartDay(res.data[0].investingStartDay);
             setUserBalance(NumberComma(res.data[0].balance.toFixed(2)));
         })
         .catch(err => console.log(err))
     }, [])
+
+    useEffect(() => {
+        UserPageAPI.getStockList(currentUser.email)
+        .then(res => {
+            // console.log(res.data);
+            calculateTotalInvestment(res.data);
+        })
+        .catch(err => console.log(err))
+    }, [])
+
+
+    function calculateTotalInvestment(stockLists){
+        let totalInvestment = 0;
+        stockLists.map(stockList => {
+            totalInvestment += parseFloat(stockList["amount"]) * parseFloat(stockList["avg_price"]);
+        })
+        console.log("totalInvestment");
+        console.log(totalInvestment);
+    }
 
     function myFetch(e) {
         e.preventDefault();
@@ -88,7 +111,7 @@ export default function ChartUserInfo() {
                     <button onClick={myFetch} className="btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2" >1Y</button>
                 </Col>
                 <Col className="m-0 p-0">
-                    <button onClick={myFetch} className="btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2" >5Y</button>
+                    <button onClick={myFetch} className="btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2" >ALL</button>
                 </Col>
             </Row>
             <hr className="myHr" />
