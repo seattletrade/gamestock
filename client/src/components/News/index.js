@@ -36,9 +36,9 @@ export default function News() {
                     return (
                         <div key={item.id}>
                             <Row>
-                                {item.image ? <Col className="col-sm-2"> <img style={{ width: "200px", float: "left" }} src={item.image} /> </Col> : <></>}
-                                <Col className="col-sm-10">
-                                    <a href={item.url}><h5>{item.headline}</h5></a>
+                                {item.image ? <div> <img style={{ width: "200px", float: "left" }} src={item.image} /> </div> : <></>}
+                                <Col className="col-sm-9">
+                                    <a href={item.url} target="_blank"><h5>{item.headline}</h5></a>
                                     <sub>{formatDate(item.datetime)}</sub>
                                 </Col>
                                 <Row>
