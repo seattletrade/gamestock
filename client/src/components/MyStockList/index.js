@@ -25,7 +25,7 @@ export default function MyStockList() {
         let finalData = []
         UserPageAPI.getStockList(currentUser.email)
         .then(stockLists => {
-            console.log("stock lists", stockLists.data);
+            // console.log("stock lists", stockLists.data);
             
             StockArr = [...stockLists.data];
             // console.log(StockArr);
@@ -59,7 +59,7 @@ export default function MyStockList() {
     return (
         <>
             <h4>Stocks</h4>
-           {console.log(myStockLists)}
+           {/* {console.log(myStockLists)} */}
             <div className="myStockLists">
                 {myStockLists.length ? (
                     
