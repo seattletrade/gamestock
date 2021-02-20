@@ -77,6 +77,7 @@ export default function Infopage(promps) {
     // CurrentValueState
     const [currentValueState, setCurrentValueState] = useState();
     const [operatorForCurrentValue, setOperatorForCurrentValue] = useState("+");
+    const [isClicked, setIsClicked] = useState(false)
     const { currentUser} = useAuth();
     const history = useHistory();
 
@@ -88,7 +89,8 @@ export default function Infopage(promps) {
             companyName: companyNameState
         })
         .then(data => console.log(data))
-        history.push("/gamestock/user")
+        setIsClicked(true);
+        // history.push("/gamestock/user")
         // console.log(`
         //     symbol: ${ticker},
         //     companyName: ${companyNameState}
@@ -396,7 +398,7 @@ export default function Infopage(promps) {
                                     to="/gamestock/user"
                                     className={location.pathname === "/gamestock/user" ? "nav-link active" : "nav-link"}
                                 >
-                                    <button  type="button" className="btn btn-danger" onClick={handleClick}> watch</button>
+                                    <button  type="button" className="btn btn-danger" onClick={handleClick}>{isClicked ? "watched" : "watch"} </button>
                                 </Link>
                             </Col>
                         </Row>
