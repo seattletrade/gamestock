@@ -48,7 +48,7 @@ export default function ChartUserInfo() {
     }, [])
 
     useEffect(() => {
-        console.log("totalInvestmentState changed")
+        // console.log("totalInvestmentState changed")
     }, [totalInvestmentState])
 
 
@@ -57,8 +57,8 @@ export default function ChartUserInfo() {
         stockLists.map(stockList => {
             totalInvestment += parseFloat(stockList["amount"]) * parseFloat(stockList["avg_price"]);
         })
-        console.log("totalInvestment");
-        console.log(totalInvestment);
+        // console.log("totalInvestment");
+        // console.log(totalInvestment);
     }
 
     function myFetch(e) {
@@ -80,7 +80,7 @@ export default function ChartUserInfo() {
                 API.getIntraMarketData(stockList.symbol, "15min")
                     .then(res => {
                         // stockData.push(res.data);
-                        console.log("IntraDayMarketDATACall");
+                        // console.log("IntraDayMarketDATACall");
                         return GetIntraDayFirstGraphData(res.data, stockList.amount, currentFakeTime);
                     })
                     .catch(err => console.log(err))
@@ -89,7 +89,7 @@ export default function ChartUserInfo() {
 
         // Get Market data for all Stocks
         Promise.all(stockData).then(res => {
-            console.log(res)
+            // console.log(res)
             let totalStocks = { ...res[0] }
             // let totalStocks = {"close": ["0"]}
             let defferenceWithStartandCurrent = 0;
@@ -111,7 +111,7 @@ export default function ChartUserInfo() {
                         }
 
                     }
-                    console.log(fistPrice)
+                    // console.log(fistPrice)
                 }
 
                 defferenceWithStartandCurrent = totalStocks["close"][totalStocks - 1] - totalStocks["close"][0]
@@ -121,7 +121,7 @@ export default function ChartUserInfo() {
                     totalStocks["color"] = { color: 'red' }
                 }
 
-                console.log(totalStocks);
+                // console.log(totalStocks);
                 let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
                 if(defferenceInvesting > 0){
@@ -142,7 +142,7 @@ export default function ChartUserInfo() {
                 } else {
                     totalStocks["color"] = { color: 'red' }
                 }
-                console.log(totalStocks);
+                // console.log(totalStocks);
                 setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length-1]))
                 setTotalInvestmentState(totalStocks);
             }

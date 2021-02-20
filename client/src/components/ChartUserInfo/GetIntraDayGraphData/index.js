@@ -9,7 +9,7 @@ function GetIntraDayGraphData(oneDayMarketData, stockAmount, currentFakeTime) {
 }
 
 function dataProcessing(oneDayMarketData, stockAmount, currentFakeTime) {
-    console.log("dataProcessing");
+    // console.log("dataProcessing");
     // console.log(oneDayMarketData);
 
     let symbol = oneDayMarketData["Meta Data"]["2. Symbol"];
