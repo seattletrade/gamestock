@@ -52,13 +52,13 @@ export default function PurchaseForm() {
 
     function GetCurrentPrice(symbol) {             
         API.getCurrentPrice(symbol)
-        .then(res => setCurrentPrice(res.data['Global Quote']['05. price']))
+        .then(res => setCurrentPrice(parseFloat(res.data['Global Quote']['05. price'])).toFixed(2))
         .catch(err => console.log(err))
     }
          
 
     useEffect(()=>{
-        API.getUserBalance(currentUser.email)        
+        API.getUserData(currentUser.email)        
         .then(data => setUserBalance(data.data.balance))  
         API.getAllStocks(currentUser.email)
         // .then(data => console.log(data.data)) 
@@ -116,7 +116,7 @@ export default function PurchaseForm() {
         <>
             <Card>
                 <Card.Body>
-                    <h1 className="text-center mb-4 text-white" style={{backgroundColor: "#FD0000"}}>Stock Market Place: Trade Shares Here</h1>                                        
+                    <h1 className="text-center mb-4 text-white" style={{backgroundColor: "#FD0000"}}>Trading Desk: Trade Shares Here</h1>                                        
                     {error && <Alert variant="danger">{error}</Alert> }
                     <Form >
                         <Form.Group id="symbol">

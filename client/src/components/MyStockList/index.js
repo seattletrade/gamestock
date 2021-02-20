@@ -25,14 +25,15 @@ export default function MyStockList() {
         let finalData = []
         UserPageAPI.getStockList(currentUser.email)
         .then(stockLists => {
-            // console.log(stockLists.data);
+            // console.log("stock lists", stockLists.data);
+            
             StockArr = [...stockLists.data];
             // console.log(StockArr);
             stockLists.data.map(stock => {
                 API.getIntraMarketData(stock.symbol, "15min")
                     .then(marketData => {
                         // console.log(StockArr);
-                        // console.log(marketData);
+                        // console.log("market Data", marketData);
                         //Get Current Value & Graph Data
                         finalData.push(StockArr.filter(stock => {
                             let graphData = stockDataProcessing(marketData.data, currentFakeTime);
@@ -45,8 +46,9 @@ export default function MyStockList() {
                         })[0])
                         // console.log(finalData);
                         setMyStockLists(finalData);
+                        
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => console.log(err))               
             })
         })
         .catch(err => console.log(err))
@@ -57,11 +59,11 @@ export default function MyStockList() {
     return (
         <>
             <h4>Stocks</h4>
+           {/* {console.log(myStockLists)} */}
             <div className="myStockLists">
                 {myStockLists.length ? (
-
-                myStockLists.map(company => {
                     
+                myStockLists.map(company => {                   
                     return(
                     <div key={company.symbol}>
                         <Row>
@@ -76,8 +78,19 @@ export default function MyStockList() {
                             <Col className="text-center" style={{ margin: "auto" }}>
                                 <StockChart company={company} />
                             </Col>
-                            <Col className="text-right" style={{ margin: "auto" }}>
-                                ${parseFloat((company["graphData"].currentValue)).toFixed(2)}
+                            <Col className="text-right " style={{ margin: "auto" }}>
+                                <Row className="justify-content-end" style={{ margin: "auto" }}>
+                                    {parseFloat((company["graphData"].currentValue)).toFixed(2)}
+                                </Row>
+                                {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2) >= 0  ? 
+                                    <Row className="text-success justify-content-end" style={{ margin: "auto",  fontSize: "10px" }}>
+                                        {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
+                                    </Row>
+                                    :
+                                    <Row className="text-danger justify-content-end" style={{ margin: "auto",  fontSize: "10px" }}>
+                                        {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
+                                    </Row>
+                                }                                
                             </Col>
                         </Row>
                         <hr className="myHr" />

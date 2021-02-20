@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useHistory } from "react-router-dom";
 import "./style.scss"
 import Logo from "../Logo";
 import { useAuth } from '../../contexts/AuthContext'
+import API from '../../utils/API';
 
 
 
 export default function Nav() {
     const location = useLocation();
     const [error, setError] = useState();
+    const [nickname, setNickname] = useState();
     const { currentUser, logout, signup, login } = useAuth();
     const history = useHistory()
+
+    useEffect(() => {
+        if(currentUser){
+            API.getUserData(currentUser.email)
+            .then(data => setNickname(data.data.nickName))
+        }   
+        console.log(currentUser)     
+    }, [])
+    
 
     const handleLogout = async () => {
         setError('')
@@ -36,7 +47,7 @@ export default function Nav() {
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarToggler">
-                <ul className="navbar-nav">
+                <ul className="navbar-nav mr-auto">
                     <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                         <Link
                             to="/gamestock/user"
@@ -62,20 +73,18 @@ export default function Nav() {
                             search
                         </Link>
                     </li>
-
-                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                        {!currentUser ?
-                            <>
-                                <Link className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"} to="/gamestock/login" >Login</Link>
-                                <Link className={location.pathname === "/gamestock/signup" ? "nav-link active" : "nav-link"} to="/gamestock/signup">Signup</Link>
-                            </> :
-                            <>
-                                <div className="ml-auto text-white" >Email: {currentUser.email}</div>
-                                <Link className="mx-2 text-white" to="/gamestock/" onClick={handleLogout} variant="link">logout</Link>
-                            </>
-                        }
-                    </li>
                 </ul>
+                {!currentUser ?
+                    <>
+                        <Link className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"} to="/gamestock/login" >Login</Link>
+                        <Link className={location.pathname === "/gamestock/signup" ? "nav-link active" : "nav-link"} to="/gamestock/signup">Signup</Link>
+                    </> :
+                    <>
+                        <div className="ml-auto text-white" >Hello, {nickname}</div>
+                        <Link className="mx-2 text-white" to="/gamestock/" onClick={handleLogout} variant="link">logout</Link>
+                    </>
+                }
+
             </div>
 
         </nav>

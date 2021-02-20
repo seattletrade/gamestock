@@ -34,7 +34,7 @@ export default function ChartUser(props) {
                     },
                     type: 'date',
                     // type: props.type,
-                    visible: false,
+                    visible: true,
                     tickmode: 'array',
                     // fixedrange: true,
                     // autorange: "reversed"

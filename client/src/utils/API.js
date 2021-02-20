@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default {
-    createUser: (email) => {
-        return axios.post("/api/user", email)
+    createUser: (userInfo) => {
+        return axios.post("/api/user", userInfo)
     },
     saveBuyTransaction: (stockPurchased) => {
         return axios.post("/api/stocks/buy", stockPurchased)
@@ -13,11 +13,20 @@ export default {
     getCurrentPrice: (companySymbol) => {
         return axios.get("/api/alphaVantage/currentPrice/" + companySymbol)
     },
-    getUserBalance: (email) => {
+    getUserData: (email) => {
         return axios.get("/api/user/" + email)
     },
     getAllStocks: (email) => {
         return axios.get("/api/stocks/all/" + email)
+    },
+    getAllOnWatchList: (email) => {
+        return axios.get("/api/watchlist/all/" + email)
+    },
+    deleteOneOnWatchList: (email, symbol) => {
+        return axios.delete(`/api/watchlist/delete/${email}/${symbol}`)
+    },
+    saveOnWatchList: (beingWatched) => {
+        return axios.post("/api/watchlist/new", beingWatched)
     },
     getStockMarketData: (endPoint) => {
         return axios.get(endPoint);
