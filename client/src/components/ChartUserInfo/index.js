@@ -5,37 +5,47 @@ import { Row, Col } from 'react-bootstrap';
 
 import UserPageAPI from '../../utils/UserPageAPI';
 import { useAuth } from '../../contexts/AuthContext';
+import FakeCurrentTimeContext from '../../contexts/FakeCurrentTimeContext'
 
+
+import { GetIntraDayFirstGraphData, GetIntraDayGraphData } from "./GetIntraDayGraphData";
 import NumberComma from '../NumberComma'
+import API from "../../utils/API";
 
 export default function ChartUserInfo() {
+    // Take FakeCurrentTime from App.js by Context
+    const currentFakeTime = useContext(FakeCurrentTimeContext);
 
     const { currentUser } = useAuth();
-    const [ userBalance, setUserBalance ] = useState(0);
-    const [ totalInvestmentState, setTotalInvestmentState ] = useState(0);
-    const [ investingStartDay, setInvestingStartDay] = useState("");
+    const [userBalance, setUserBalance] = useState(0);
+    const [totalInvestmentState, setTotalInvestmentState] = useState(0);
+    const [stockLists, setStockListsState] = useState(0);
+    const [investingStartDay, setInvestingStartDay] = useState("");
 
     useEffect(() => {
         UserPageAPI.getUserInfo(currentUser.email)
-        .then(res => {
-            // console.log(res.data);
-            setInvestingStartDay(res.data[0].investingStartDay);
-            setUserBalance(NumberComma(res.data[0].balance.toFixed(2)));
-        })
-        .catch(err => console.log(err))
+            .then(res => {
+                // console.log(res.data);
+                setInvestingStartDay(res.data[0].investingStartDay);
+                setUserBalance(NumberComma(res.data[0].balance.toFixed(2)));
+            })
+            .catch(err => console.log(err))
     }, [])
 
     useEffect(() => {
         UserPageAPI.getStockList(currentUser.email)
-        .then(res => {
-            // console.log(res.data);
-            calculateTotalInvestment(res.data);
-        })
-        .catch(err => console.log(err))
+            .then(res => {
+                // console.log(res.data);
+                calculateTotalInvestment(res.data);
+
+                // call All Market DATA each symbol.
+                getMarketData(res.data)
+            })
+            .catch(err => console.log(err))
     }, [])
 
 
-    function calculateTotalInvestment(stockLists){
+    function calculateTotalInvestment(stockLists) {
         let totalInvestment = 0;
         stockLists.map(stockList => {
             totalInvestment += parseFloat(stockList["amount"]) * parseFloat(stockList["avg_price"]);
@@ -47,6 +57,44 @@ export default function ChartUserInfo() {
     function myFetch(e) {
         e.preventDefault();
         console.log(e.target.innerText)
+    }
+
+    function getMarketData(stockLists) {
+        // console.log(stockLists);
+
+        // Call IntraDay market data
+        IntraDayMarketDATACall(stockLists)
+
+    }
+
+    // function IntraDayMarketDATACall(stockLists) {
+    //     let stockData = [];
+    //         let test = stockLists.map(stockList => {
+    //             return (API.getIntraMarketData(stockList.symbol, "15min")
+    //                 .then(res => {
+    //                     // stockData.push(res.data);
+    //                     console.log("IntraDayMarketDATACall");
+    //                     stockData.push(GetIntraDayFirstGraphData(res.data, currentFakeTime));
+    //                 })
+    //                 .catch(err => console.log(err)))
+    //         })
+    //     console.log(test);
+    // }
+
+    function IntraDayMarketDATACall(stockLists) {
+        const stockData = stockLists.map(async stockList => {
+            return(
+            API.getIntraMarketData(stockList.symbol, "15min")
+                .then(res => {
+                    // stockData.push(res.data);
+                    console.log("IntraDayMarketDATACall");
+                    return GetIntraDayFirstGraphData(res.data, currentFakeTime);
+                })
+                .catch(err => console.log(err))
+            )
+            })
+        
+        Promise.all(stockData).then(res => console.log(res));
     }
 
     return (
@@ -64,9 +112,9 @@ export default function ChartUserInfo() {
                                     ? "nav-link active"
                                     : "nav-link"
                             }
-                            style={{margin:"auto", padding:"0"}}
+                            style={{ margin: "auto", padding: "0" }}
                         >
-                            <button type="button" style={{backgroundColor:"#FD0000", color:"white"}}  className="btn">search</button>
+                            <button type="button" style={{ backgroundColor: "#FD0000", color: "white" }} className="btn">search</button>
                         </Link>
                     </Col>
                 </Row>
@@ -81,9 +129,9 @@ export default function ChartUserInfo() {
                                 location.pathname === "/gamestock/trade"
                                     ? "nav-link active"
                                     : "nav-link"
-                            } style={{margin:"auto", padding:"0"}}
+                            } style={{ margin: "auto", padding: "0" }}
                         >
-                            <button type="button" style={{backgroundColor:"#FD0000", color:"white"}} className="btn">trade</button>
+                            <button type="button" style={{ backgroundColor: "#FD0000", color: "white" }} className="btn">trade</button>
                         </Link>
                     </Col>
                 </Row>
