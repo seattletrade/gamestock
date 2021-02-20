@@ -74,29 +74,17 @@ export default function Nav() {
                         </Link>
                     </li>
                 </ul>
-                <ul className="navbar-nav">
-                    {!currentUser ?                        
-                        <li className="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">                                  
-                            <Link className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"} to="/gamestock/login" >Login</Link>
-                        </li>
-                        :
-                        <li className="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">                            
-                            <Link className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"} to="/gamestock/login" >Hi {nickname}</Link>
-                            {/* <div className="text-white">Hi {nickname}</div> */}
-                        </li>
-                    }
-                    {!currentUser ? 
-                        <li className="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">    
-                            <Link className={location.pathname === "/gamestock/signup" ? "nav-link active" : "nav-link"} to="/gamestock/signup">Signup</Link>                                
-                        </li>
-                        :
-                        <li className="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">  
-                            <Link onClick={handleLogout} className={location.pathname === "/gamestock/signup" ? "nav-link active" : "nav-link"} to="/gamestock/signup">Logout</Link> 
-                            {/* <Link className="mx-2 text-white" to="/gamestock/" onClick={handleLogout} variant="link">logout</Link> */}
-                                                    
-                        </li>
-                    }                       
-                </ul>
+                {!currentUser ?
+                    <>
+                        <Link className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"} to="/gamestock/login" >Login</Link>
+                        <Link className={location.pathname === "/gamestock/signup" ? "nav-link active" : "nav-link"} to="/gamestock/signup">Signup</Link>
+                    </> :
+                    <>
+                        <div className="ml-auto text-white" >Hello, {nickname}</div>
+                        <Link className="mx-2 text-white" to="/gamestock/" onClick={handleLogout} variant="link">logout</Link>
+                    </>
+                }
+
             </div>
 
         </nav>
