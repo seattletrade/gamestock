@@ -52,7 +52,7 @@ export default function PurchaseForm() {
 
     function GetCurrentPrice(symbol) {             
         API.getCurrentPrice(symbol)
-        .then(res => setCurrentPrice(res.data['Global Quote']['05. price']))
+        .then(res => setCurrentPrice(parseFloat(res.data['Global Quote']['05. price'])).toFixed(2))
         .catch(err => console.log(err))
     }
          
