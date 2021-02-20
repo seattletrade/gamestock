@@ -19,7 +19,6 @@ function dataProcessing(oneDayMarketData, stockAmount, currentFakeTime) {
     let days = 1;
     // 86400000 sec (= 1 day )
     let aDayTomiliSec = 86400000;
-    let fiveHourmiliSec = 18000000;
 
     for (let date in oneDayMarketData["Time Series (15min)"]) {
         if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - days) {

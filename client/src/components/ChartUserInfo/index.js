@@ -20,6 +20,9 @@ export default function ChartUserInfo() {
     const [userBalance, setUserBalance] = useState(0);
     const [totalInvestmentState, setTotalInvestmentState] = useState(0);
     const [totalInvestingMoney, setTotalInvestingMoney] = useState(0);
+    const [defferenceOfInvestingMoney, setDefferenceOfInvestingMoney] = useState(0);
+    const [percentOfDefferenceOfInvestingMoney, setPercentOfDefferenceOfInvestingMoney] = useState(0);
+    const [ isSign, setIsSign ] = useState(true)
     const [stockLists, setStockListsState] = useState(0);
     const [investingStartDay, setInvestingStartDay] = useState("");
 
@@ -119,6 +122,17 @@ export default function ChartUserInfo() {
                 }
 
                 console.log(totalStocks);
+                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+
+                if(defferenceInvesting > 0){
+                    setIsSign(true)
+                }else{
+                    setIsSign(false)
+                }
+
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setDefferenceOfInvestingMoney(defferenceInvesting)
+                
                 setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length-1]))
                 setTotalInvestmentState(totalStocks);
             } else {
@@ -174,8 +188,12 @@ export default function ChartUserInfo() {
                     </Col>
                 </Row>
             </div>
-            <div className="text-primary ml-3 mt-2" style={{ fontSize: "11px" }}>
-                &#8593; $88.51(1.20%) Today
+            <div className="text-danger ml-3 mt-2" style={{ fontSize: "11px" }}>
+                {
+                (isSign)?
+                (<div style={{color:"blue"}}>&#8593; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) Today</div>):
+                (<div style={{color:"red"}}>&#8595; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) Today</div>)
+                }
             </div>
             <div style={{ margin: "0 -15px" }}>{
                 (totalInvestmentState)?(<ChartUser totalInvestmentState={totalInvestmentState} />):(<div>Loading...</div>)
