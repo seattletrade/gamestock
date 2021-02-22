@@ -1,5 +1,5 @@
 export default function GetOneYearGraphData(GetOneYearGraphData, stockAmount, currentFakeTime) {
-    console.log(GetOneYearGraphData);
+    // console.log(GetOneYearGraphData);
 
     // console.log(dataProcessing(oneWeekMarketData, stockAmount, currentFakeTime))
     return dataProcessing(GetOneYearGraphData, stockAmount, currentFakeTime)
@@ -40,7 +40,7 @@ function dataProcessing(GetOneYearGraphData, stockAmount, currentFakeTime) {
             // Date.parse(currentFakeTime) - fiveHourmiliSec - (aDayTomiliSec * days) < Date.parse(date) &&
             Date.parse(date) < (Date.parse(currentFakeTime) - aDayTomiliSec * days)) {
                 tempCloseValue += parseFloat(GetOneYearGraphData["Time Series (Daily)"][date]['4. close']);
-                console.log(tempCloseValue);
+                // console.log(tempCloseValue);
                 if(count % 5 === 0){
                     currentCloseValue.unshift((tempCloseValue/5).toFixed(2));
                     tempCloseValue = 0;

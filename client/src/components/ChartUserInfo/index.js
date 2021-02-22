@@ -634,12 +634,6 @@ export default function ChartUserInfo() {
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
                 IntraDayMarketDATACall(stockListState)
-                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime, currentFakeTime)
-                // useTypeState(type);
-                // useVisibleState(visible);
-                // setTraceState(setTraceStateIntraDay);
-                // setVolume(setVolumeIntraDay);
-                // setRangeState(rangeIntraDay);
                 break;
             }
             case "1W": {
@@ -651,12 +645,6 @@ export default function ChartUserInfo() {
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
                 OneWeekMarketDATACall(stockListState)
-                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime, currentFakeTime);
-                // useTypeState(type);
-                // useVisibleState(visible);
-                // setTraceState(setTraceStateIntraDay);
-                // setVolume(setVolumeIntraDay);
-                // setRangeState(rangeIntraDay);
                 break;
             }
             case "1M": {
@@ -668,13 +656,6 @@ export default function ChartUserInfo() {
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
                 OneMonthMarketDATACall(stockListState)
-                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
-                // useTypeState(type);
-                // useVisibleState(visible);
-                // setTraceState(setTraceStateIntraDay);
-                // setVolume(setVolumeIntraDay);
-                // setRangeState(rangeIntraDay);
-
                 break;
             }
             case "3M": {
@@ -686,12 +667,6 @@ export default function ChartUserInfo() {
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
                 ThreeMonthMarketDATACall(stockListState)
-                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
-                // useTypeState(type);
-                // useVisibleState(visible);
-                // setTraceState(setTraceStateIntraDay);
-                // setVolume(setVolumeIntraDay);
-                // setRangeState(rangeIntraDay);
                 break;
             }
             case "1Y": {
@@ -703,12 +678,6 @@ export default function ChartUserInfo() {
                 setButton1YState(btnWithoutOutline)
                 setButtonAllState(btnWithOutline)
                 OneYearMarketDATACall(stockListState);
-                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
-                // useTypeState(type);
-                // useVisibleState(visible);
-                // setTraceState(setTraceStateIntraDay);
-                // setVolume(setVolumeIntraDay);
-                // setRangeState(rangeIntraDay);
                 break;
             }
             case "ALL": {
@@ -719,12 +688,6 @@ export default function ChartUserInfo() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithoutOutline)
-                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetFiveYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
-                // useTypeState(type);
-                // useVisibleState(visible);
-                // setTraceState(setTraceStateIntraDay);
-                // setVolume(setVolumeIntraDay);
-                // setRangeState(rangeIntraDay);
                 break;
             }
         }
