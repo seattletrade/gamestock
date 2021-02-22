@@ -311,7 +311,7 @@ export default function ChartUserInfo() {
                     .then(res => {
                         // stockData.push(res.data);
                         // console.log("OneWeekMarketDATACall");
-                        console.log(res);
+                        // console.log(res);
                         return GetOneMonthGraphData(res.data, stockList.amount, currentFakeTime);
                     })
                     .catch(err => console.log(err))
@@ -416,7 +416,7 @@ export default function ChartUserInfo() {
                     .then(res => {
                         // stockData.push(res.data);
                         // console.log("OneWeekMarketDATACall");
-                        console.log(res);
+                        // console.log(res);
                         return GetThreeMonthGraphData(res.data, stockList.amount, currentFakeTime);
                     })
                     .catch(err => console.log(err))
@@ -521,7 +521,7 @@ export default function ChartUserInfo() {
                     .then(res => {
                         // stockData.push(res.data);
                         // console.log("OneWeekMarketDATACall");
-                        console.log(res);
+                        // console.log(res);
                         return GetOneYearGraphData(res.data, stockList.amount, currentFakeTime);
                     })
                     .catch(err => console.log(err))

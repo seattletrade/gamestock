@@ -1,5 +1,5 @@
 export default function GetOneMonthGraphData(threeMonthMarketData, stockAmount, currentFakeTime) {
-    console.log(threeMonthMarketData);
+    // console.log(threeMonthMarketData);
 
     // console.log(dataProcessing(oneWeekMarketData, stockAmount, currentFakeTime))
     return dataProcessing(threeMonthMarketData, stockAmount, currentFakeTime)
