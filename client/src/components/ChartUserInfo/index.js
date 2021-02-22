@@ -9,6 +9,7 @@ import FakeCurrentTimeContext from '../../contexts/FakeCurrentTimeContext'
 
 
 import { GetIntraDayFirstGraphData, GetIntraDayGraphData } from "./GetIntraDayGraphData";
+import GetOneWeekGraphData from './GetOneWeekGraphData';
 import NumberComma from '../NumberComma'
 import API from "../../utils/API";
 
@@ -18,13 +19,13 @@ export default function ChartUserInfo() {
 
     const { currentUser } = useAuth();
     const [userBalance, setUserBalance] = useState(0);
-    const [totalInvestmentState, setTotalInvestmentState] = useState(0);
-    const [totalInvestingMoney, setTotalInvestingMoney] = useState(0);
+    const [totalInvestmentState, setTotalInvestmentState] = useState(0); // All Market data for Graph
+    const [totalInvestingMoney, setTotalInvestingMoney] = useState(0); // Total Investment money + Gain or Loss
     const [defferenceOfInvestingMoney, setDefferenceOfInvestingMoney] = useState(0);
     const [percentOfDefferenceOfInvestingMoney, setPercentOfDefferenceOfInvestingMoney] = useState(0);
     const [isSign, setIsSign] = useState(true)
-    const [stockLists, setStockListsState] = useState(0);
     const [investingStartDay, setInvestingStartDay] = useState("");
+    const [stockListState, setStockListState] = useState("");
 
     // Button Style state
     const [switchState, setSwitchState] = useState("1D");
@@ -52,6 +53,7 @@ export default function ChartUserInfo() {
                 // console.log(res.data);
                 calculateTotalInvestment(res.data);
                 // call All Market DATA each symbol.
+                setStockListState(res.data);
                 getMarketData(res.data)
             })
             .catch(err => console.log(err))
@@ -59,8 +61,12 @@ export default function ChartUserInfo() {
 
     useEffect(() => {
         // console.log("totalInvestmentState changed")
-    }, [totalInvestmentState])
+    }, [totalInvestmentState]) // All Market data for Graph
 
+
+    useEffect(() => {
+        console.log("switchState changed")
+    }, [switchState])
 
     function calculateTotalInvestment(stockLists) {
         let totalInvestment = 0;
@@ -120,11 +126,16 @@ export default function ChartUserInfo() {
                     // console.log(fistPrice)
                 }
 
+                // console.log(totalStocks)
+                totalStocks["type"] = "date";
+                totalStocks["visible"] = "true";
+                // console.log(totalStocks)
+
                 defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
                 if (defferenceWithStartandCurrent > 0) {
-                    totalStocks["color"] = { color: 'blue' }
+                    totalStocks["color"] = { color: '#00ff00' }
                 } else {
-                    totalStocks["color"] = { color: 'red' }
+                    totalStocks["color"] = {color: "red"}
                 }
 
                 // console.log(totalStocks);
@@ -145,9 +156,12 @@ export default function ChartUserInfo() {
                     setTotalInvestingMoney("No Stock Data")
                 }
             } else {
+                totalStocks["type"] = "date";
+                totalStocks["visible"] = "true";
+
                 defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
                 if (defferenceWithStartandCurrent > 0) {
-                    totalStocks["color"] = { color: 'blue' }
+                    totalStocks["color"] = { color: '#00ff00' }
                 } else {
                     totalStocks["color"] = { color: 'red' }
                 }
@@ -175,6 +189,110 @@ export default function ChartUserInfo() {
     }
 
 
+    function OneWeekMarketDATACall(stockLists){
+        const stockData = stockLists.map(async stockList => {
+            return (
+                API.getIntraMarketData(stockList.symbol, "60min")
+                    .then(res => {
+                        // stockData.push(res.data);
+                        // console.log("OneWeekMarketDATACall");
+                        // console.log(res);
+                        return GetOneWeekGraphData(res.data, stockList.amount, currentFakeTime);
+                    })
+                    .catch(err => console.log(err))
+            )
+        })
+
+         // Get Market data for all Stocks
+         Promise.all(stockData).then(res => {
+            console.log(res)
+            let totalStocks = { ...res[0] }
+            let defferenceWithStartandCurrent = 0;
+
+            if (res.length > 1) {
+                let fistPrice = totalStocks["close"][0]
+
+                for (let i = 0; i < res.length; i++) {
+                    if (i === 0) {
+                    } else {
+                        totalStocks["symbol"] += ", " + res[i]["symbol"];
+                    }
+                    for (let j = 0; j < res[i]["close"].length; j++) {
+                        //         // let tempCurrent = res[i]["close"][j] * res[i]["stockAmount"];
+                        if (i === 0) {
+                            totalStocks["close"][j] = ((parseFloat(totalStocks["close"][j]) + (parseFloat(res[i]["close"][j]) * res[i]["stockAmount"])) - fistPrice).toFixed(2);
+                        } else {
+                            totalStocks["close"][j] = (parseFloat(totalStocks["close"][j]) + (parseFloat(res[i]["close"][j]) * res[i]["stockAmount"])).toFixed(2);
+                        }
+
+                    }
+                    // console.log(fistPrice)
+                }
+                // console.log(totalStocks)
+                totalStocks["type"] = "category";
+                totalStocks["visible"] = false;
+                // console.log(totalStocks)
+
+                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                if (defferenceWithStartandCurrent > 0) {
+                    totalStocks["color"] = { color: '#00ff00' }
+                } else {
+                    totalStocks["color"] = { color: 'red' }
+                }
+
+                // console.log(totalStocks);
+                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+
+                if (defferenceInvesting > 0) {
+                    setIsSign(true)
+                } else {
+                    setIsSign(false)
+                }
+
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setDefferenceOfInvestingMoney(defferenceInvesting)
+                if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
+                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    setTotalInvestmentState(totalStocks);
+                } else {
+                    setTotalInvestingMoney("No Stock Data")
+                }
+            } else {
+                totalStocks["type"] = "category";
+                totalStocks["visible"] = false;
+
+                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                if (defferenceWithStartandCurrent > 0) {
+                    totalStocks["color"] = { color: '#00ff00' }
+                } else {
+                    totalStocks["color"] = { color: 'red' }
+                }
+
+                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+
+                if (defferenceInvesting > 0) {
+                    setIsSign(true)
+                } else {
+                    setIsSign(false)
+                }
+
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setDefferenceOfInvestingMoney(defferenceInvesting)
+
+                // console.log(totalStocks);
+                if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
+                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    setTotalInvestmentState(totalStocks);
+                } else {
+                    setTotalInvestingMoney("No Stock Data")
+                }
+
+            }
+
+         })
+
+    }
+
     // Function for Changing DATE (1D 1W 1M 3M 1Y ALL)
     function myFetch(e) {
         e.preventDefault();
@@ -190,6 +308,7 @@ export default function ChartUserInfo() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
+                IntraDayMarketDATACall(stockListState)
                 // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime, currentFakeTime)
                 // useTypeState(type);
                 // useVisibleState(visible);
@@ -206,6 +325,7 @@ export default function ChartUserInfo() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
+                OneWeekMarketDATACall(stockListState)
                 // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime, currentFakeTime);
                 // useTypeState(type);
                 // useVisibleState(visible);
