@@ -22,7 +22,7 @@ export default function ChartUserInfo() {
     const [totalInvestingMoney, setTotalInvestingMoney] = useState(0);
     const [defferenceOfInvestingMoney, setDefferenceOfInvestingMoney] = useState(0);
     const [percentOfDefferenceOfInvestingMoney, setPercentOfDefferenceOfInvestingMoney] = useState(0);
-    const [ isSign, setIsSign ] = useState(true)
+    const [isSign, setIsSign] = useState(true)
     const [stockLists, setStockListsState] = useState(0);
     const [investingStartDay, setInvestingStartDay] = useState("");
 
@@ -68,9 +68,9 @@ export default function ChartUserInfo() {
 
     function getMarketData(stockLists) {
         console.log(stockLists);
-        if(stockLists.length > 0){
-        // Call IntraDay market data
-        IntraDayMarketDATACall(stockLists)
+        if (stockLists.length > 0) {
+            // Call IntraDay market data
+            IntraDayMarketDATACall(stockLists)
         }
 
     }
@@ -115,7 +115,7 @@ export default function ChartUserInfo() {
                     // console.log(fistPrice)
                 }
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: 'blue' }
                 } else {
@@ -125,27 +125,46 @@ export default function ChartUserInfo() {
                 // console.log(totalStocks);
                 let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
-                if(defferenceInvesting > 0){
+                if (defferenceInvesting > 0) {
                     setIsSign(true)
-                }else{
+                } else {
                     setIsSign(false)
                 }
 
                 setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
-                
-                setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length-1]))
-                setTotalInvestmentState(totalStocks);
+                if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
+                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    setTotalInvestmentState(totalStocks);
+                } else {
+                    setTotalInvestingMoney("No Stock Data")
+                }
             } else {
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: 'blue' }
                 } else {
                     totalStocks["color"] = { color: 'red' }
                 }
+
+                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+
+                if (defferenceInvesting > 0) {
+                    setIsSign(true)
+                } else {
+                    setIsSign(false)
+                }
+
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setDefferenceOfInvestingMoney(defferenceInvesting)
+
                 // console.log(totalStocks);
-                setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length-1]))
-                setTotalInvestmentState(totalStocks);
+                if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
+                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    setTotalInvestmentState(totalStocks);
+                } else {
+                    setTotalInvestingMoney("No Stock Data")
+                }
             }
         });
     }
@@ -191,15 +210,15 @@ export default function ChartUserInfo() {
             </div>
             <div className="text-danger ml-3 mt-2" style={{ fontSize: "11px" }}>
                 {
-                (isSign)?
-                (<div style={{color:"blue"}}>&#8593; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) Today</div>):
-                (<div style={{color:"red"}}>&#8595; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) Today</div>)
+                    (isSign) ?
+                        (<div style={{ color: "blue" }}>&#8593; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) Today</div>) :
+                        (<div style={{ color: "red" }}>&#8595; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) Today</div>)
                 }
             </div>
             <div style={{ margin: "0 -15px" }}>{
-                (totalInvestmentState)?(<ChartUser totalInvestmentState={totalInvestmentState} />):(<div style={{textAlign:"center", margin:"50px 0"}}><h1>No stocks</h1></div>)
+                (totalInvestmentState) ? (<ChartUser totalInvestmentState={totalInvestmentState} />) : (<div style={{ textAlign: "center", margin: "50px 0" }}><h1>No Stock Data</h1></div>)
             }
-                
+
             </div>
             <Row>
                 <Col className="ml-2 mr-0 pr-0">
