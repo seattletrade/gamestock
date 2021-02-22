@@ -28,6 +28,7 @@ function dataProcessing(oneDayStockState, increaseFAKETime, currentFakeTime) {
     let currentOpenValue = [];
     let currentCloseValue = [];
 
+    let days = 1;
     // 86400000 sec (= 1 day )
     let aDayTomiliSec = 86400000;
 
@@ -36,8 +37,8 @@ function dataProcessing(oneDayStockState, increaseFAKETime, currentFakeTime) {
     for (let date in oneDayStockState["Time Series (15min)"]) {
 
         // get Open_Close value after 15 min from fakeDate for Displaying current value.
-        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 1 &&
-            Date.parse(date) > (Date.parse(currentFakeTime) - aDayTomiliSec)) {
+        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - days &&
+            Date.parse(date) > (Date.parse(currentFakeTime) - aDayTomiliSec * days)) {
             myDate.unshift((new Date(Date.parse(currentFakeTime) + aDayTomiliSec)));
             currentOpenValue.unshift(oneDayStockState["Time Series (15min)"][date]['1. open']);
             currentCloseValue.unshift(oneDayStockState["Time Series (15min)"][date]['4. close']);
