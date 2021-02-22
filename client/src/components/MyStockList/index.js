@@ -66,6 +66,7 @@ export default function MyStockList() {
                 myStockLists.map(company => {                   
                     return(
                     <div key={company.symbol}>
+                        {/* {console.log(company)} */}
                         <Row>
                             <Col>
                                 <Row style={{ margin: "auto" }}>
@@ -83,11 +84,11 @@ export default function MyStockList() {
                                     {parseFloat((company["graphData"].currentValue)).toFixed(2)}
                                 </Row>
                                 {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2) >= 0  ? 
-                                    <Row className="text-success justify-content-end" style={{ margin: "auto",  fontSize: "10px" }}>
+                                    <Row className="justify-content-end" style={{ margin: "auto",  fontSize: "10px", color:"#00ff00" }}>
                                         {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
                                     </Row>
                                     :
-                                    <Row className="text-danger justify-content-end" style={{ margin: "auto",  fontSize: "10px" }}>
+                                    <Row className="justify-content-end" style={{ margin: "auto",  fontSize: "10px", color:"red" }}>
                                         {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
                                     </Row>
                                 }                                
