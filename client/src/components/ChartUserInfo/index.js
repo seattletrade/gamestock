@@ -26,6 +26,16 @@ export default function ChartUserInfo() {
     const [stockLists, setStockListsState] = useState(0);
     const [investingStartDay, setInvestingStartDay] = useState("");
 
+    // Button Style state
+    const [switchState, setSwitchState] = useState("1D");
+    const btnWithOutline = "btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2";
+    const [button1DState, setButton1DState] = useState("btn btn-primary btn-sm pt-0 pb-0 pl-2 pr-2");
+    const [button1WState, setButton1WState] = useState(btnWithOutline);
+    const [button1MState, setButton1MState] = useState(btnWithOutline);
+    const [button3MState, setButton3MState] = useState(btnWithOutline);
+    const [button1YState, setButton1YState] = useState(btnWithOutline);
+    const [buttonAllState, setButtonAllState] = useState(btnWithOutline);
+
     useEffect(() => {
         UserPageAPI.getUserInfo(currentUser.email)
             .then(res => {
@@ -59,11 +69,6 @@ export default function ChartUserInfo() {
         })
         // console.log("totalInvestment");
         // console.log(totalInvestment);
-    }
-
-    function myFetch(e) {
-        e.preventDefault();
-        console.log(e.target.innerText)
     }
 
     function getMarketData(stockLists) {
@@ -169,6 +174,116 @@ export default function ChartUserInfo() {
         });
     }
 
+
+    // Function for Changing DATE (1D 1W 1M 3M 1Y ALL)
+    function myFetch(e) {
+        e.preventDefault();
+        const btnWithOutline = "btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2";
+        const btnWithoutOutline = "btn btn-primary btn-sm pt-0 pb-0 pl-2 pr-2";
+
+        switch (e.target.innerText) {
+            case "1D": {
+                setSwitchState("1D")
+                setButton1DState(btnWithoutOutline)
+                setButton1WState(btnWithOutline)
+                setButton1MState(btnWithOutline)
+                setButton3MState(btnWithOutline)
+                setButton1YState(btnWithOutline)
+                setButtonAllState(btnWithOutline)
+                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetIntraDayMarketData(intraDayStockState, increaseFAKETime, currentFakeTime)
+                // useTypeState(type);
+                // useVisibleState(visible);
+                // setTraceState(setTraceStateIntraDay);
+                // setVolume(setVolumeIntraDay);
+                // setRangeState(rangeIntraDay);
+                break;
+            }
+            case "1W": {
+                setSwitchState("1W")
+                setButton1DState(btnWithOutline)
+                setButton1WState(btnWithoutOutline)
+                setButton1MState(btnWithOutline)
+                setButton3MState(btnWithOutline)
+                setButton1YState(btnWithOutline)
+                setButtonAllState(btnWithOutline)
+                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneWeekMarketData(oneWeekStockState, increaseFAKETime, currentFakeTime);
+                // useTypeState(type);
+                // useVisibleState(visible);
+                // setTraceState(setTraceStateIntraDay);
+                // setVolume(setVolumeIntraDay);
+                // setRangeState(rangeIntraDay);
+                break;
+            }
+            case "1M": {
+                setSwitchState("1M")
+                setButton1DState(btnWithOutline)
+                setButton1WState(btnWithOutline)
+                setButton1MState(btnWithoutOutline)
+                setButton3MState(btnWithOutline)
+                setButton1YState(btnWithOutline)
+                setButtonAllState(btnWithOutline)
+                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
+                // useTypeState(type);
+                // useVisibleState(visible);
+                // setTraceState(setTraceStateIntraDay);
+                // setVolume(setVolumeIntraDay);
+                // setRangeState(rangeIntraDay);
+
+                break;
+            }
+            case "3M": {
+                setSwitchState("3M")
+                setButton1DState(btnWithOutline)
+                setButton1WState(btnWithOutline)
+                setButton1MState(btnWithOutline)
+                setButton3MState(btnWithoutOutline)
+                setButton1YState(btnWithOutline)
+                setButtonAllState(btnWithOutline)
+                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetThreeMonthMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
+                // useTypeState(type);
+                // useVisibleState(visible);
+                // setTraceState(setTraceStateIntraDay);
+                // setVolume(setVolumeIntraDay);
+                // setRangeState(rangeIntraDay);
+                break;
+            }
+            case "1Y": {
+                setSwitchState("1Y")
+                setButton1DState(btnWithOutline)
+                setButton1WState(btnWithOutline)
+                setButton1MState(btnWithOutline)
+                setButton3MState(btnWithOutline)
+                setButton1YState(btnWithoutOutline)
+                setButtonAllState(btnWithOutline)
+                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetOneYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
+                // useTypeState(type);
+                // useVisibleState(visible);
+                // setTraceState(setTraceStateIntraDay);
+                // setVolume(setVolumeIntraDay);
+                // setRangeState(rangeIntraDay);
+                break;
+            }
+            case "ALL": {
+                setSwitchState("ALL")
+                setButton1DState(btnWithOutline)
+                setButton1WState(btnWithOutline)
+                setButton1MState(btnWithOutline)
+                setButton3MState(btnWithOutline)
+                setButton1YState(btnWithOutline)
+                setButtonAllState(btnWithoutOutline)
+                // const { setTraceStateIntraDay, setVolumeIntraDay, rangeIntraDay, type, visible } = GetFiveYearMarketData(totalDailyStockState, increaseFAKETime, currentFakeTime);
+                // useTypeState(type);
+                // useVisibleState(visible);
+                // setTraceState(setTraceStateIntraDay);
+                // setVolume(setVolumeIntraDay);
+                // setRangeState(rangeIntraDay);
+                break;
+            }
+        }
+
+    }
+
+
     return (
         <div style={{ height: "450px", color: "white" }}>
             <div className="pl-3 pt-5">
@@ -222,22 +337,22 @@ export default function ChartUserInfo() {
             </div>
             <Row>
                 <Col className="ml-2 mr-0 pr-0">
-                    <button onClick={myFetch} className="btn btn-primary btn-sm pt-0 pb-0 pl-2 pr-2" >1D</button>
+                    <button onClick={myFetch} className={button1DState} >1D</button>
                 </Col>
                 <Col className="m-0 p-0">
-                    <button onClick={myFetch} className="btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2" >1W</button>
+                    <button onClick={myFetch} className={button1WState} >1W</button>
                 </Col>
                 <Col className="m-0 p-0">
-                    <button onClick={myFetch} className="btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2" >1M</button>
+                    <button onClick={myFetch} className={button1MState} >1M</button>
                 </Col>
                 <Col className="m-0 p-0">
-                    <button onClick={myFetch} className="btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2" >3M</button>
+                    <button onClick={myFetch} className={button3MState} >3M</button>
                 </Col>
                 <Col className="m-0 p-0">
-                    <button onClick={myFetch} className="btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2" >1Y</button>
+                    <button onClick={myFetch} className={button1YState} >1Y</button>
                 </Col>
                 <Col className="m-0 p-0">
-                    <button onClick={myFetch} className="btn btn-outline-primary btn-sm pt-0 pb-0 pl-2 pr-2" >ALL</button>
+                    <button onClick={myFetch} className={buttonAllState} >ALL</button>
                 </Col>
             </Row>
             <hr className="myHr" />
