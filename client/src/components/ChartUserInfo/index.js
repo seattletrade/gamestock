@@ -26,6 +26,7 @@ export default function ChartUserInfo() {
     const [isSign, setIsSign] = useState(true)
     const [investingStartDay, setInvestingStartDay] = useState("");
     const [stockListState, setStockListState] = useState("");
+    const [displayDateState, setDisplayDateState] = useState("Today");
 
     // Button Style state
     const [switchState, setSwitchState] = useState("1D");
@@ -87,6 +88,8 @@ export default function ChartUserInfo() {
     }
 
     function IntraDayMarketDATACall(stockLists) {
+        setDisplayDateState("Today")
+
         const stockData = stockLists.map(async stockList => {
             return (
                 API.getIntraMarketData(stockList.symbol, "15min")
@@ -190,6 +193,8 @@ export default function ChartUserInfo() {
 
 
     function OneWeekMarketDATACall(stockLists){
+        setDisplayDateState("Past Week")
+
         const stockData = stockLists.map(async stockList => {
             return (
                 API.getIntraMarketData(stockList.symbol, "60min")
@@ -446,8 +451,8 @@ export default function ChartUserInfo() {
             <div className="text-danger ml-3 mt-2" style={{ fontSize: "11px" }}>
                 {
                     (isSign) ?
-                        (<div style={{ color: "blue" }}>&#8593; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) Today</div>) :
-                        (<div style={{ color: "red" }}>&#8595; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) Today</div>)
+                        (<div style={{ color: "#00ff00" }}>&#8593; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) {displayDateState}</div>) :
+                        (<div style={{ color: "red" }}>&#8595; {defferenceOfInvestingMoney}({percentOfDefferenceOfInvestingMoney}%) {displayDateState}</div>)
                 }
             </div>
             <div style={{ margin: "0 -15px" }}>{
