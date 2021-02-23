@@ -76,8 +76,8 @@ export default function Nav() {
                 </ul>
                 {!currentUser ?
                     <>
-                        <Link className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"} to="/gamestock/login" >Login</Link>
-                        <Link className={location.pathname === "/gamestock/signup" ? "nav-link active" : "nav-link"} to="/gamestock/signup">Signup</Link>
+                        <Link className={location.pathname === "/gamestock/login" ? "nav-link text-white active" : "nav-link text-white"} to="/gamestock/login" >Login</Link>
+                        <Link className={location.pathname === "/gamestock/signup" ? "nav-link active text-white" : "nav-link text-white"} to="/gamestock/signup">Signup</Link>
                     </> :
                     <>
                         <div className="ml-auto text-white" >Hello, {nickname}</div>
