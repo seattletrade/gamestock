@@ -44,7 +44,7 @@ function dataProcessing(stockData, currentFakeTime) {
 
     let marker = ""
     if(currentValue >= openValueAt930){
-        marker = "blue"
+        marker = "#00ff00"
     }else{
         marker = "red"
     }
