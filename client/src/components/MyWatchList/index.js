@@ -99,7 +99,7 @@ export default function MyWatchList() {
                                 ${parseFloat((company["graphData"].currentValue)).toFixed(2)}
                             </Col>
                             <Col className="text-right" style={{ margin: "auto" }}>
-                                <Button onClick={() => handleDelete(currentUser.email, company.symbol)} className="btn btn-danger">X</Button>
+                                <Button onClick={() => handleDelete(currentUser.email, company.symbol)} className="btn btn-sm btn-danger">X</Button>
                             </Col>
                         </Row>
                         <hr className="myHr" />
