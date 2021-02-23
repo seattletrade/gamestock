@@ -13,8 +13,9 @@ export default function Search() {
     const [searchListFromDB, setSearchListFromDB] = useState();
     const [searchList, setSearchList] = useState([]);
     const [nameResult, setNameResult] = useState();
-    const [searchResult, setSearchResult] = useState({"symbol":"", "companyName":""});
+    const [searchResult, setSearchResult] = useState({ "symbol": "", "companyName": "" });
 
+    const [isSymbol, setIsSymbol] = useState(false);
     // useEffect(() => {
     //     // console.log(symbolResult)
     //     // console.log(nameResult);
@@ -29,6 +30,11 @@ export default function Search() {
             })
             .catch(err => console.log(err))
     }, [])
+
+    useEffect(() => {
+        console.log("Changed isSymbol")
+        console.log(isSymbol);
+    }, [isSymbol])
 
     const handleChange = e => {
         e.preventDefault();
@@ -59,7 +65,7 @@ export default function Search() {
         <>
             <div style={{ zIndex: 10, marginTop: "", position: "absolute" }} >
                 <Autocomplete
-                    getItemValue={(item) => item.Symbol +"/"+ item["Company Name"]}
+                    getItemValue={(item) => item.Symbol + "/" + item["Company Name"]}
                     items={searchList}
                     renderItem={(item, isHighlighted) =>
                         <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}
@@ -72,22 +78,38 @@ export default function Search() {
                     value={searchInput}
                     onChange={handleChange}
                     onSelect={(item) => {
-                        // console.log(item.split("/"));
+                        console.log(item.split("/"));
                         // console.log(item.split("/")[0]);
                         // console.log(item.split("/")[1]);
                         // setSymbolResult(item)
-                        setSearchResult({"symbol": item.split("/")[0],
-                                         "companyName": item.split("/")[1]})
+                        API.getIntraMarketData(item.split("/")[0], "60min")
+                            .then(res => {
+                                if (res["data"]["Error Message"]) {
+                                    setIsSymbol(false)
+                                } else {
+                                    setIsSymbol(true)
+                                }
+                                console.log(res);
+                            })
+                            .then(err => {
+                                if (err !== undefined) {
+                                    setIsSymbol(false)
+                                }
+                            })
+                        setSearchResult({
+                            "symbol": item.split("/")[0],
+                            "companyName": item.split("/")[1]
+                        })
                     }}
                 />
             </div>
-            {searchResult["symbol"] ? (
+            {isSymbol ? (
                 <>
-                    <ChartCompanyinfoMain companyName= {searchResult["companyName"]} symbol={searchResult["symbol"]} />
+                    <ChartCompanyinfoMain companyName={searchResult["companyName"]} symbol={searchResult["symbol"]} />
                     <CompanyInformation symbol={searchResult["symbol"]} />
                     <CompanyNews symbol={searchResult["symbol"]} />
                 </>
-            ) : (<div></div>)}
+            ) : (<div style={{textAlign:"center", color:"white", paddingTop:"100px"}}>Search by Company name or Symbol</div>)}
 
         </>
     )

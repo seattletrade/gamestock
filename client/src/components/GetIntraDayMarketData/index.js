@@ -41,6 +41,7 @@ function dataProcessing(oneDayStockState, increaseFAKETime, currentFakeTime) {
     let currentOpenValue = [];
     let currentVolumeValue = [];
 
+    let days = 1;
     // 86400000 sec (= 1 day )
     let aDayTomiliSec = 86400000;
 
@@ -54,37 +55,60 @@ function dataProcessing(oneDayStockState, increaseFAKETime, currentFakeTime) {
 
     for (let date in oneDayStockState["Time Series (15min)"]) {
 
-        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 1 ) {
+        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - days) {
             // Fake Date -> Change Previous day to Today
-            currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)));
-            // currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)).toString().substring(4, 21));
+            if (date.substring(11, 16) === "04:15" || date.substring(11, 16) === "04:30" ||
+                date.substring(11, 16) === "04:45" || date.substring(11, 16) === "05:00" || date.substring(11, 16) === "05:15" ||
+                date.substring(11, 16) === "05:30" || date.substring(11, 16) === "05:45" || date.substring(11, 16) === "06:00" ||
+                date.substring(11, 16) === "06:15" || date.substring(11, 16) === "06:30" || date.substring(11, 16) === "06:45" ||
+                date.substring(11, 16) === "07:00" || date.substring(11, 16) === "07:15" || date.substring(11, 16) === "07:30" ||
+                date.substring(11, 16) === "07:45" || date.substring(11, 16) === "08:00" || date.substring(11, 16) === "08:15" ||
+                date.substring(11, 16) === "08:30" || date.substring(11, 16) === "08:45" || date.substring(11, 16) === "09:00"
+            ) {
+                // console.log("Pass Too early data")
+            } else {
+                currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)));
+                // currentXAxis.unshift((new Date(Date.parse(date) + aDayTomiliSec)).toString().substring(4, 21));
+            }
         }
 
+
         // get Current data for Graph
-        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - 1  &&
-            Date.parse(date) < (Date.parse(currentFakeTime) + increasorFAKETime - aDayTomiliSec)) {
-            currentOpenValue.unshift(oneDayStockState["Time Series (15min)"][date]['1. open']);
-            currentHighValue.unshift(oneDayStockState["Time Series (15min)"][date]['2. high']);
-            currentLowValue.unshift(oneDayStockState["Time Series (15min)"][date]['3. low']);
-            currentCloseValue.unshift(oneDayStockState["Time Series (15min)"][date]['4. close']);
-            currentVolumeValue.unshift(oneDayStockState["Time Series (15min)"][date]['5. volume']);
+        if (new Date(Date.parse(date)).getDate() === new Date(Date.parse(currentFakeTime)).getDate() - days &&
+            Date.parse(date) < (Date.parse(currentFakeTime) - aDayTomiliSec * days)) {
+            if (date.substring(11, 16) === "04:15" || date.substring(11, 16) === "04:30" ||
+                date.substring(11, 16) === "04:45" || date.substring(11, 16) === "05:00" || date.substring(11, 16) === "05:15" ||
+                date.substring(11, 16) === "05:30" || date.substring(11, 16) === "05:45" || date.substring(11, 16) === "06:00" ||
+                date.substring(11, 16) === "06:15" || date.substring(11, 16) === "06:30" || date.substring(11, 16) === "06:45" ||
+                date.substring(11, 16) === "07:00" || date.substring(11, 16) === "07:15" || date.substring(11, 16) === "07:30" ||
+                date.substring(11, 16) === "07:45" || date.substring(11, 16) === "08:00" || date.substring(11, 16) === "08:15" ||
+                date.substring(11, 16) === "08:30" || date.substring(11, 16) === "08:45" || date.substring(11, 16) === "09:00"
+            ) {
+                // console.log("Pass Too early data")
+            } else {
+                currentOpenValue.unshift(oneDayStockState["Time Series (15min)"][date]['1. open']);
+                currentHighValue.unshift(oneDayStockState["Time Series (15min)"][date]['2. high']);
+                currentLowValue.unshift(oneDayStockState["Time Series (15min)"][date]['3. low']);
+                currentCloseValue.unshift(oneDayStockState["Time Series (15min)"][date]['4. close']);
+                currentVolumeValue.unshift(oneDayStockState["Time Series (15min)"][date]['5. volume']);
+            }
         }
     }
 
     // console.log(currentXAxis);
 
-    currentXAxis.splice(0, 5); // remove 18:30:00 ~ 20:00:00
-    currentXAxis.splice(45, 9); // remove 04:15:00 ~ 7:00:00
-    currentCloseValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
-    currentCloseValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
-    currentHighValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
-    currentHighValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
-    currentLowValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
-    currentLowValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
-    currentOpenValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
-    currentOpenValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
-    currentVolumeValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
-    currentVolumeValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
+    // currentXAxis.splice(0, 5); // remove 18:30:00 ~ 20:00:00
+    // currentXAxis.splice(45, 9); // remove 04:15:00 ~ 7:00:00
+    // currentCloseValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
+    // currentCloseValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
+    // currentHighValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
+    // currentHighValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
+    // currentLowValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
+    // currentLowValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
+    // currentOpenValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
+    // currentOpenValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
+    // currentVolumeValue.splice(0, 5); // remove 18:30:00 ~ 20:00:00
+    // currentVolumeValue.splice(45, 9); // remove 04:15:00 ~ 7:00:00
 
     // console.log(currentXAxis);
 
