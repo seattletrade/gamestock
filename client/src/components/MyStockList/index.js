@@ -88,15 +88,15 @@ export default function MyStockList() {
                             </Col>
                             <Col className="text-right " style={{ margin: "auto" }}>
                                 <Row className="justify-content-end" style={{ margin: "auto" }}>
-                                    {parseFloat((company["graphData"].currentValue)).toFixed(2)}
+                                    {parseFloat(company.price).toFixed(2)}
                                 </Row>
-                                {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2) >= 0  ? 
+                                {((company.price * company.amount) - (company.avg_price * company.amount)).toFixed(2) >= 0  ? 
                                     <Row className="justify-content-end" style={{ margin: "auto",  fontSize: "10px", color:"#00ff00" }}>
-                                        {(((company.price) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
+                                        {((company.price * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
                                     </Row>
                                     :
                                     <Row className="justify-content-end" style={{ margin: "auto",  fontSize: "10px", color:"red" }}>
-                                        {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
+                                        {((company.price * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
                                     </Row>
                                 }                                
                             </Col>
