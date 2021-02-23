@@ -25,10 +25,17 @@ export default function MyStockList() {
         let finalData = []
         UserPageAPI.getStockList(currentUser.email)
         .then(stockLists => {
-            // console.log("stock lists", stockLists.data);
+            console.log("stock lists", stockLists.data[0].symbol);
             
             StockArr = [...stockLists.data];
-            // console.log(StockArr);
+            // console.log("stosk Array", StockArr)
+            for(let i = 0; i < StockArr.length; i++) {
+                // console.log("each stock array", StockArr[i])
+                API.getCurrentPrice(StockArr[i].symbol)
+                // .then(data => console.log(data.data["Global Quote"]["05. price"]))
+                .then(data => StockArr[i].price = data.data["Global Quote"]["05. price"])
+            }
+            // console.log("new stock array", StockArr)
             stockLists.data.map(stock => {
                 API.getIntraMarketData(stock.symbol, "15min")
                     .then(marketData => {
@@ -59,7 +66,7 @@ export default function MyStockList() {
     return (
         <>
             <h4>Stocks</h4>
-           {/* {console.log(myStockLists)} */}
+           {console.log(myStockLists)}
             <div className="myStockLists">
                 {myStockLists.length ? (
                     
@@ -85,7 +92,7 @@ export default function MyStockList() {
                                 </Row>
                                 {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2) >= 0  ? 
                                     <Row className="justify-content-end" style={{ margin: "auto",  fontSize: "10px", color:"#00ff00" }}>
-                                        {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
+                                        {(((company.price) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
                                     </Row>
                                     :
                                     <Row className="justify-content-end" style={{ margin: "auto",  fontSize: "10px", color:"red" }}>
