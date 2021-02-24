@@ -74,22 +74,28 @@ export default function Nav() {
                         </Link>
                     </li>
                 </ul>
-                <ul className="navbar-nav mr-0">
-                    {!currentUser ?
 
+                {!currentUser ?
+                    <ul className="navbar-nav mr-0">
                         <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                             <Link className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"} to="/gamestock/login" >Login</Link>
+                        </li>
+                        <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                             <Link className={location.pathname === "/gamestock/signup" ? "nav-link active" : "nav-link"} to="/gamestock/signup">Signup</Link>
                         </li>
-                        :
-
+                    </ul>
+                    :
+                    <ul className="navbar-nav mr-0">
                         <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                            <div className="ml-auto text-white" >Hello, {nickname}</div>
+                            <Link className={location.pathname === "#" ? "nav-link active" : "nav-link"} to="#" >Hello, {nickname}</Link>
+                        </li>
+                        <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                             <Link className={location.pathname === "/gamestock/" ? "nav-link active" : "nav-link"} to="/gamestock/" onClick={handleLogout} variant="link">logout</Link>
                         </li>
+                    </ul>
 
-                    }
-                </ul>
+                }
+
             </div>
 
         </nav >
