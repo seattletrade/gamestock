@@ -398,7 +398,7 @@ export default function Infopage(promps) {
                                     to="/gamestock/user"
                                     className={location.pathname === "/gamestock/user" ? "nav-link active" : "nav-link"}
                                 >
-                                    <button  type="button" className="btn btn-danger" onClick={handleClick}>{isClicked ? "watched" : "watch"} </button>
+                                    <button  type="button" className="btn btn-danger" onClick={handleClick}>{isClicked ? "watching" : "watch"} </button>
                                 </Link>
                             </Col>
                         </Row>
