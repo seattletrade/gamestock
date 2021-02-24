@@ -67,8 +67,8 @@ export default function Signup() {
                     </Form>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
-                Already have an account? <Link to="/gamestock/login">Log In</Link>
+            <div className="w-100 text-center text-white mt-2">
+                Already have an account? <Link to="/gamestock/login" style={{color: "#FD0000"}}>Log In</Link>
             </div>
         </>
     )

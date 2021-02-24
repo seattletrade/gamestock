@@ -42,12 +42,12 @@ export default function Login() {
                         <Button disabled={loading} className="w-100" type="submit" style={{backgroundColor: "#FD0000"}}>Log In</Button>
                     </Form>
                     <div className="w-100 text-center mt-3">
-                        <Link to="/gamestock/forgot-password">Forgot password?</Link>
+                        <Link to="/gamestock/forgot-password" style={{color: "#FD0000"}}>Forgot password?</Link>
                     </div>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
-                Don't have an account? <Link to="/gamestock/signup">Sign Up</Link>
+            <div className="w-100 text-center text-white mt-2">
+                Don't have an account? <Link to="/gamestock/signup" style={{color: "#FD0000"}}>Sign Up</Link>
             </div>
         </>
     )

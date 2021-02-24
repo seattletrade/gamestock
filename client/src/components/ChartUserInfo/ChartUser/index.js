@@ -6,6 +6,7 @@ export default function ChartUser(props) {
     // console.log("In ChartUserInfo")
     const [ propsState, setPropsState ] = useState(); 
     // console.log(props)
+    // console.log(props.totalInvestmentState);
     // if(propsState !== props){
     //     setPropsState(props)
     // }
@@ -18,7 +19,9 @@ export default function ChartUser(props) {
                     x: props.totalInvestmentState.x,
                     y: props.totalInvestmentState.close,
                     type: 'scatter',
-                    mode: 'lines+markers',
+                    mode: 'lines',
+                    // mode: 'lines+markers',
+                    // marker: {color: "#00ff00"},
                     marker: props.totalInvestmentState.color,
                 },
             ]}
@@ -36,9 +39,11 @@ export default function ChartUser(props) {
                     rangeslider: {
                         visible: false
                     },
-                    type: 'date',
-                    // type: props.type,
-                    // visible: props.visible,
+                    // type: 'date',
+                    // type: 'category',
+                    type: props.totalInvestmentState.type,
+                    visible: props.totalInvestmentState.visible,
+                    // visible: false,
                     tickmode: 'array',
                     // fixedrange: true,
                     // autorange: "reversed"

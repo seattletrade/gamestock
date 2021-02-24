@@ -25,10 +25,17 @@ export default function MyStockList() {
         let finalData = []
         UserPageAPI.getStockList(currentUser.email)
         .then(stockLists => {
-            // console.log("stock lists", stockLists.data);
+            console.log("stock lists", stockLists.data[0].symbol);
             
             StockArr = [...stockLists.data];
-            // console.log(StockArr);
+            // console.log("stosk Array", StockArr)
+            for(let i = 0; i < StockArr.length; i++) {
+                // console.log("each stock array", StockArr[i])
+                API.getCurrentPrice(StockArr[i].symbol)
+                // .then(data => console.log(data.data["Global Quote"]["05. price"]))
+                .then(data => StockArr[i].price = data.data["Global Quote"]["05. price"])
+            }
+            // console.log("new stock array", StockArr)
             stockLists.data.map(stock => {
                 API.getIntraMarketData(stock.symbol, "15min")
                     .then(marketData => {
@@ -66,6 +73,7 @@ export default function MyStockList() {
                 myStockLists.map(company => {                   
                     return(
                     <div key={company.symbol}>
+                        {/* {console.log(company)} */}
                         <Row>
                             <Col>
                                 <Row style={{ margin: "auto" }}>
@@ -80,15 +88,15 @@ export default function MyStockList() {
                             </Col>
                             <Col className="text-right " style={{ margin: "auto" }}>
                                 <Row className="justify-content-end" style={{ margin: "auto" }}>
-                                    {parseFloat((company["graphData"].currentValue)).toFixed(2)}
+                                    {parseFloat(company.price).toFixed(2)}
                                 </Row>
-                                {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2) >= 0  ? 
-                                    <Row className="text-success justify-content-end" style={{ margin: "auto",  fontSize: "10px" }}>
-                                        {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
+                                {((company.price * company.amount) - (company.avg_price * company.amount)).toFixed(2) >= 0  ? 
+                                    <Row className="justify-content-end" style={{ margin: "auto",  fontSize: "10px", color:"#00ff00" }}>
+                                        {((company.price * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
                                     </Row>
                                     :
-                                    <Row className="text-danger justify-content-end" style={{ margin: "auto",  fontSize: "10px" }}>
-                                        {(((company["graphData"].currentValue) * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
+                                    <Row className="justify-content-end" style={{ margin: "auto",  fontSize: "10px", color:"red" }}>
+                                        {((company.price * company.amount) - (company.avg_price * company.amount)).toFixed(2)}
                                     </Row>
                                 }                                
                             </Col>

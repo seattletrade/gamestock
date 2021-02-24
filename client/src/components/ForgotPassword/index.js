@@ -44,8 +44,8 @@ export default function ForgotPassword() {
                     </div>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
-                Don't have an account? <Link to="/gamestock/signup">Sign Up</Link>
+            <div className="w-100 text-center text-white mt-2">
+                Don't have an account? <Link to="/gamestock/signup" style={{color: "#FD0000"}}>Sign Up</Link>
             </div>
         </>
     )
