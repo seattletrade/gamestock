@@ -196,7 +196,7 @@ export default function ChartUserInfo() {
     }
 
 
-    function OneWeekMarketDATACall(stockLists){
+    function OneWeekMarketDATACall(stockLists, totalInvestingMoney){
         setDisplayDateState("Past Week")
 
         const stockData = stockLists.map(async stockList => {
@@ -242,7 +242,11 @@ export default function ChartUserInfo() {
                 totalStocks["visible"] = false;
                 // console.log(totalStocks)
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                // totalInvestingMoney is Current TotalInvetingMoney
+                // defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalInvestingMoney.replace(",","") - totalStocks["close"][0]
+                // console.log(totalInvestingMoney.replace(",","") - totalStocks["close"][0])
+                totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",","");
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: '#00ff00' }
                 } else {
@@ -250,34 +254,42 @@ export default function ChartUserInfo() {
                 }
 
                 // console.log(totalStocks);
-                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
-
+                
+                let defferenceInvesting = (parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                // let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                // console.log(parseFloat(totalInvestingMoney.replace(",","")))
+                // console.log(defferenceInvesting)
+                // console.log(parseFloat(totalStocks["close"][0]));
                 if (defferenceInvesting > 0) {
                     setIsSign(true)
                 } else {
                     setIsSign(false)
                 }
 
-                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                // setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
                 if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
-                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    // setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
                     setTotalInvestmentState(totalStocks);
                 } else {
-                    setTotalInvestingMoney("No Stock Data")
+                    // setTotalInvestingMoney("No Stock Data")
                 }
             } else {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalInvestingMoney.replace(",","") - totalStocks["close"][0]
+                totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",","");
+                // defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: '#00ff00' }
                 } else {
                     totalStocks["color"] = { color: 'red' }
                 }
 
-                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                let defferenceInvesting = (parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                // let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
                 if (defferenceInvesting > 0) {
                     setIsSign(true)
@@ -285,15 +297,16 @@ export default function ChartUserInfo() {
                     setIsSign(false)
                 }
 
-                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                // setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
 
                 // console.log(totalStocks);
                 if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
-                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    // setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
                     setTotalInvestmentState(totalStocks);
                 } else {
-                    setTotalInvestingMoney("No Stock Data")
+                    // setTotalInvestingMoney("No Stock Data")
                 }
 
             }
@@ -302,7 +315,7 @@ export default function ChartUserInfo() {
 
     }
 
-    function OneMonthMarketDATACall(stockLists){
+    function OneMonthMarketDATACall(stockLists, totalInvestingMoney){
         setDisplayDateState("Past Month")
 
         const stockData = stockLists.map(async stockList => {
@@ -348,7 +361,10 @@ export default function ChartUserInfo() {
                 totalStocks["visible"] = false;
                 // console.log(totalStocks)
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                // totalInvestingMoney is Current TotalInvetingMoney
+                // defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalInvestingMoney.replace(",","") - totalStocks["close"][0]
+                totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",","");
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: '#00ff00' }
                 } else {
@@ -356,7 +372,8 @@ export default function ChartUserInfo() {
                 }
 
                 // console.log(totalStocks);
-                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                let defferenceInvesting = (parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                // let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
                 if (defferenceInvesting > 0) {
                     setIsSign(true)
@@ -364,26 +381,32 @@ export default function ChartUserInfo() {
                     setIsSign(false)
                 }
 
-                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                // setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
                 if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
-                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    // setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
                     setTotalInvestmentState(totalStocks);
                 } else {
-                    setTotalInvestingMoney("No Stock Data")
+                    // setTotalInvestingMoney("No Stock Data")
                 }
             } else {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                // totalInvestingMoney is Current TotalInvetingMoney
+                // defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalInvestingMoney.replace(",","") - totalStocks["close"][0]
+                totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",","");
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: '#00ff00' }
                 } else {
                     totalStocks["color"] = { color: 'red' }
                 }
 
-                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                let defferenceInvesting = (parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                // let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
                 if (defferenceInvesting > 0) {
                     setIsSign(true)
@@ -391,15 +414,16 @@ export default function ChartUserInfo() {
                     setIsSign(false)
                 }
 
-                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                // setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
 
                 // console.log(totalStocks);
                 if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
-                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    // setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
                     setTotalInvestmentState(totalStocks);
                 } else {
-                    setTotalInvestingMoney("No Stock Data")
+                    // setTotalInvestingMoney("No Stock Data")
                 }
 
             }
@@ -407,7 +431,7 @@ export default function ChartUserInfo() {
 
     }
 
-    function ThreeMonthMarketDATACall(stockLists){
+    function ThreeMonthMarketDATACall(stockLists, totalInvestingMoney){
         setDisplayDateState("Past 3 Months")
 
         const stockData = stockLists.map(async stockList => {
@@ -453,7 +477,8 @@ export default function ChartUserInfo() {
                 totalStocks["visible"] = false;
                 // console.log(totalStocks)
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalInvestingMoney.replace(",","") - totalStocks["close"][0]
+                totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",","");
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: '#00ff00' }
                 } else {
@@ -461,7 +486,7 @@ export default function ChartUserInfo() {
                 }
 
                 // console.log(totalStocks);
-                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                let defferenceInvesting = (parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
                 if (defferenceInvesting > 0) {
                     setIsSign(true)
@@ -469,26 +494,27 @@ export default function ChartUserInfo() {
                     setIsSign(false)
                 }
 
-                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
                 if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
-                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    // setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
                     setTotalInvestmentState(totalStocks);
                 } else {
-                    setTotalInvestingMoney("No Stock Data")
+                    // setTotalInvestingMoney("No Stock Data")
                 }
             } else {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalInvestingMoney.replace(",","") - totalStocks["close"][0]
+                totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",","");
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: '#00ff00' }
                 } else {
                     totalStocks["color"] = { color: 'red' }
                 }
 
-                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                let defferenceInvesting = (parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
                 if (defferenceInvesting > 0) {
                     setIsSign(true)
@@ -496,15 +522,15 @@ export default function ChartUserInfo() {
                     setIsSign(false)
                 }
 
-                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
 
                 // console.log(totalStocks);
                 if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
-                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    // setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
                     setTotalInvestmentState(totalStocks);
                 } else {
-                    setTotalInvestingMoney("No Stock Data")
+                    // setTotalInvestingMoney("No Stock Data")
                 }
 
             }
@@ -512,7 +538,7 @@ export default function ChartUserInfo() {
 
     }
 
-    function OneYearMarketDATACall(stockLists){
+    function OneYearMarketDATACall(stockLists, totalInvestingMoney){
         setDisplayDateState("Past Year")
 
         const stockData = stockLists.map(async stockList => {
@@ -558,7 +584,8 @@ export default function ChartUserInfo() {
                 totalStocks["visible"] = false;
                 // console.log(totalStocks)
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalInvestingMoney.replace(",","") - totalStocks["close"][0]
+                totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",","");
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: '#00ff00' }
                 } else {
@@ -566,7 +593,7 @@ export default function ChartUserInfo() {
                 }
 
                 // console.log(totalStocks);
-                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                let defferenceInvesting = (parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
                 if (defferenceInvesting > 0) {
                     setIsSign(true)
@@ -574,26 +601,27 @@ export default function ChartUserInfo() {
                     setIsSign(false)
                 }
 
-                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
                 if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
-                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    // setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
                     setTotalInvestmentState(totalStocks);
                 } else {
-                    setTotalInvestingMoney("No Stock Data")
+                    // setTotalInvestingMoney("No Stock Data")
                 }
             } else {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
 
-                defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
+                defferenceWithStartandCurrent = totalInvestingMoney.replace(",","") - totalStocks["close"][0]
+                totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",","");
                 if (defferenceWithStartandCurrent > 0) {
                     totalStocks["color"] = { color: '#00ff00' }
                 } else {
                     totalStocks["color"] = { color: 'red' }
                 }
 
-                let defferenceInvesting = (parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])).toFixed(2);
+                let defferenceInvesting = (parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])).toFixed(2);
 
                 if (defferenceInvesting > 0) {
                     setIsSign(true)
@@ -601,15 +629,15 @@ export default function ChartUserInfo() {
                     setIsSign(false)
                 }
 
-                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalStocks["close"][totalStocks["close"].length - 1]) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
+                setPercentOfDefferenceOfInvestingMoney((((parseFloat(totalInvestingMoney.replace(",","")) - parseFloat(totalStocks["close"][0])) / parseFloat(totalStocks["close"][0])) * 100).toFixed(2))
                 setDefferenceOfInvestingMoney(defferenceInvesting)
 
                 // console.log(totalStocks);
                 if (totalStocks.close[totalStocks.close.length - 1] !== undefined) {
-                    setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
+                    // setTotalInvestingMoney(NumberComma(totalStocks.close[totalStocks.close.length - 1]))
                     setTotalInvestmentState(totalStocks);
                 } else {
-                    setTotalInvestingMoney("No Stock Data")
+                    // setTotalInvestingMoney("No Stock Data")
                 }
 
             }
@@ -644,7 +672,7 @@ export default function ChartUserInfo() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
-                OneWeekMarketDATACall(stockListState)
+                OneWeekMarketDATACall(stockListState, totalInvestingMoney)
                 break;
             }
             case "1M": {
@@ -655,7 +683,7 @@ export default function ChartUserInfo() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
-                OneMonthMarketDATACall(stockListState)
+                OneMonthMarketDATACall(stockListState, totalInvestingMoney)
                 break;
             }
             case "3M": {
@@ -666,7 +694,7 @@ export default function ChartUserInfo() {
                 setButton3MState(btnWithoutOutline)
                 setButton1YState(btnWithOutline)
                 setButtonAllState(btnWithOutline)
-                ThreeMonthMarketDATACall(stockListState)
+                ThreeMonthMarketDATACall(stockListState, totalInvestingMoney)
                 break;
             }
             case "1Y": {
@@ -677,7 +705,7 @@ export default function ChartUserInfo() {
                 setButton3MState(btnWithOutline)
                 setButton1YState(btnWithoutOutline)
                 setButtonAllState(btnWithOutline)
-                OneYearMarketDATACall(stockListState);
+                OneYearMarketDATACall(stockListState, totalInvestingMoney);
                 break;
             }
             case "ALL": {

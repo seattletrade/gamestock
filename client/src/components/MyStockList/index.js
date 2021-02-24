@@ -66,7 +66,7 @@ export default function MyStockList() {
     return (
         <>
             <h4>Stocks</h4>
-           {console.log(myStockLists)}
+           {/* {console.log(myStockLists)} */}
             <div className="myStockLists">
                 {myStockLists.length ? (
                     
