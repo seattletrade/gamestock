@@ -15,13 +15,13 @@ export default function Nav() {
     const history = useHistory()
 
     useEffect(() => {
-        if(currentUser){
+        if (currentUser) {
             API.getUserData(currentUser.email)
-            .then(data => setNickname(data.data.nickName))
-        }   
-        console.log(currentUser)     
+                .then(data => setNickname(data.data.nickName))
+        }
+        console.log(currentUser)
     }, [])
-    
+
 
     const handleLogout = async () => {
         setError('')
@@ -73,20 +73,24 @@ export default function Nav() {
                             search
                         </Link>
                     </li>
-                </ul>
-                {!currentUser ?
-                    <>
-                        <Link className={location.pathname === "/gamestock/login" ? "nav-link text-white active" : "nav-link text-white"} to="/gamestock/login" >Login</Link>
-                        <Link className={location.pathname === "/gamestock/signup" ? "nav-link active text-white" : "nav-link text-white"} to="/gamestock/signup">Signup</Link>
-                    </> :
-                    <>
-                        <div className="ml-auto text-white" >Hello, {nickname}</div>
-                        <Link className="mx-2 text-white" to="/gamestock/" onClick={handleLogout} variant="link">logout</Link>
-                    </>
-                }
 
+                    {!currentUser ?
+
+                        <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                            <Link className={location.pathname === "/gamestock/login" ? "nav-link active" : "nav-link"} to="/gamestock/login" >Login</Link>
+                            <Link className={location.pathname === "/gamestock/signup" ? "nav-link active" : "nav-link"} to="/gamestock/signup">Signup</Link>
+                        </li>
+                        :
+
+                        <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                            <div className="ml-auto text-white" >Hello, {nickname}</div>
+                            <Link className={location.pathname === "/gamestock/" ? "nav-link active" : "nav-link"} to="/gamestock/" onClick={handleLogout} variant="link">logout</Link>
+                        </li>
+
+                    }
+                </ul>
             </div>
 
-        </nav>
+        </nav >
     )
 }
