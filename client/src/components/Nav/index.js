@@ -73,7 +73,8 @@ export default function Nav() {
                             search
                         </Link>
                     </li>
-
+                </ul>
+                <ul className="navbar-nav mr-0">
                     {!currentUser ?
 
                         <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
