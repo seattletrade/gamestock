@@ -57,7 +57,7 @@ export default function ChartUserInfo() {
     useEffect(() => {
         UserPageAPI.getStockList(currentUser.email)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 calculateTotalInvestment(res.data);
                 // call All Market DATA each symbol.
                 setStockListState(res.data);
@@ -82,7 +82,7 @@ export default function ChartUserInfo() {
 
 
     useEffect(() => {
-        console.log("switchState changed")
+        // console.log("switchState changed")
     }, [switchState])
 
     function calculateTotalInvestment(stockLists) {
@@ -607,7 +607,7 @@ export default function ChartUserInfo() {
 
                 // console.log(totalStocks.x[0].substring(0, 11));
                 if (Date.parse(totalStocks.x[0].substring(0, 11)) < Date.parse(investingStartDay)) {
-                    console.log("test");
+                    // console.log("test");
                     checkStartInvestingDateForOneYear(totalStocks, investingStartDay, totalInvestingMoneyWithoutGainLoss);
                 }
 
@@ -713,12 +713,12 @@ export default function ChartUserInfo() {
                     }
                     // console.log(fistPrice)
                 }
-                console.log(totalStocks)
+                // console.log(totalStocks)
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
                 // let tempDate = new Date(Date.parse(investingStartDay))
-                console.log(new Date(Date.parse(investingStartDay)).toString().substring(0, 11))
-                console.log(totalInvestingMoneyWithoutGainLoss);
+                // console.log(new Date(Date.parse(investingStartDay)).toString().substring(0, 11))
+                // console.log(totalInvestingMoneyWithoutGainLoss);
                 totalStocks.x.unshift(new Date(Date.parse(investingStartDay)).toString().substring(0, 11))
                 totalStocks.close.unshift(totalInvestingMoneyWithoutGainLoss);
                 // // console.log(totalStocks.x[0].substring(0, 11));

@@ -32,8 +32,8 @@ export default function Search() {
     }, [])
 
     useEffect(() => {
-        console.log("Changed isSymbol")
-        console.log(isSymbol);
+        // console.log("Changed isSymbol")
+        // console.log(isSymbol);
     }, [isSymbol])
 
     const handleChange = e => {
@@ -78,7 +78,7 @@ export default function Search() {
                     value={searchInput}
                     onChange={handleChange}
                     onSelect={(item) => {
-                        console.log(item.split("/"));
+                        // console.log(item.split("/"));
                         // console.log(item.split("/")[0]);
                         // console.log(item.split("/")[1]);
                         // setSymbolResult(item)
@@ -89,7 +89,7 @@ export default function Search() {
                                 } else {
                                     setIsSymbol(true)
                                 }
-                                console.log(res);
+                                // console.log(res);
                             })
                             .then(err => {
                                 if (err !== undefined) {
