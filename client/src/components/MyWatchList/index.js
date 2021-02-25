@@ -30,7 +30,7 @@ export default function MyWatchList() {
         let finalData = []
         API.getAllOnWatchList(currentUser.email)
         .then(watchLists => {
-           console.log(watchLists.data)
+        //    console.log(watchLists.data)
             if(watchLists.data.length){
                 WatchArr = [...watchLists.data];           
                 watchLists.data.map(stock => {

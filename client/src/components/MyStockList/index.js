@@ -25,7 +25,7 @@ export default function MyStockList() {
         let finalData = []
         UserPageAPI.getStockList(currentUser.email)
         .then(stockLists => {
-            console.log("stock lists", stockLists.data[0].symbol);
+            // console.log("stock lists", stockLists.data[0].symbol);
             
             StockArr = [...stockLists.data];
             // console.log("stosk Array", StockArr)

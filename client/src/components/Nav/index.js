@@ -19,7 +19,7 @@ export default function Nav() {
             API.getUserData(currentUser.email)
                 .then(data => setNickname(data.data.nickName))
         }
-        console.log(currentUser)
+        // console.log(currentUser)
     }, [])
 
 
