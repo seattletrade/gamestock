@@ -175,6 +175,11 @@ export default function ChartUserInfo() {
                     setTotalInvestingMoney("No Stock Data")
                 }
             } else {
+                // console.log(totalStocks);
+                for(let i = 0; i < totalStocks.close.length; i++){
+                    totalStocks.close[i] = (totalStocks.close[i] * totalStocks.stockAmount).toFixed(2);
+                }
+                // console.log(totalStocks);
                 totalStocks["type"] = "date";
                 totalStocks["visible"] = "true";
 
@@ -295,6 +300,14 @@ export default function ChartUserInfo() {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
 
+                for(let i = 0; i < totalStocks.close.length; i++){
+                    totalStocks.close[i] = (totalStocks.close[i] * totalStocks.stockAmount).toFixed(2);
+                }
+
+                if (Date.parse(totalStocks.x[0]) < Date.parse(investingStartDay)) {
+                    checkStartInvestingDate(totalStocks, investingStartDay, totalInvestingMoneyWithoutGainLoss);
+                }
+
                 defferenceWithStartandCurrent = totalInvestingMoney.replace(",", "") - totalStocks["close"][0]
                 totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",", "");
                 // defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
@@ -414,6 +427,14 @@ export default function ChartUserInfo() {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
 
+                for(let i = 0; i < totalStocks.close.length; i++){
+                    totalStocks.close[i] = (totalStocks.close[i] * totalStocks.stockAmount).toFixed(2);
+                }
+
+                if (Date.parse(totalStocks.x[0]) < Date.parse(investingStartDay)) {
+                    checkStartInvestingDate(totalStocks, investingStartDay, totalInvestingMoneyWithoutGainLoss);
+                }
+
                 // totalInvestingMoney is Current TotalInvetingMoney
                 // defferenceWithStartandCurrent = totalStocks["close"][totalStocks["close"].length - 1] - totalStocks["close"][0]
                 defferenceWithStartandCurrent = totalInvestingMoney.replace(",", "") - totalStocks["close"][0]
@@ -528,6 +549,14 @@ export default function ChartUserInfo() {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
 
+                for(let i = 0; i < totalStocks.close.length; i++){
+                    totalStocks.close[i] = (totalStocks.close[i] * totalStocks.stockAmount).toFixed(2);
+                }
+
+                if (Date.parse(totalStocks.x[0]) < Date.parse(investingStartDay)) {
+                    checkStartInvestingDate(totalStocks, investingStartDay, totalInvestingMoneyWithoutGainLoss);
+                }
+
                 defferenceWithStartandCurrent = totalInvestingMoney.replace(",", "") - totalStocks["close"][0]
                 totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",", "");
                 if (defferenceWithStartandCurrent > 0) {
@@ -640,6 +669,17 @@ export default function ChartUserInfo() {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
 
+
+                for(let i = 0; i < totalStocks.close.length; i++){
+                    totalStocks.close[i] = (totalStocks.close[i] * totalStocks.stockAmount).toFixed(2);
+                }
+
+                // console.log(totalStocks.x[0].substring(0, 11));
+                if (Date.parse(totalStocks.x[0].substring(0, 11)) < Date.parse(investingStartDay)) {
+                    // console.log("test");
+                    checkStartInvestingDateForOneYear(totalStocks, investingStartDay, totalInvestingMoneyWithoutGainLoss);
+                }
+
                 defferenceWithStartandCurrent = totalInvestingMoney.replace(",", "") - totalStocks["close"][0]
                 totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",", "");
                 if (defferenceWithStartandCurrent > 0) {
@@ -673,7 +713,7 @@ export default function ChartUserInfo() {
     }
 
     function AllMarketDATACall(stockLists, totalInvestingMoney, investingStartDay, totalInvestingMoneyWithoutGainLoss) {
-        setDisplayDateState("ALL")
+        setDisplayDateState("All Time")
 
         const stockData = stockLists.map(async stockList => {
             return (
@@ -755,6 +795,13 @@ export default function ChartUserInfo() {
             } else {
                 totalStocks["type"] = "category";
                 totalStocks["visible"] = false;
+
+                for(let i = 0; i < totalStocks.close.length; i++){
+                    totalStocks.close[i] = (totalStocks.close[i] * totalStocks.stockAmount).toFixed(2);
+                }
+
+                totalStocks.x.unshift(new Date(Date.parse(investingStartDay)).toString().substring(0, 11))
+                totalStocks.close.unshift(totalInvestingMoneyWithoutGainLoss);
 
                 defferenceWithStartandCurrent = totalInvestingMoney.replace(",", "") - totalStocks["close"][0]
                 totalStocks["close"][totalStocks["close"].length - 1] = totalInvestingMoney.replace(",", "");
