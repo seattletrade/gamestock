@@ -22,6 +22,10 @@ export default function Nav() {
         // console.log(currentUser)
     }, [])
 
+    useEffect(() => {
+
+    }, [nickname]
+    )
 
     const handleLogout = async () => {
         setError('')
