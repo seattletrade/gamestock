@@ -28,7 +28,7 @@ export default function PurchaseForm() {
         } else {
             total = ""
         }
-        return total;
+        return parseFloat(total).toFixed(2);
     }
 
     function handleClick(event) {
