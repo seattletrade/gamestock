@@ -40,7 +40,7 @@ export default function ForgotPassword() {
                         <Button disabled={loading} className="w-100" type="submit" style={{backgroundColor: "#FD0000"}}>Reset Password</Button>
                     </Form>
                     <div className="w-100 text-center mt-3">
-                        <Link to="/gamestock/login">Log In</Link>
+                        <Link to="/gamestock/login" style={{color: "#FD0000"}}>Log In</Link>
                     </div>
                 </Card.Body>
             </Card>
