@@ -16,7 +16,7 @@ export default function CompanyNews(props) {
         API.getCompanyNews(symbol)
             .then(res => {
                 newsArr = res.data.slice(0, 15);
-                console.log(newsArr)
+                // console.log(newsArr)
                 setCompanyNews(newsArr);
             }
             )
