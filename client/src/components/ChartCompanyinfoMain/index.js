@@ -78,6 +78,7 @@ export default function Infopage(promps) {
     const [currentValueState, setCurrentValueState] = useState();
     const [operatorForCurrentValue, setOperatorForCurrentValue] = useState("+");
     const [isClicked, setIsClicked] = useState(false)
+    const [isOnWatchList, setIsOnWatchList] = useState([])
     const { currentUser} = useAuth();
     const history = useHistory();
 
@@ -89,12 +90,16 @@ export default function Infopage(promps) {
             companyName: companyNameState
         })
         .then(data => console.log(data))
-        setIsClicked(true);
-        // history.push("/gamestock/user")
-        // console.log(`
-        //     symbol: ${ticker},
-        //     companyName: ${companyNameState}
-        // `)
+        setIsClicked(true);        
+    }
+    
+    function OnWatchList(email){
+        let watchArr = []
+        API.getAllOnWatchList(email)       
+        .then(data => {
+            data.data.map(company => watchArr.push(company.symbol))
+            setIsOnWatchList(watchArr)            
+        })
     }
     // Fetch Martke Data from API (Alpha Vantage) 
     function GetMarketData(userInput) {
@@ -136,7 +141,7 @@ export default function Infopage(promps) {
         // console.log("First")
         setPropsState(promps)
         // API.getTest().then((res) => console.log(res));
-
+        OnWatchList(currentUser.email)
         // Get the data from a User when they click a company from Search PAGE
         let userInput = promps
         // console.log(userInput);
@@ -379,6 +384,7 @@ export default function Infopage(promps) {
     return (
 
         <>
+       {/* {console.log(isOnWatchList)} */}
             {loading ? (<div>Loding...</div>) : (
                 <div style={{ background: "black", height: "400px", margin: "0 -15px" }}>
                     <div className="pl-3 pt-5" style={{ color: "white" }}>
@@ -398,7 +404,7 @@ export default function Infopage(promps) {
                                     to="/gamestock/user"
                                     className={location.pathname === "/gamestock/user" ? "nav-link active" : "nav-link"}
                                 >
-                                    <button  type="button" className="btn btn-danger" onClick={handleClick}>{isClicked ? "watching" : "watch"} </button>
+                                    <button disabled={isOnWatchList.includes(ticker)} type="button" className="btn btn-danger" onClick={handleClick}>{isClicked || isOnWatchList.includes(ticker) ? "watching" : "watch"} </button>
                                 </Link>
                             </Col>
                         </Row>
