@@ -63,6 +63,11 @@ export default function MyStockList() {
     // Put Currten Value with symbols and shares which are from Stock DB to setMyStockLists
         
     }, [])
+
+    useEffect(() => {
+                
+    }, [myStockLists])
+    
     return (
         <>
             <h4>Stocks</h4>

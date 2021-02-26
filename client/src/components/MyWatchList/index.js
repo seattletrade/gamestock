@@ -32,7 +32,13 @@ export default function MyWatchList() {
         .then(watchLists => {
         //    console.log(watchLists.data)
             if(watchLists.data.length){
-                WatchArr = [...watchLists.data];           
+                WatchArr = [...watchLists.data]; 
+                for(let i = 0; i < WatchArr.length; i++) {
+                    // console.log("each stock array", StockArr[i])
+                    API.getCurrentPrice(WatchArr[i].symbol)
+                    // .then(data => console.log(data.data["Global Quote"]["05. price"]))
+                    .then(data => WatchArr[i].price = data.data["Global Quote"]["05. price"])
+                }          
                 watchLists.data.map(stock => {
                     API.getIntraMarketData(stock.symbol, "15min")
                         .then(marketData => {
@@ -72,6 +78,10 @@ export default function MyWatchList() {
     useEffect(() => {
         loadWatchList()        
     }, [])
+    
+    useEffect(() => {        
+        
+    }, [myWatchLists])
 
     return (
         <>
@@ -96,7 +106,7 @@ export default function MyWatchList() {
                                 <StockChart company={company} />
                             </Col>
                             <Col className="text-right" style={{ margin: "auto" }}>
-                                ${parseFloat((company["graphData"].currentValue)).toFixed(2)}
+                                ${parseFloat(company.price).toFixed(2)}
                             </Col>
                             <Col className="text-right" style={{ margin: "auto" }}>
                                 <Button onClick={() => handleDelete(currentUser.email, company.symbol)} className="btn btn-sm btn-danger">X</Button>
