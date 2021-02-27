@@ -20,12 +20,12 @@ export default function Nav() {
                 .then(data => setNickname(data.data.nickName))
         }
         // console.log(currentUser)
-    }, [])
+    }, [currentUser])
 
     useEffect(() => {
 
-    }, [nickname]
-    )
+    }, [nickname])
+    
 
     const handleLogout = async () => {
         setError('')
