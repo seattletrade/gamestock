@@ -20,7 +20,11 @@
 - [Questions](#Questions)
 
 ## About the Project
+In this project, we created an application that helps inexperienced investors to learn investing without risking their hard earned money. To be able to use the app, a user has to sign up first. Up on sign up, a user will be given $10,000 fake free money that can be used to buy shares. A user will have access to the latest business news to be able to make decision of buying or selling. A user also can search companies by name to be able to get detailed information about the company a user would wish to search. If a user wouldn't like to buy, he/she will be given an option to put the company under a watch list. Any company under a watchlist can be removed when a user wishes to do so.
 
+For each purchased share, the app shows current price, todays share price movement in graph and the gain or loss of money from owning that share.
+
+The app also displays, total money a user has from owning shares. The trend for the combined investin money is also displayed for different time spans.
 ## Usage
 
 Run the following commands in your terminal

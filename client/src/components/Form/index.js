@@ -14,6 +14,8 @@ export default function PurchaseForm() {
     const [currentPrice, setCurrentPrice] = useState();
     const [buyOrSell, setbuyOrSell] = useState("buy");
     const [error, setError] = useState();
+    const [success, setSuccess] = useState();
+    const [message, setMessage] = useState();
     const [userBalance, setUserBalance] = useState(0)
     const [stocksPortfolio, setStocksPortfolio] = useState([])
     const [foundStock, setfoundStock] = useState("")
@@ -41,7 +43,7 @@ export default function PurchaseForm() {
         setFormObject({ ...formObject, [name]: value })
         // GetCurrentPrice(formObject.symbol)
         let newArr = stocksPortfolio.filter(stock => {
-            console.log(stock.symbol === formObject.symbol.toUpperCase().trim())
+            // console.log(stock.symbol === formObject.symbol.toUpperCase().trim())
             return stock.symbol === formObject.symbol.toUpperCase().trim()
         });
         if (newArr.length) {
@@ -78,7 +80,7 @@ export default function PurchaseForm() {
         console.log(stocksPortfolio)
         if (buyOrSell === "buy") {
             if (calculateTotal() > userBalance) {
-                setError(`You don't have enough money. Your balance is ${userBalance}`)
+                setMessage(`You don't have enough money. Your balance is ${userBalance}`)
             }
             else {
                 API.saveBuyTransaction({
@@ -90,17 +92,18 @@ export default function PurchaseForm() {
                     .then(res => console.log(res))
                     .catch(err => console.log(err))
 
-                history.push("/gamestock/user")
+                setMessage(`Successfully bought ${formObject.amount} ${formObject.symbol.toUpperCase().trim()} shares`)
+                // history.push("/gamestock/user")
             }
         }
         if (buyOrSell === "sell") {
             console.log(foundStock)
             console.log(numberOfStocks)
             if (foundStock === "") {
-                setError(`You don't own any ${formObject.symbol.toUpperCase().trim()} shares`)
+                setMessage(`You don't own any ${formObject.symbol.toUpperCase().trim()} shares`)
             }
             else if (parseInt(formObject.amount) > parseInt(numberOfStocks)) {
-                setError(`You only have ${numberOfStocks} ${formObject.symbol.toUpperCase().trim()} shares to sell`)
+                setMessage(`You only have ${numberOfStocks} ${formObject.symbol.toUpperCase().trim()} shares to sell`)
             } else {
                 API.saveSellTransaction({
                     email: currentUser.email,
@@ -110,8 +113,8 @@ export default function PurchaseForm() {
                 })
                     .then(data => console.log("selling info", data))
                     .catch(err => console.log(err))
-
-                history.push("/gamestock/user")
+                setMessage(`Successfully sold ${formObject.amount} ${formObject.symbol.toUpperCase().trim()} shares`)
+                // history.push("/gamestock/user")
             }
         }
     }
@@ -121,7 +124,7 @@ export default function PurchaseForm() {
             <Card>
                 <Card.Body>
                     <h1 className="text-center mb-4 text-white" style={{ backgroundColor: "#FD0000" }}>Trading Desk: Trade Shares Here</h1>
-                    {error && <Alert variant="danger">{error}</Alert>}
+                    {message && <Alert variant="info">{message}</Alert>}
                     <Form >
                         <Form.Group id="symbol">
                             <Form.Label>Symbol</Form.Label>
@@ -137,7 +140,7 @@ export default function PurchaseForm() {
                                 name="amount"
                                 onChange={handleInputChange}
                             />
-                            <div id="previewTotal" className="form-text text-muted">Total: {calculateTotal()}</div>
+                            <div id="previewTotal" className="form-text text-muted">Total: {formObject.symbol && formObject.amount ? calculateTotal(): ""}</div>
                         </Form.Group>
 
                         <label>
