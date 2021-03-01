@@ -14,7 +14,7 @@ export default function Login() {
     const handleSubmit = async(e) => {
         e.preventDefault();        
         try {
-            setError('')
+            setError(' ')
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
             history.push("/gamestock/user")
